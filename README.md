@@ -1,6 +1,7 @@
 # SKN35-4th-4Team
 
 - 폴더 구조
+```
 SKN35-4th-4Team
 ├─config : Django config 정의
 ├─data : RAG 데이터
@@ -9,3 +10,4 @@ SKN35-4th-4Team
 ├─users : 사용자 관리 애플리케이션 (django application)
 ├─app.py : 파이프라인 실행 테스트
 └─manage.py
+```
