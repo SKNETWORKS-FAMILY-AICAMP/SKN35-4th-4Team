@@ -5,10 +5,10 @@ import sys
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
-from src.graph.state import MigrationState
-from src.prompt.analyzer_prompt import analyzer_prompt
-from src.rag.import_map import LATEST_VERSION
-from src.rag.import_map.version_resolve import normalize_version
+from langration.src.graph.state import MigrationState
+from langration.src.prompt.analyzer_prompt import analyzer_prompt
+from langration.src.rag.import_map import LATEST_VERSION
+from langration.src.rag.import_map.version_resolve import normalize_version
  
 load_dotenv()
 

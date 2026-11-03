@@ -50,9 +50,9 @@ import subprocess
 import tempfile
 from functools import lru_cache
 
-from src.graph.state import MigrationState
-from src.rag.import_map import PYTHON_VERSION, TARGET_VERSIONS, symbols_path
-from src.rag.retrieval.import_lookup import lookup, lookup_methods, parse_import_paths
+from langration.src.graph.state import MigrationState
+from langration.src.rag.import_map import PYTHON_VERSION, TARGET_VERSIONS, symbols_path
+from langration.src.rag.retrieval.import_lookup import lookup, lookup_methods, parse_import_paths
 
 MAX_ATTEMPTS = int(os.getenv("VERIFIER_MAX_ATTEMPTS", "3"))  # rewriter 최대 시도 횟수
 USE_SANDBOX = os.getenv("VERIFIER_SANDBOX", "0") == "1"
@@ -297,7 +297,7 @@ def _exists_static(path: str) -> bool | None:
 
 def _sandbox_import(targets: list[tuple[str, bool]]) -> dict[str, str | None] | None:
     """uv 격리 환경에 1.x 패키지를 설치해 실제로 import 한다. 실패하면 None (정적 검사로 대체)."""
-    from src.rag.import_map.build_import_map import IMPORT_CHECK  # 대응표 빌드 때와 같은 검사 스크립트
+    from langration.src.rag.import_map.build_import_map import IMPORT_CHECK  # 대응표 빌드 때와 같은 검사 스크립트
 
     cmd = ["uv", "run", "--isolated", "--no-project", "--python", PYTHON_VERSION]
     for pkg in [f"{p}=={v}" for p, v in TARGET_VERSIONS.items()] + ["pydantic"]:

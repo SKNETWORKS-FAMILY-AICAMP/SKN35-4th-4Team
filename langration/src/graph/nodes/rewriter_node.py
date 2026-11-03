@@ -29,8 +29,8 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
-from src.graph.state import MigrationState
-from src.prompt.rewriter_prompt import rewriter_system_prompt, rewriter_user_template
+from langration.src.graph.state import MigrationState
+from langration.src.prompt.rewriter_prompt import rewriter_system_prompt, rewriter_user_template
 
 load_dotenv()
 

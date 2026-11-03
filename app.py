@@ -1,6 +1,6 @@
 import json
 from langchain_core.messages import HumanMessage
-from src.graph.supervisor import supervisor
+from langration.src.graph.supervisor import supervisor
 
 def main():
     question = """Document 만들어서 쓰는 부분인데 0.3 코드예요. 1.x로 바꿔 주세요.

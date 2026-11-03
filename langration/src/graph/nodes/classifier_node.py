@@ -1,8 +1,8 @@
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
-from src.graph.state import MigrationState
-from src.prompt.classifier_prompt import classifier_prompt
+from langration.src.graph.state import MigrationState
+from langration.src.prompt.classifier_prompt import classifier_prompt
 
 load_dotenv()
 

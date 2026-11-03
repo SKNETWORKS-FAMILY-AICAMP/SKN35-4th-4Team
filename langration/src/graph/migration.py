@@ -1,10 +1,10 @@
 from langgraph.graph import END, START, StateGraph
 
-from src.graph.nodes.analyzer_node import analyzer_node
-from src.graph.nodes.retriever_node import retriever_node
-from src.graph.nodes.rewriter_node import rewriter_node
-from src.graph.nodes.verifier_node import route_after_verify, verifier_node
-from src.graph.state import MigrationState
+from langration.src.graph.nodes.analyzer_node import analyzer_node
+from langration.src.graph.nodes.retriever_node import retriever_node
+from langration.src.graph.nodes.rewriter_node import rewriter_node
+from langration.src.graph.nodes.verifier_node import route_after_verify, verifier_node
+from langration.src.graph.state import MigrationState
 
 def migration():
     builder = StateGraph(MigrationState)

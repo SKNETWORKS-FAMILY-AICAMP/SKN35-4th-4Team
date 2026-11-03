@@ -1,11 +1,11 @@
 from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.memory import MemorySaver
-from src.graph.state import MigrationState
+from langration.src.graph.state import MigrationState
 from langgraph.graph import StateGraph, START, END
-from src.graph.nodes.classifier_node import classifier_node
-from src.graph.nodes.general_node import general_node
-from src.graph.nodes.search_node import search_node
-from src.graph.migration import migration
+from langration.src.graph.nodes.classifier_node import classifier_node
+from langration.src.graph.nodes.general_node import general_node
+from langration.src.graph.nodes.search_node import search_node
+from langration.src.graph.migration import migration
 
 # 대화 맥락 유지 (10-15): 같은 세션(thread_id) 안의 앞 대화를 기억한다.
 # - compile(checkpointer=MemorySaver()) 로 thread_id 별 state(messages 등)를 서버 메모리에 남긴다.

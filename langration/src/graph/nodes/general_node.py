@@ -1,8 +1,8 @@
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 from langchain_openai import ChatOpenAI
-from src.graph.state import MigrationState
-from src.prompt.general_prompt import general_prompt
+from langration.src.graph.state import MigrationState
+from langration.src.prompt.general_prompt import general_prompt
 
 load_dotenv()
 

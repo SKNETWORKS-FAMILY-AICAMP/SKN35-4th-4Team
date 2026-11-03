@@ -4,7 +4,9 @@
     uv run python -m src.rag.import_map.run_all --skip-import-check   # 검증 생략 (빠름)
 """
 
-from . import build_import_map, extract_symbols, fetch_cli_mappings
+from . import fetch_cli_mappings
+from . import build_import_map
+from . import extract_symbols
 
 
 def main():

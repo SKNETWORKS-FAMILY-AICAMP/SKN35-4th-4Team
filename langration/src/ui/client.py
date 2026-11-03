@@ -51,10 +51,10 @@ def _pipeline():
     try:
         global _entry
         try:                                         # 2026-10-15 dev: 최상위 그래프 (질문 분류 → migration / search / general)
-            from src.graph.supervisor import supervisor as build
+            from langration.src.graph.supervisor import supervisor as build
             _entry = "supervisor"
         except ImportError:                          # 그 전 dev: 변환 파이프라인만
-            from src.graph.supervisor import migration_pipeline as build
+            from langration.src.graph.supervisor import migration_pipeline as build
             _entry = "migration"
         _graph = build()
         return _graph, None
@@ -72,7 +72,7 @@ def mode() -> str:
     if graph_status()[0]:
         return "graph"
     try:
-        import src.rag.retrieval.import_lookup  # noqa: F401  2번 검색기가 있으면 근거는 실제
+        import langration.src.rag.retrieval.import_lookup  # noqa: F401  2번 검색기가 있으면 근거는 실제
         return "mock+real_evidence"
     except ImportError:
         return "mock"
@@ -160,7 +160,7 @@ def _short(text, n: int = 70) -> str:
 def _error_names(errors: list[dict]) -> list[str]:
     """검사 오류 → '검사 이름 ×개수' (결과 패널의 검사 결과 탭과 같은 이름)."""
     from collections import Counter
-    from src.ui.result_view import CHECKS
+    from langration.src.ui.result_view import CHECKS
     name_of = {t: name for name, _, types in CHECKS for t in types}
     counts = Counter(name_of.get(e.get("type"), e.get("type") or "기타") for e in errors)
     return [f"{name} ×{c}" if c > 1 else name for name, c in counts.most_common()]
@@ -220,7 +220,7 @@ def _step_message(node: str, upd: dict) -> tuple[str, str, list[str]]:
     if node == "verifier":
         # 그래프와 같은 함수로 다음 경로를 판단한다 (화면 문구와 실제 동작이 어긋나지 않게).
         # 그래프를 쓸 수 없는 환경에서도 이 파일이 깨지지 않도록 맨 위가 아니라 여기서 불러온다.
-        from src.graph.nodes.verifier_node import MAX_ATTEMPTS, route_after_verify
+        from langration.src.graph.nodes.verifier_node import MAX_ATTEMPTS, route_after_verify
 
         v, n = upd.get("verify_result") or {}, upd.get("attempt", 0)
         warns = v.get("warnings") or []

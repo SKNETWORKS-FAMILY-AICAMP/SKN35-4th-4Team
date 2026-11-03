@@ -60,7 +60,7 @@ def find_evidence(path: str, target: str = "1.x") -> dict | None:
         return {"old": path, "new": t["new"], "kind": t["kind"], "evidence_id": f"ver-{target}:{t['new'] or path}",
                 "source": "version_symbols", "alternative": None, "real": True}
     try:
-        from src.rag.retrieval.import_lookup import lookup  # 팀 저장소에 2번 코드가 있을 때
+        from langration.src.rag.retrieval.import_lookup import lookup  # 팀 저장소에 2번 코드가 있을 때
         hit = lookup(path)
         if hit is None:
             if vm is not None and vm.available():

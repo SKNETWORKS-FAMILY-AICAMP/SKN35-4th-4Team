@@ -1,9 +1,9 @@
 from functools import lru_cache
 
-from src.graph.state import MigrationState
-from src.rag.retrieval import DOC_SOURCES
-from src.rag.retrieval.hybrid import RetrievalEngine
-from src.rag.retrieval.import_lookup import parse_import_paths
+from langration.src.graph.state import MigrationState
+from langration.src.rag.retrieval import DOC_SOURCES
+from langration.src.rag.retrieval.hybrid import RetrievalEngine
+from langration.src.rag.retrieval.import_lookup import parse_import_paths
 
 MAP_SOURCES = ("import_map", "method_map")
 FINDING_DOC_K = 2  # 대응표에 없는 finding 하나당 추가로 찾을 문서 근거 수
