@@ -11,3 +11,9 @@ SKN35-4th-4Team
 ├─app.py : 파이프라인 실행 테스트
 └─manage.py
 ```
+
+- django server 실행
+```
+uv sync
+uv run python manage.py runserver
+```
