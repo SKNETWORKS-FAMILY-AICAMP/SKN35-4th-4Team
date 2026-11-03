@@ -24,7 +24,7 @@ from sqlalchemy import (Column, DateTime, ForeignKey, Index, MetaData, String, T
                         insert, select)
 from sqlalchemy.exc import IntegrityError
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3] # src 폴더 위치 변경으로 parents 2 -> 3 변경
 meta = MetaData()
 
 users = Table(
