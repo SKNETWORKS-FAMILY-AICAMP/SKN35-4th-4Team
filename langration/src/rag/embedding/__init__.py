@@ -4,7 +4,7 @@ import os
 import chromadb
 from dotenv import load_dotenv
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4] # src 폴더 위치 변경으로 parents 3 -> 4 변경
 CHUNKS_PATH = ROOT / "data" / "processed" / "chunks.jsonl"
 ENV_PATH = ROOT / ".env"
 

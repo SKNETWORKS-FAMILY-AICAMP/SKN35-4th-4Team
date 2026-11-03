@@ -13,7 +13,7 @@ import os
 from functools import lru_cache
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4] # src 폴더 위치 변경으로 parents 3 -> 4 변경
 SYMBOLS = Path(os.environ.get("MIGRATION_SYMBOLS_DIR") or ROOT / "data" / "raw" / "symbols")
 
 # 화면의 버전 → 그 시기에 함께 쓰던 패키지 목록 (2번 도구 목록 파일 이름)

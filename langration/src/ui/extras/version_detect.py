@@ -12,7 +12,7 @@ from pathlib import Path
 from ..mock import import_paths
 from ..versions import ALL, ALL_WITH_NEW
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4] # src 폴더 위치 변경으로 parents 3 -> 4 변경
 IMPORT_MAP = ROOT / "data" / "processed" / "import_map.jsonl"
 
 # 2번 대응표가 없을 때 쓰는 예시 (실제 대응표의 seen_in 값을 옮겨 둔 것)

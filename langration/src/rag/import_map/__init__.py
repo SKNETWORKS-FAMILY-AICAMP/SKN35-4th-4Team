@@ -14,7 +14,7 @@
 
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4] # src 폴더 위치 변경으로 parents 3 -> 4 변경
 RAW_DIR = ROOT / "data" / "raw"
 SYMBOLS_DIR = RAW_DIR / "symbols"
 CLI_MAPPINGS_PATH = RAW_DIR / "cli_mappings.jsonl"
