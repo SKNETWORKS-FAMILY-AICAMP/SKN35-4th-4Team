@@ -8,6 +8,13 @@ dependencies = [
     "django==5.2.7",
     "mysqlclient>=2.2.7,<3",
     "python-dotenv>=1,<2",
+    "langchain>=1.4.4",
+    "langchain-chroma>=1.1.0",
+    "langchain-openai>=1.7.1",
+    "langgraph>=1.2.14",
+    "pydantic>=2.14.1",
+    "pymysql>=1.2.3",
+    "sqlalchemy>=2.1.4",
 ]
 
 [dependency-groups]
