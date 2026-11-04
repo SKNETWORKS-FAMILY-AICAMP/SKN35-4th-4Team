@@ -1,0 +1,246 @@
+/* ─────────────────────────────────────────────
+   공통 스타일 (로그인 · 회원가입 · 채팅 화면이 함께 씀)
+   색은 :root 에서 한 번만 정하고 var(--이름) 으로 가져다 씀 (3차 Streamlit 색)
+   ───────────────────────────────────────────── */
+:root {
+    --bg: #0e1117;          /* 페이지 배경 */
+    --card: #262730;        /* 카드 · 사이드바 */
+    --panel: #1a1c24;       /* 결과 패널 · 코드 배경 */
+    --line: #3d3f4b;        /* 테두리 */
+    --text: #fafafa;        /* 기본 글자 */
+    --muted: #a3a8b8;       /* 흐린 글자 */
+    --accent: #ff4b4b;      /* 강조 (버튼 · 실패) */
+    --ok: #21c354;          /* 성공 */
+    --old-bg: #3b1d22;      /* 전후 비교: 지운 줄 */
+    --new-bg: #173524;      /* 전후 비교: 새 줄 */
+    --radius: 8px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Pretendard", "Malgun Gothic", sans-serif;
+    font-size: 15px;
+}
+
+a { color: var(--text); }
+
+button {
+    padding: 10px 14px;
+    font: inherit;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+button:hover { opacity: 0.9; }
+button:disabled { opacity: 0.5; cursor: wait; }
+
+button.ghost {                       /* 테두리만 있는 버튼 (새 대화 · 로그아웃) */
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--line);
+}
+
+input, textarea, select {
+    padding: 12px 14px;
+    font: inherit;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); }
+
+pre, code { font-family: "Consolas", "D2Coding", monospace; font-size: 13px; }
+
+.message { margin: 0; min-height: 20px; font-size: 13px; color: var(--accent); }
+.message.ok { color: var(--ok); }
+
+
+/* ─────────────── 로그인 · 회원가입 (가운데 카드) ─────────────── */
+.auth-page {
+    min-height: 100vh;
+    display: flex;                   /* 카드를 화면 정가운데로 */
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    width: 100%;
+    max-width: 380px;
+    margin: 16px;
+    padding: 36px 28px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+}
+.card h1 { margin: 0 0 6px; font-size: 22px; line-height: 1.4; }
+.card .sub { margin: 0 0 28px; color: var(--muted); font-size: 14px; }
+.card form { display: flex; flex-direction: column; gap: 12px; }
+.card .hint { margin: -4px 0 0; font-size: 12px; color: var(--muted); }
+.card .switch { margin: 20px 0 0; text-align: center; font-size: 13px; color: var(--muted); }
+
+
+/* ─────────────── 채팅 화면: 3칸 배치 ───────────────
+   [사이드바 260px] [대화 영역 (남는 너비)] [결과 패널 (남는 너비)]          */
+.app {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr) minmax(0, 1fr);   /* minmax(0, …): 긴 코드가 칸을 넓히지 못하게 */
+    height: 100vh;
+}
+
+/* 사이드바 */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 16px;
+    background: var(--card);
+    border-right: 1px solid var(--line);
+    overflow-y: auto;
+}
+.sidebar h2 { margin: 0; font-size: 17px; line-height: 1.4; }
+.sidebar h3 { margin: 0 0 8px; font-size: 13px; color: var(--muted); font-weight: 600; }
+.sidebar select { width: 100%; padding: 8px 10px; font-size: 13px; }
+.sidebar .example-text { margin: 8px 0; font-size: 12px; color: var(--muted); white-space: pre-wrap; }
+.sidebar .example button { width: 100%; }
+
+.session-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.session-list button {
+    width: 100%;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--text);
+    background: transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;         /* 긴 제목은 ... 으로 */
+}
+.session-list button:hover { background: var(--line); }
+.session-list button.active { background: var(--accent); }
+.session-list .empty { font-size: 12px; color: var(--muted); }
+
+.sidebar .me {
+    margin-top: auto;                /* 맨 아래로 밀기 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+}
+.sidebar .me button { padding: 6px 10px; font-size: 12px; }
+
+/* 대화 영역 */
+.chat {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;                    /* grid 안에서 긴 코드가 칸을 밀어내지 않게 */
+    padding: 24px;
+    gap: 16px;
+}
+.chat header h1 { margin: 0 0 6px; font-size: 22px; }
+.chat header p { margin: 0; font-size: 13px; color: var(--muted); }
+
+.messages {
+    flex: 1;                         /* 남는 높이를 전부 차지 */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+.messages .empty { margin: auto; color: var(--muted); font-size: 14px; text-align: center; }
+
+.bubble {
+    max-width: 92%;
+    padding: 12px 14px;
+    border-radius: var(--radius);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+.bubble.user { align-self: flex-end; background: var(--line); }        /* 내 질문: 오른쪽 */
+.bubble.bot { align-self: flex-start; background: var(--card); }       /* 챗봇 답: 왼쪽 */
+.bubble.bot.loading { color: var(--muted); }
+.bubble.bot.error { border: 1px solid var(--accent); }
+.bubble pre {
+    margin: 8px 0;
+    padding: 10px;
+    background: var(--bg);
+    border-radius: 6px;
+    overflow-x: auto;
+}
+
+.composer { display: flex; gap: 8px; }
+.composer textarea { flex: 1; min-height: 52px; max-height: 200px; resize: vertical; }
+
+/* 결과 패널 */
+.result {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 24px;
+    gap: 12px;
+    border-left: 1px solid var(--line);
+    overflow-y: auto;
+}
+.result h2 { margin: 0; font-size: 20px; padding-bottom: 8px; border-bottom: 2px solid #4b8bff; }
+.result .empty { color: var(--muted); font-size: 14px; }
+
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.badge { padding: 4px 10px; font-size: 12px; border-radius: 999px; background: var(--line); }
+.badge.ok { background: var(--new-bg); color: var(--ok); }
+.badge.fail { background: var(--old-bg); color: var(--accent); }
+
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); }
+.tabs button {
+    padding: 8px 12px;
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--muted);
+    background: transparent;
+    border-radius: 0;
+    border-bottom: 2px solid transparent;
+}
+.tabs button.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.diff { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+.diff h4 { margin: 0 0 6px; font-size: 12px; color: var(--muted); }
+.code {
+    margin: 0;
+    padding: 8px 0;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow-x: auto;
+}
+.code span { display: block; padding: 0 10px; white-space: pre; }
+.code span.old { background: var(--old-bg); }
+.code span.new { background: var(--new-bg); }
+
+table.changes { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.changes th, table.changes td { padding: 8px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.changes th { color: var(--muted); font-weight: 600; }
+table.changes code { overflow-wrap: anywhere; }
+
+
+/* ─────────────── 좁은 화면 (노트북 반쪽 · 휴대폰) ─────────────── */
+@media (max-width: 1100px) {
+    .app { grid-template-columns: 220px minmax(0, 1fr); height: auto; min-height: 100vh; }
+    .result { grid-column: 1 / -1; border-left: none; border-top: 1px solid var(--line); }
+}
+@media (max-width: 700px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { border-right: none; border-bottom: 1px solid var(--line); }
+    .messages { min-height: 50vh; }
+    .diff { grid-template-columns: 1fr; }
+}

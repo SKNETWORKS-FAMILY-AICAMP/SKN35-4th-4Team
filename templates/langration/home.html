@@ -1,11 +1,68 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>LangChain 버전 마이그레이션 코드 어시스턴트</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    Langration
+    {% csrf_token %}
+
+    <div class="app">
+        <!-- ① 사이드바: 새 대화 · 예제 · 내 대화 · 로그아웃 -->
+        <aside class="sidebar">
+            <h2>LangChain 버전 마이그레이션<br>코드 어시스턴트</h2>
+
+            <button type="button" class="ghost" id="new-chat">＋ 새 대화</button>
+
+            <section class="example">
+                <h3>확인용 예제</h3>
+                <select id="example-select"></select>
+                <p class="example-text" id="example-text"></p>
+                <button type="button" id="example-send">이 예제 보내기</button>
+            </section>
+
+            <section>
+                <h3>내 대화</h3>
+                <ul class="session-list" id="session-list">
+                    <li class="empty">불러오는 중...</li>
+                </ul>
+            </section>
+
+            <div class="me">
+                <!-- 로그인한 아이디는 ①의 뷰가 템플릿에 user_id 로 넘겨 줌 -->
+                <span>👤 {{ user_id|default:"로그인 사용자" }}</span>
+                <button type="button" class="ghost" id="logout">로그아웃</button>
+            </div>
+        </aside>
+
+        <!-- ② 대화 영역: 질문 · 답변 말풍선 + 입력창 -->
+        <main class="chat">
+            <header>
+                <h1>LangChain 버전 마이그레이션 코드 어시스턴트</h1>
+                <p>바꿀 버전은 질문에 적어 주세요 (예: "0.2로 되돌려 줘"). 적지 않으면 최신 LangChain 1.x로 바꿔요.</p>
+            </header>
+
+            <div class="messages" id="messages">
+                <p class="empty">옛 LangChain 코드를 붙여 넣거나, 왼쪽 예제를 보내 보세요.</p>
+            </div>
+
+            <form class="composer" id="chat-form">
+                <textarea id="chat-input" placeholder="옛 코드나 질문을 입력하세요 (줄 바꿈은 Shift+Enter)" required></textarea>
+                <button type="submit" id="chat-send">전송</button>
+            </form>
+        </main>
+
+        <!-- ③ 결과 패널: 검증 배지 + 탭 (전후 비교 · 변경 사항 · 근거) -->
+        <section class="result" id="result">
+            <h2>결과</h2>
+            <p class="empty">코드 변환 결과가 여기에 나와요.</p>
+        </section>
+    </div>
+
+    <script src="{% static 'js/api.js' %}"></script>
+    <script src="{% static 'js/chat.js' %}"></script>
 </body>
 </html>

@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 · LangChain 마이그레이션 어시스턴트</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="auth-page">
+    <main class="card">
+        <h1>LangChain 버전 마이그레이션<br>코드 어시스턴트</h1>
+        <p class="sub">아이디로 로그인하면 이전 대화를 이어서 볼 수 있어요.</p>
+
+        <form id="auth-form" data-mode="login">
+            {% csrf_token %}
+            <input type="text" id="user-id" name="user_id" placeholder="아이디" required>
+            <button type="submit">로그인</button>
+            <p class="message" id="message"></p>
+        </form>
+
+        <p class="switch">처음이신가요? <a href="/login/signup/">회원가입</a></p>
+    </main>
+
+    <script src="{% static 'js/api.js' %}"></script>
+    <script src="{% static 'js/auth.js' %}"></script>
+</body>
+</html>
