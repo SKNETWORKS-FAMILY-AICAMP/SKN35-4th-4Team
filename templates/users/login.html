@@ -19,13 +19,15 @@
                 {% csrf_token %}
                 <label for="user-id">아이디</label>
                 <input class="field" type="text" id="user-id" name="user_id" placeholder="내 아이디" autocomplete="username" required autofocus>
+                <label for="password">비밀번호</label>
+                <input class="field" type="password" id="password" name="password" placeholder="비밀번호" autocomplete="current-password" required>
                 <button class="btn primary" type="submit">로그인</button>
                 <p class="msg" id="message"></p>
             </form>
 
             <p class="switch">처음이신가요? <a href="/login/signup/">아이디 만들기</a></p>
         </section>
-        <p class="foot">비밀번호 없이 아이디만으로 이전 대화를 이어서 볼 수 있어요.</p>
+        <p class="foot">로그인하면 이전 대화를 이어서 볼 수 있어요.</p>
     </main>
 
     <script src="{% static 'js/icons.js' %}"></script>

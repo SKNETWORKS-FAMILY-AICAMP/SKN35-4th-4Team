@@ -13,7 +13,7 @@
         <section class="card">
             <span class="logo"><svg class="i" data-i="logo"></svg></span>
             <h1>아이디 만들기</h1>
-            <p class="sub">사용할 아이디만 정하면 바로 시작할 수 있어요.</p>
+            <p class="sub">아이디와 비밀번호를 정하면 바로 시작할 수 있어요.</p>
 
             <form id="auth-form" data-mode="signup">
                 {% csrf_token %}
@@ -21,6 +21,12 @@
                 <input class="field" type="text" id="user-id" name="user_id" placeholder="한글 · 영문 · 숫자 · _ 2~20자"
                        autocomplete="username" required minlength="2" maxlength="20" autofocus>
                 <p class="hint">이미 있는 아이디는 쓸 수 없어요.</p>
+                <label for="password">비밀번호</label>
+                <input class="field" type="password" id="password" name="password" placeholder="6자 이상"
+                       autocomplete="new-password" required minlength="6" maxlength="64">
+                <label for="password-confirm">비밀번호 확인</label>
+                <input class="field" type="password" id="password-confirm" name="password_confirm" placeholder="한 번 더 입력"
+                       autocomplete="new-password" required minlength="6" maxlength="64">
                 <button class="btn primary" type="submit">시작하기</button>
                 <p class="msg" id="message"></p>
             </form>

@@ -2,7 +2,7 @@
 // 대화 화면 (3차 streamlit_app.py 의 chat_screen · sidebar · handle 을 옮긴 것)
 //
 // 백엔드와 주고받는 것 (API 는 api.js)
-//   새 대화 첫 질문 → POST API.sessions      → { ok, session_id }
+//   새 대화 버튼    → POST API.sessions      → { ok, session_id }   (화면을 처음 열 때도)
 //   질문 · 예제     → POST API.chat (스트리밍) → step 줄 여러 개 … → done 줄 하나
 //                     done = 3차 client.ask() 결과 그대로 { kind, reply, result, steps, seconds }
 //   내 대화 목록    → GET  API.sessions      → { ok, sessions: [{ session_id, title, last_at, started_at?, turns? }] }
@@ -44,6 +44,7 @@ function init() {
     loadExamples();
     loadSessions();
     renderResult();
+    startNewChat();                                             // 처음 열 때도 새 대화 번호부터
 }
 
 
@@ -94,7 +95,7 @@ async function sendQuestion(text) {
     bot.body.append(progress.node);
     scrollDown();
 
-    // 새 대화의 첫 질문 → 새 대화 번호
+    // 번호를 아직 못 받았으면(처음 열 때 실패 등) 여기서 한 번 더 받음
     if (!state.sessionId) {
         const created = await callApi(API.sessions, { method: "POST" });
         if (!created.ok) return fail(bot, progress, created.error);
@@ -269,9 +270,18 @@ $("close-result").addEventListener("click", () => { state.resultClosed = true; a
 
 
 // ─────────────── 6. 새 대화 · 내 대화 ───────────────
-$("new-chat").addEventListener("click", () => {
-    if (state.busy) return;
+// 새 대화 버튼 → 백엔드에서 새 대화 번호를 받음 (팀 합의). 빈 대화는 DB 에 저장되지 않아 목록에 안 쌓임
+async function startNewChat() {
     resetChat();
+    const data = await callApi(API.sessions, { method: "POST" });
+    if (!data.ok) { toast(data.error || "새 대화를 시작하지 못했어요"); return; }
+    state.sessionId = data.session_id;
+    updateHead();
+}
+
+$("new-chat").addEventListener("click", async () => {
+    if (state.busy) return;
+    await startNewChat();
     focusComposer();
 });
 
@@ -327,7 +337,7 @@ function markActive() {
 function updateHead() {
     const s = state.sessions.find((x) => x.session_id === state.sessionId);
     if (!state.sessionId) { el.title.textContent = "새 대화"; el.meta.textContent = ""; return; }
-    el.title.textContent = (s && s.title) || "대화";
+    el.title.textContent = (s && s.title) || "새 대화";
     const parts = [`세션 ${String(state.sessionId).slice(0, 8)}`];
     if (s && s.started_at) parts.push(`${fmtTime(s.started_at)} 시작`);
     if (s && s.turns) parts.push(`질문 ${s.turns}개`);
