@@ -16,6 +16,7 @@ ragas 는 팀 프로젝트(uv.lock)와 버전이 부딪혀서 프로젝트에 �
     uv run --script eval/score_ragas.py --judge gpt-4o-mini
     uv run --script eval/score_ragas.py --rescore       # 저장된 점수 버리고 다시 채점
     uv run --script eval/score_ragas.py --mode e2e      # run_ragas.py --mode e2e 결과 채점 (실제 화면 기준)
+    uv run --script eval/score_ragas.py --set gpt       # 다른 질문 세트 (ragas_questions_gpt.json · results/gpt/)
 
 저장: results/ragas_scores[_e2e].jsonl (질문×채점모델별 점수, 다시 실행하면 이어서) · ragas_summary[_e2e].json · ragas_scorecard[_e2e].md
 e2e 에서 general 경로로 간 질문은 찾은 문서가 없으므로 answer_relevancy · factual_correctness 만 매긴다.
@@ -163,14 +164,14 @@ def summarize(qs: dict, raw: dict, scores: list[dict], judge: str, mode: str) ->
     types = {}
     for t in dict.fromkeys(qs[i]["type"] for i in ans):
         ids = [i for i in ans if qs[i]["type"] == t]
-        types[t] = {"n": len(ids), "hit": mean([1.0 if R[i]["hit"] else 0.0 for i in ids]),
+        types[t] = {"n": len(ids), "hit": mean([None if R[i]["hit"] is None else float(R[i]["hit"]) for i in ids]),
                     **{f"bot_{n}": mean([R[i]["bot"].get(n) for i in ids]) for n in BOT_METRICS},
                     "llm_factual_correctness": mean([R[i]["llm"].get("factual_correctness") for i in ids])}
     routes = {}
     for x in rows:
         routes[x["route"]] = routes.get(x["route"], 0) + 1
     return {"run_at": time.strftime("%Y-%m-%d %H:%M:%S"), "judge": judge, "mode": mode, "n": len(rows), "answerable": len(ans),
-            "overall": overall, "hit_at_6": mean([1.0 if R[i]["hit"] else 0.0 for i in ans]), "by_type": types,
+            "overall": overall, "hit_at_6": mean([None if R[i]["hit"] is None else float(R[i]["hit"]) for i in ans]), "by_type": types,
             "routes": routes, "unanswerable": {i: {"bot": R[i]["bot_abstain"], "llm": R[i]["llm_abstain"]} for i in una},
             "rows": rows}
 
@@ -215,9 +216,15 @@ def main() -> None:
     ap.add_argument("--judge", default="gpt-4o")
     ap.add_argument("--rescore", action="store_true")
     ap.add_argument("--mode", choices=["search", "e2e"], default="search")
+    ap.add_argument("--set", default="", help="질문 세트 이름. gpt → eval/ragas_questions_gpt.json, 결과는 eval/results/gpt/")
     args = ap.parse_args()
 
-    qs = {q["id"]: q for q in json.loads((ROOT / "eval" / "ragas_questions.json").read_text(encoding="utf-8"))}
+    global RES
+    qfile = ROOT / "eval" / (f"ragas_questions_{args.set}.json" if args.set else "ragas_questions.json")
+    if args.set:
+        RES = RES / args.set
+
+    qs = {q["id"]: q for q in json.loads(qfile.read_text(encoding="utf-8"))}
     raw = {r["id"]: r for r in load_jsonl(RES / f"raw_ragas{suffix(args.mode)}.jsonl")}
     raw = {qid: raw[qid] for qid in qs if qid in raw}  # 질문 파일 순서
     scores = asyncio.run(score_all(qs, raw, args.judge, args.rescore, args.mode))

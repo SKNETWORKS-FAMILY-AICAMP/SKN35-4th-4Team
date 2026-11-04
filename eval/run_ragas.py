@@ -7,6 +7,7 @@
     uv run python eval/run_ragas.py --mode e2e       # 실제 화면처럼 그래프 전체 (분류 → 경로)
     uv run python eval/run_ragas.py --only r01       # 일부만
     uv run python eval/run_ragas.py --fresh          # 저장된 답 지우고 처음부터
+    uv run python eval/run_ragas.py --set gpt        # 다른 질문 세트 (ragas_questions_gpt.json → results/gpt/)
 
 두 모드는 묻는 것이 다르다.
 - search (component): "문서 검색 + 근거 답변 부품이 얼마나 좋은가". 모든 질문을 search 경로로 보내 검색·답변 품질만 본다.
@@ -33,7 +34,17 @@ from dotenv import load_dotenv  # noqa: E402
 load_dotenv(ROOT / ".env")
 
 RES = ROOT / "eval" / "results"
-OUT = {"search": RES / "raw_ragas.jsonl", "e2e": RES / "raw_ragas_e2e.jsonl"}
+
+
+def question_set(name: str) -> tuple[Path, Path]:
+    """질문 세트 이름 → (질문 파일, 결과 폴더). 기본 세트는 이름 없음."""
+    if not name:
+        return ROOT / "eval" / "ragas_questions.json", RES
+    return ROOT / "eval" / f"ragas_questions_{name}.json", RES / name
+
+
+def out_paths(res: Path) -> dict[str, Path]:
+    return {"search": res / "raw_ragas.jsonl", "e2e": res / "raw_ragas_e2e.jsonl"}
 MODEL = "gpt-4o-mini"
 
 
@@ -135,14 +146,17 @@ def main() -> None:
     ap.add_argument("--mode", choices=["search", "e2e"], default="search")
     ap.add_argument("--only", help="쉼표로 구분한 질문 id")
     ap.add_argument("--fresh", action="store_true")
+    ap.add_argument("--set", default="", help="질문 세트 이름. gpt → eval/ragas_questions_gpt.json, 결과는 eval/results/gpt/")
     args = ap.parse_args()
 
     from langchain_openai import ChatOpenAI
 
     from langration.src.graph.nodes.retriever_node import get_retriever_engine
 
+    qfile, res = question_set(args.set)
+    OUT = out_paths(res)
     out = OUT[args.mode]
-    qs = json.loads((ROOT / "eval" / "ragas_questions.json").read_text(encoding="utf-8"))
+    qs = json.loads(qfile.read_text(encoding="utf-8"))
     if args.only:
         keep = set(args.only.split(","))
         qs = [q for q in qs if q["id"] in keep]
@@ -151,6 +165,7 @@ def main() -> None:
         out.unlink()
     skip = set(load_jsonl(out))
     todo = [q for q in qs if q["id"] not in skip]
+    print(f"[ragas:{args.mode}] {qfile.name} → {out.relative_to(ROOT)}")
     print(f"[ragas:{args.mode}] {len(todo)}개 실행 (이미 끝난 {len(qs) - len(todo)}개 건너뜀)")
 
     engine = get_retriever_engine()
