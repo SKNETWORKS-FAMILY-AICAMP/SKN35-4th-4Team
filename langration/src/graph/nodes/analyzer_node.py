@@ -14,8 +14,10 @@ load_dotenv()
 
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
-# 질문 안의 ```python ... ``` 코드 블록
-CODE_BLOCK = re.compile(r"```(?:python|py)?[ \t]*\n(.*?)```", re.DOTALL)
+# 질문 안의 ``` ... ``` 코드 블록 (python · py · Python · python3 · 언어 표시 없음 등 모두)
+CODE_BLOCK = re.compile(r"```[\w+-]*[ \t]*\n(.*?)```", re.DOTALL)
+# 코드 블록 없이 줄을 나눠 쓴 import 줄 (classifier_node.has_code 와 같은 기준)
+IMPORT_LINE = re.compile(r"^[ \t]*(from[ \t]+[\w.]+[ \t]+import[ \t]|import[ \t]+[\w.]+)", re.M)
 # LLM 응답 전체를 감싼 ```json ... ``` 코드펜스
 JSON_FENCE = re.compile(r"^\s*```(?:json)?[ \t]*\n(.*?)\n?```\s*$", re.DOTALL)
 
@@ -26,8 +28,13 @@ def parse_json(text: str) -> dict:
     return data if isinstance(data, dict) else {}
  
 def fallback_code(question: str) -> str:
+    """LLM 이 old_code 를 못 돌려줬을 때 질문에서 직접 코드를 꺼낸다.
+    코드 블록 → 첫 import 줄부터 끝까지 → 없으면 "" (질문 문장 전체를 코드로 쓰지 않는다: r03 처럼 문장을 '변환'하는 사고 방지)"""
     m = CODE_BLOCK.search(question)
-    return (m.group(1) if m else question).strip()
+    if m:
+        return m.group(1).strip()
+    m = IMPORT_LINE.search(question)
+    return question[m.start():].strip() if m else ""
 
 # LLM이 old_code를 ```python ... ``` 으로 감싸서 돌려준 경우 펜스를 벗기는 거 
 def strip_code_fence(code: str) -> str:
