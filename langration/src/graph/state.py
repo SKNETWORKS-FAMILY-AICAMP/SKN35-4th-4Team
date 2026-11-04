@@ -22,6 +22,7 @@ class MigrationState(TypedDict):
     classification: str             # migration | search | general (classifier_node 가 세 값으로 정리해서 넣음)
     question: str                   # 이번 사용자 메시지 원문. general 이면 "" (classifier_node)
     route_reason: NotRequired[str]  # 분류 이유: "R1 옛 API 이름 [...]", "R2 코드 없음 ...", "LLM → search" 등. 화면 진행 표시 · 평가 로그용
+    route_error: NotRequired[str]   # 분류 LLM 실패 내용 ("" = 정상, "llm_error: AuthenticationError", "parse_failed: '...'"). 실패해도 경로는 general
 
     # ── migration 하위 그래프 (analyzer → retriever → rewriter → verifier)
     old_code: NotRequired[str]      # 사용자가 질문한 코드. 코드가 없으면 "" → migration.py 가 no_code 로 보냄

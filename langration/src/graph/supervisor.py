@@ -19,7 +19,7 @@ HISTORY_CHARS = 300      # 메시지 하나당 최대 글자 (코드가 길어�
 TURN_RESET = {
     "old_code": "", "analysis": None, "target_version": None, "new_code": "", "changes": [],
     "install_packages": [], "verify_result": None, "attempt": 0, "rewrite_notes": [], "unresolved": [],
-    "evidences": [], "shown_evidence_ids": None, "rewrite_failed": False, "route_reason": "",
+    "evidences": [], "shown_evidence_ids": None, "rewrite_failed": False, "route_reason": "", "route_error": "",
     "exclude_ids": None,   # merge_ids reducer 에 None = 비우기 (앞 질문에서 제외한 근거가 다음 변환에 남지 않게)
 }
 
