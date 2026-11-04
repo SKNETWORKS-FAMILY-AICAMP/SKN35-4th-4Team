@@ -96,6 +96,8 @@ def run_bot(graph, item: dict) -> dict:
     elapsed = round(time.time() - t0, 1)
 
     s = state or {}
+    if s.get("route_error") and not error:
+        error = f"classifier {s['route_error']}"
     reply = None
     for m in reversed(s.get("messages", []) or []):
         if getattr(m, "type", "") == "ai":
@@ -104,7 +106,8 @@ def run_bot(graph, item: dict) -> dict:
     analysis = s.get("analysis") if isinstance(s.get("analysis"), dict) else {}
     return {
         "id": item["id"], "set": item["set"], "elapsed": elapsed, "error": error,
-        "classification": s.get("classification"),
+        "classification": f"error: {s['route_error']}" if s.get("route_error") else s.get("classification"),
+        "route_reason": s.get("route_reason"),
         "analysis_target": (analysis.get("analysis") or analysis).get("target_version") if analysis else None,
         "target_version": s.get("target_version"),
         "old_code": s.get("old_code"), "new_code": s.get("new_code"),
@@ -139,7 +142,7 @@ def run_route(item: dict) -> dict:
     for _ in range(ROUTE_REPEAT):
         try:
             out = classifier_node({"question": item["text"], "messages": [HumanMessage(content=item["text"])]})
-            labels.append(out.get("classification"))
+            labels.append(f"error: {out['route_error']}" if out.get("route_error") else out.get("classification"))
         except Exception as exc:
             labels.append(f"error: {type(exc).__name__}")
     return {"id": item["id"], "set": item["set"], "expected": item.get("expected_route"), "labels": labels}
