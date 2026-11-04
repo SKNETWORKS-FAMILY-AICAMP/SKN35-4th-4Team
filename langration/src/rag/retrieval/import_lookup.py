@@ -74,6 +74,50 @@ def lookup(path: str) -> MapHit | None:
     return None
 
 
+# ---------------------------------------------------------------- 이름만으로 대응표 찾기 (search 경로)
+# "Chroma는 어디서 import해요?" 처럼 import 문 없이 클래스·함수 이름만 묻는 질문용.
+# 질문에 나온 식별자 중 대응표에 있는 이름만 쓰므로 LangChain·Python 같은 일반 단어는 자연히 걸러진다.
+
+# \w 는 한글도 글자로 봐서 "ConversationBufferMemory는" 을 한 단어로 읽으므로 ASCII 로만 경계를 잡는다.
+# 점 경로의 중간 조각(langchain.vectorstores)은 빼고, 문장 끝 마침표("Chroma.")는 허용.
+IDENTIFIER = re.compile(r"(?<![A-Za-z0-9_.])([A-Za-z_][A-Za-z0-9_]{2,})(?![A-Za-z0-9_]|\.[A-Za-z_])")
+MAX_NAME_HITS = 3
+
+
+@lru_cache(maxsize=1)
+def _load_names() -> dict[str, dict]:
+    """심볼 이름 → 대표 레코드. 같은 이름이 여러 옛 경로에 있으면 사용자가 가장 흔히 쓰던 공개 경로
+    (langchain.<모듈>.<이름>, 점이 가장 적은 것)를 고른다 (langchain.vectorstores.Chroma 등)."""
+    symbols, _ = _load()
+    best: dict[str, dict] = {}
+    for old, rec in symbols.items():
+        if not rec.get("new") or not old.startswith("langchain."):
+            continue
+        name = old.rsplit(".", 1)[-1]
+        depth = old.count(".")
+        key = (depth < 2, depth, len(old))  # langchain.Name(depth 1)보다 langchain.mod.Name 을 먼저
+        if name not in best or key < best[name][0]:
+            best[name] = (key, rec)
+    return {name: rec for name, (_, rec) in best.items()}
+
+
+def lookup_names(text: str, skip_paths: list[str] = ()) -> list[MapHit]:
+    """질문에 나온 식별자(CamelCase 클래스, snake_case 함수) 중 대응표에 있는 이름 → MapHit (최대 MAX_NAME_HITS)."""
+    names = _load_names()
+    skip = {p.rsplit(".", 1)[-1] for p in skip_paths}
+    hits = []
+    for name in dict.fromkeys(IDENTIFIER.findall(text)):
+        if name in skip or name not in names:
+            continue
+        if not (any(c.isupper() for c in name) or "_" in name):  # chain, tool 같은 일반 소문자 단어 제외
+            continue
+        rec = names[name]
+        hits.append(MapHit(rec["old"], rec, via_module=False))
+        if len(hits) >= MAX_NAME_HITS:
+            break
+    return hits
+
+
 # ---------------------------------------------------------------- 메서드 대응표
 
 METHOD_CALL = re.compile(r"\.([A-Za-z_]\w*)\s*\(")
