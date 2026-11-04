@@ -14,8 +14,7 @@ from langration.src.rag.retrieval.import_lookup import lookup, parse_import_path
 load_dotenv()
 
 ROUTES = ("migration", "search", "general")
-DEFAULT_ROUTE = "general"   # LLM 출력이 세 값 밖이거나 호출이 실패하면 (팀 범위: 확실한 것만 search · migration)
-
+DEFAULT_ROUTE = "general"   # LLM 출력이 세 값 밖이거나 호출이 실패하면
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 # 구조 판정
