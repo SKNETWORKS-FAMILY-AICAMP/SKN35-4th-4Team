@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
+    'langration',
 ]
 
 MIDDLEWARE = [
@@ -75,9 +79,22 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.getenv('SQLITE_PATH', BASE_DIR / 'db.sqlite3'),
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.getenv('SQLITE_PATH', BASE_DIR / 'db.sqlite3'),
+    # }
+    "default": {
+        "ENGINE": "django_tidb",          # django-tidb 백엔드
+        "NAME": os.environ["TIDB_DATABASE"],
+        "USER": os.environ["TIDB_USERNAME"],
+        "PASSWORD": os.environ["TIDB_PASSWORD"],
+        "HOST": os.environ["TIDB_HOST"],
+        "PORT": int(os.environ.get("TIDB_PORT", 4000)),
+        "OPTIONS": {
+            "charset": "utf8mb4",
+            # "ssl": {"ca": os.environ["TIDB_CA_PATH"]},  # TiDB Cloud는 TLS 필수
+            "ssl": { "ca": BASE_DIR / 'isrgrootx1.pem' }
+        },
     }
 }
 
