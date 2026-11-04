@@ -6,6 +6,6 @@ import importlib
 def load(name: str):
     """선택 기능 모듈 (src/ui/extras/{name}.py). 폴더나 파일이 없으면 None."""
     try:
-        return importlib.import_module(f"src.ui.extras.{name}")
+        return importlib.import_module(f"langration.src.ui.extras.{name}")
     except ImportError:
         return None

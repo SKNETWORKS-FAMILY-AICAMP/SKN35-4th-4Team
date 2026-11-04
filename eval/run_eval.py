@@ -12,6 +12,7 @@
 
 - 일반 LLM: 팀 그래프와 같은 gpt-4o-mini, temperature 0. 시스템 프롬프트 없이 사용자가 보낸 글 그대로.
 - route: 질문 분류기(classifier_node)만 같은 질문으로 3번씩 불러 분류가 흔들리는지 본다.
+- 우리 챗봇은 질문마다 thread_id 를 새로 줘서, 질문끼리 한 대화로 이어지지 않는다.
 """
 import argparse
 import json
@@ -67,10 +68,13 @@ def run_bot(graph, item: dict) -> dict:
     from langchain_core.messages import HumanMessage
 
     inputs = {"question": item["text"], "messages": [HumanMessage(content=item["text"])]}
+    # 질문마다 대화(thread)를 따로 연다. supervisor 는 MemorySaver 를 쓰므로 thread_id 를 안 넘기면
+    # 모든 질문이 기본 thread 하나에 쌓여, 앞 질문들이 '이전 대화'로 붙어 들어간다.
+    config = {"configurable": {"thread_id": f"eval-{item['id']}-{time.time_ns()}"}}
     attempts, nodes, state = [], [], None
     t0 = time.time()
     try:
-        for ns, mode, data in graph.stream(inputs, stream_mode=["updates", "values"], subgraphs=True):
+        for ns, mode, data in graph.stream(inputs, config=config, stream_mode=["updates", "values"], subgraphs=True):
             if mode == "values" and not ns:
                 state = data
             elif mode == "updates":

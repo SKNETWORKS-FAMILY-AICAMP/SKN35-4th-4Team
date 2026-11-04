@@ -15,10 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import path, include
 
+from langration.urls import api_urlpatterns as langration_api
+from users.urls import api_urlpatterns as users_api
+
 urlpatterns = [
+    path('', lambda request: redirect('/langration/')),
     path('admin/', admin.site.urls),
     path('login/', include('users.urls')),
     path('langration/', include('langration.urls')),
+    path('api/users/', include(users_api)),
+    path('api/langration/', include(langration_api)),
 ]

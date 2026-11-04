@@ -15,6 +15,9 @@ class User(models.Model):
         unique=True,
         help_text="로그인 아이디",
     )
+    # 비밀번호는 원문이 아니라 Django make_password() 로 만든 해시만 저장 (pbkdf2_sha256)
+    # db_default: 이 칸을 모르는 옛 코드가 INSERT 해도 DB 가 빈 값으로 채움
+    password = models.CharField(max_length=128, default="", db_default="", help_text="비밀번호 해시")
     created_at = models.DateTimeField(auto_now_add=True)
  
     class Meta:
