@@ -536,6 +536,15 @@ wheels = [
 ]
 
 [[package]]
+name = "django-tidb"
+version = "5.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/43/30/d6f3d40d3c0096b8b87e78d457ec09eb2d3df6f62f7805e419689c77221d/django_tidb-5.2.0.tar.gz", hash = "sha256:47170bd2e9cb7669cca58dce24156ac9192279d1d77e4c103b8df814003faca0", size = 24139, upload-time = "2025-05-14T03:39:34.433Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e9/c9/acfb4294f3ac1b6b3278b602305d74bc742fad4f79bad4be8cb0dc5d72d6/django_tidb-5.2.0-py3-none-any.whl", hash = "sha256:6bc2b82b5bf7ccb47cc89c2d84e15ba9b24d12b6303a22c09666e71928c229e1", size = 25611, upload-time = "2025-05-14T03:39:33.521Z" },
+]
+
+[[package]]
 name = "durationpy"
 version = "0.11"
 source = { registry = "https://pypi.org/simple" }
@@ -2781,6 +2790,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "django" },
+    { name = "django-tidb" },
     { name = "gunicorn" },
     { name = "langchain" },
     { name = "langchain-chroma" },
@@ -2802,6 +2812,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "django", specifier = "==5.2.7" },
+    { name = "django-tidb", specifier = "==5.2.0" },
     { name = "gunicorn", specifier = ">=26.2.0" },
     { name = "langchain", specifier = ">=1.4.4" },
     { name = "langchain-chroma", specifier = ">=1.1.0" },
