@@ -1,0 +1,740 @@
+{
+ "run_at": "2026-11-04 12:09:40",
+ "judge": "gpt-4o",
+ "mode": "e2e",
+ "n": 24,
+ "answerable": 21,
+ "overall": {
+  "bot": {
+   "faithfulness": 0.848,
+   "answer_relevancy": 0.653,
+   "context_precision": 0.702,
+   "context_recall": 1.0,
+   "factual_correctness": 0.467
+  },
+  "llm": {
+   "answer_relevancy": 0.663,
+   "factual_correctness": 0.2
+  }
+ },
+ "hit_at_6": 0.619,
+ "by_type": {
+  "마이그레이션 가이드": {
+   "n": 8,
+   "hit": 0.375,
+   "bot_faithfulness": 0.667,
+   "bot_answer_relevancy": 0.663,
+   "bot_context_precision": 0.489,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.296,
+   "llm_factual_correctness": 0.226
+  },
+  "최신 문서": {
+   "n": 6,
+   "hit": 0.5,
+   "bot_faithfulness": 1.0,
+   "bot_answer_relevancy": 0.627,
+   "bot_context_precision": 0.848,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.45,
+   "llm_factual_correctness": 0.228
+  },
+  "import 위치": {
+   "n": 4,
+   "hit": 1.0,
+   "bot_faithfulness": 0.857,
+   "bot_answer_relevancy": 0.674,
+   "bot_context_precision": 0.744,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.593,
+   "llm_factual_correctness": 0.045
+  },
+  "에러 메시지": {
+   "n": 3,
+   "hit": 1.0,
+   "bot_faithfulness": 0.867,
+   "bot_answer_relevancy": 0.648,
+   "bot_context_precision": 0.715,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.787,
+   "llm_factual_correctness": 0.277
+  }
+ },
+ "routes": {
+  "general": 10,
+  "migration": 1,
+  "search": 13
+ },
+ "unanswerable": {
+  "r22": {
+   "bot": true,
+   "llm": false
+  },
+  "r23": {
+   "bot": false,
+   "llm": false
+  },
+  "r24": {
+   "bot": false,
+   "llm": false
+  }
+ },
+ "rows": [
+  {
+   "id": "r01",
+   "type": "마이그레이션 가이드",
+   "difficulty": "쉬움",
+   "route": "general",
+   "hit": false,
+   "bot": {
+    "answer_relevancy": 0.5983,
+    "factual_correctness": 0.0
+   },
+   "llm": {
+    "answer_relevancy": 0.5192,
+    "factual_correctness": 0.19
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [],
+   "gold": [
+    "doc-1f037eaf7dfb"
+   ]
+  },
+  {
+   "id": "r02",
+   "type": "마이그레이션 가이드",
+   "difficulty": "중간",
+   "route": "general",
+   "hit": false,
+   "bot": {
+    "answer_relevancy": 0.6697,
+    "factual_correctness": 0.25
+   },
+   "llm": {
+    "answer_relevancy": 0.7034,
+    "factual_correctness": 0.31
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [],
+   "gold": [
+    "doc-a96dfad72d63"
+   ]
+  },
+  {
+   "id": "r03",
+   "type": "마이그레이션 가이드",
+   "difficulty": "중간",
+   "route": "migration",
+   "hit": true,
+   "bot": {
+    "faithfulness": 0.0,
+    "answer_relevancy": 0.5401,
+    "context_precision": 0.9336,
+    "context_recall": 1.0,
+    "factual_correctness": 0.2
+   },
+   "llm": {
+    "answer_relevancy": 0.7554,
+    "factual_correctness": 0.29
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-603ce0dabad4",
+    "doc-9cf5a3c9739a",
+    "doc-5aa35c3a6a52",
+    "doc-1e0dbb111691",
+    "doc-0db6cf10ba15",
+    "doc-0fe5c820ce76",
+    "doc-bba96cfe999e",
+    "doc-3c05251002c4",
+    "doc-20903c6857a0",
+    "doc-e585b556c409",
+    "doc-ff65910f2855",
+    "doc-c2fd8ffc5805",
+    "doc-594eeb7ca94a",
+    "doc-1a1f0ce283be",
+    "doc-e40dce52cb92"
+   ],
+   "gold": [
+    "doc-1e0dbb111691",
+    "doc-463a5eff121d",
+    "doc-b061b1e5ca8c"
+   ]
+  },
+  {
+   "id": "r04",
+   "type": "마이그레이션 가이드",
+   "difficulty": "중간",
+   "route": "general",
+   "hit": false,
+   "bot": {
+    "answer_relevancy": 0.7427,
+    "factual_correctness": 0.0
+   },
+   "llm": {
+    "answer_relevancy": 0.7807,
+    "factual_correctness": 0.44
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [],
+   "gold": [
+    "doc-b6fe15b266ad",
+    "doc-0e4d01fc02e3"
+   ]
+  },
+  {
+   "id": "r05",
+   "type": "마이그레이션 가이드",
+   "difficulty": "어려움",
+   "route": "general",
+   "hit": false,
+   "bot": {
+    "answer_relevancy": 0.6658,
+    "factual_correctness": 0.0
+   },
+   "llm": {
+    "answer_relevancy": 0.6927,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [],
+   "gold": [
+    "doc-d1a82dff36d5"
+   ]
+  },
+  {
+   "id": "r06",
+   "type": "마이그레이션 가이드",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": true,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.7228,
+    "context_precision": 0.3333,
+    "context_recall": 1.0,
+    "factual_correctness": 0.89
+   },
+   "llm": {
+    "answer_relevancy": 0.6819,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-a9fc248799",
+    "doc-ba70f6867a74",
+    "doc-a9f53ff5ca16",
+    "doc-16492bcffe8d",
+    "doc-74ea4fe18ecc",
+    "doc-53b6c1aa4756",
+    "doc-e745bf2ccf6f"
+   ],
+   "gold": [
+    "doc-a9f53ff5ca16"
+   ]
+  },
+  {
+   "id": "r07",
+   "type": "마이그레이션 가이드",
+   "difficulty": "어려움",
+   "route": "search",
+   "hit": true,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.7339,
+    "context_precision": 0.2,
+    "context_recall": 1.0,
+    "factual_correctness": 0.89
+   },
+   "llm": {
+    "answer_relevancy": 0.7145,
+    "factual_correctness": 0.58
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-0166f2f9e40c",
+    "doc-f36484acdb45",
+    "doc-340a165333ff",
+    "doc-b1c7f2a0740e",
+    "doc-c91f5675787e",
+    "doc-afeaf986d51b"
+   ],
+   "gold": [
+    "doc-c91f5675787e"
+   ]
+  },
+  {
+   "id": "r08",
+   "type": "마이그레이션 가이드",
+   "difficulty": "중간",
+   "route": "general",
+   "hit": false,
+   "bot": {
+    "answer_relevancy": 0.6286,
+    "factual_correctness": 0.14
+   },
+   "llm": {
+    "answer_relevancy": 0.6522,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [],
+   "gold": [
+    "doc-6fd9c07c98cc"
+   ]
+  },
+  {
+   "id": "r09",
+   "type": "최신 문서",
+   "difficulty": "쉬움",
+   "route": "general",
+   "hit": false,
+   "bot": {
+    "answer_relevancy": 0.6095,
+    "factual_correctness": 0.27
+   },
+   "llm": {
+    "answer_relevancy": 0.6712,
+    "factual_correctness": 0.24
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [],
+   "gold": [
+    "doc-ba70f6867a74",
+    "doc-16492bcffe8d",
+    "doc-892231bb08e6"
+   ]
+  },
+  {
+   "id": "r10",
+   "type": "최신 문서",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": true,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.6479,
+    "context_precision": 0.71,
+    "context_recall": 1.0,
+    "factual_correctness": 0.57
+   },
+   "llm": {
+    "answer_relevancy": 0.6699,
+    "factual_correctness": 0.22
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-d9aa56bdef",
+    "doc-70a4239f14ca",
+    "doc-ebeb6001add9",
+    "doc-27000aa485c7",
+    "doc-53b6c1aa4756",
+    "doc-0e4d01fc02e3",
+    "doc-fb90904dc480"
+   ],
+   "gold": [
+    "doc-70a4239f14ca",
+    "doc-27000aa485c7"
+   ]
+  },
+  {
+   "id": "r11",
+   "type": "최신 문서",
+   "difficulty": "쉬움",
+   "route": "general",
+   "hit": false,
+   "bot": {
+    "answer_relevancy": 0.5406,
+    "factual_correctness": 0.0
+   },
+   "llm": {
+    "answer_relevancy": 0.5201,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [],
+   "gold": [
+    "doc-fb32e5af74af",
+    "doc-0b84ee923a8f"
+   ]
+  },
+  {
+   "id": "r12",
+   "type": "최신 문서",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": true,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.7049,
+    "context_precision": 0.8333,
+    "context_recall": 1.0,
+    "factual_correctness": 1.0
+   },
+   "llm": {
+    "answer_relevancy": 0.5686,
+    "factual_correctness": 0.5
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-892231bb08e6",
+    "doc-f64669ae8d4f",
+    "doc-f2780894319f",
+    "doc-a8e0bd6c1f7f",
+    "doc-947981469757",
+    "doc-09880c4ef5f8"
+   ],
+   "gold": [
+    "doc-892231bb08e6"
+   ]
+  },
+  {
+   "id": "r13",
+   "type": "최신 문서",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": true,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.6803,
+    "context_precision": 1.0,
+    "context_recall": 1.0,
+    "factual_correctness": 0.86
+   },
+   "llm": {
+    "answer_relevancy": 0.62,
+    "factual_correctness": 0.24
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-b34589ca05dc",
+    "doc-632f59537614",
+    "doc-501c8b9a982b",
+    "doc-8a30c7b18fd2",
+    "doc-682498a84eb6",
+    "doc-dd4c8d7ae843"
+   ],
+   "gold": [
+    "doc-632f59537614",
+    "doc-70433f692806"
+   ]
+  },
+  {
+   "id": "r14",
+   "type": "최신 문서",
+   "difficulty": "어려움",
+   "route": "general",
+   "hit": false,
+   "bot": {
+    "answer_relevancy": 0.5816,
+    "factual_correctness": 0.0
+   },
+   "llm": {
+    "answer_relevancy": 0.5413,
+    "factual_correctness": 0.17
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [],
+   "gold": [
+    "doc-951fdb9829af"
+   ]
+  },
+  {
+   "id": "r15",
+   "type": "import 위치",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": true,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.7157,
+    "context_precision": 0.9762,
+    "context_recall": 1.0,
+    "factual_correctness": 0.67
+   },
+   "llm": {
+    "answer_relevancy": 0.8396,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-f0323e963f",
+    "doc-a3e61bf87554",
+    "doc-91f0cfdfde0a",
+    "doc-7106b8be7436",
+    "doc-e82372b6da8b",
+    "doc-d5747800dfde",
+    "doc-1a1a2a988c8c"
+   ],
+   "gold": [
+    "imap-f0323e963f"
+   ]
+  },
+  {
+   "id": "r16",
+   "type": "import 위치",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": true,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.6292,
+    "context_precision": 1.0,
+    "context_recall": 1.0,
+    "factual_correctness": 0.5
+   },
+   "llm": {
+    "answer_relevancy": 0.607,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-729d68e52c",
+    "doc-c5e6cbee0b57",
+    "doc-ef0643209efb",
+    "doc-90d6ef6c09f1",
+    "doc-1d18f94d006d",
+    "doc-e2e33cd3f3ca",
+    "doc-1b284f9b27f8"
+   ],
+   "gold": [
+    "imap-729d68e52c"
+   ]
+  },
+  {
+   "id": "r17",
+   "type": "import 위치",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": true,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.6709,
+    "context_precision": 0.0,
+    "context_recall": 1.0,
+    "factual_correctness": 0.8
+   },
+   "llm": {
+    "answer_relevancy": 0.6416,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-4d53e9db60",
+    "imap-9091408f7c",
+    "doc-4108777a8efe",
+    "doc-a1192b07b3b4",
+    "doc-8716345dd562",
+    "doc-5c67fb9298fa",
+    "doc-6eb001d1305c",
+    "doc-aa9a6fe5450f"
+   ],
+   "gold": [
+    "imap-4d53e9db60",
+    "imap-9091408f7c"
+   ]
+  },
+  {
+   "id": "r18",
+   "type": "import 위치",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": true,
+   "bot": {
+    "faithfulness": 0.4286,
+    "answer_relevancy": 0.6802,
+    "context_precision": 1.0,
+    "context_recall": 1.0,
+    "factual_correctness": 0.4
+   },
+   "llm": {
+    "answer_relevancy": 0.759,
+    "factual_correctness": 0.18
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-cc30e3e863",
+    "doc-3c05251002c4",
+    "doc-d4f52a72bd1d",
+    "doc-9990b08c1363",
+    "doc-e7a49402e322",
+    "doc-1e0dbb111691",
+    "doc-ff65910f2855"
+   ],
+   "gold": [
+    "imap-cc30e3e863",
+    "doc-3c05251002c4"
+   ]
+  },
+  {
+   "id": "r19",
+   "type": "에러 메시지",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": true,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.7894,
+    "context_precision": 0.6962,
+    "context_recall": 1.0,
+    "factual_correctness": 0.8
+   },
+   "llm": {
+    "answer_relevancy": 0.7845,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-02229b7d73",
+    "doc-6218171913dc",
+    "doc-68bcd31a2eae",
+    "doc-08f861caad44",
+    "doc-c2d05b8c05ec",
+    "doc-6a2fee79b2a5",
+    "doc-48e404dfb1f3"
+   ],
+   "gold": [
+    "imap-02229b7d73",
+    "doc-13824c8a2ef0"
+   ]
+  },
+  {
+   "id": "r20",
+   "type": "에러 메시지",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": true,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.7944,
+    "context_precision": 0.9484,
+    "context_recall": 1.0,
+    "factual_correctness": 0.89
+   },
+   "llm": {
+    "answer_relevancy": 0.686,
+    "factual_correctness": 0.5
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-41c19d624a",
+    "doc-ba70f6867a74",
+    "doc-16492bcffe8d",
+    "doc-1f037eaf7dfb",
+    "doc-cb5c8de6f3be",
+    "doc-d4f52a72bd1d",
+    "doc-4621c50f2012"
+   ],
+   "gold": [
+    "doc-ba70f6867a74",
+    "doc-16492bcffe8d",
+    "doc-1f037eaf7dfb"
+   ]
+  },
+  {
+   "id": "r21",
+   "type": "에러 메시지",
+   "difficulty": "어려움",
+   "route": "search",
+   "hit": true,
+   "bot": {
+    "faithfulness": 0.6,
+    "answer_relevancy": 0.36,
+    "context_precision": 0.5,
+    "context_recall": 1.0,
+    "factual_correctness": 0.67
+   },
+   "llm": {
+    "answer_relevancy": 0.521,
+    "factual_correctness": 0.33
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-3f9d20ed50",
+    "doc-c1f4370dc853",
+    "doc-028f06c1c69b",
+    "doc-f102cf6df5ba",
+    "doc-70b4428417ac",
+    "doc-b061b1e5ca8c",
+    "doc-2284a13dd68c"
+   ],
+   "gold": [
+    "doc-c1f4370dc853"
+   ]
+  },
+  {
+   "id": "r22",
+   "type": "문서에 없음",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.8333,
+    "answer_relevancy": 0.0
+   },
+   "llm": {},
+   "bot_abstain": true,
+   "llm_abstain": false,
+   "retrieved": [
+    "doc-62ebd56cdfcb",
+    "doc-b2cd51012ec8",
+    "doc-74ea4fe18ecc",
+    "doc-3f720cbf6bb4",
+    "doc-501c8b9a982b",
+    "doc-67e2450ffccd"
+   ],
+   "gold": []
+  },
+  {
+   "id": "r23",
+   "type": "문서에 없음",
+   "difficulty": "쉬움",
+   "route": "general",
+   "hit": null,
+   "bot": {
+    "answer_relevancy": 0.0
+   },
+   "llm": {},
+   "bot_abstain": false,
+   "llm_abstain": false,
+   "retrieved": [],
+   "gold": []
+  },
+  {
+   "id": "r24",
+   "type": "문서에 없음",
+   "difficulty": "어려움",
+   "route": "general",
+   "hit": null,
+   "bot": {
+    "answer_relevancy": 0.7253
+   },
+   "llm": {},
+   "bot_abstain": false,
+   "llm_abstain": false,
+   "retrieved": [],
+   "gold": []
+  }
+ ]
+}
