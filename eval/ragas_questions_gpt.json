@@ -1,0 +1,275 @@
+[
+  {
+    "id": "g01",
+    "type": "에이전트 API 변경",
+    "difficulty": "쉬움",
+    "question": "기존에 `from langgraph.prebuilt import create_react_agent`로 에이전트를 만들었는데 LangChain 1.x에서는 뭘로 바꿔야 해?",
+    "reference": "LangChain 1.x에서는 기존 `langgraph.prebuilt.create_react_agent` 대신 `langchain.agents.create_agent`를 사용하는 것을 권장한다. 함수 이름과 import 경로가 모두 변경되었으므로 `from langchain.agents import create_agent`로 수정해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g02",
+    "type": "매개변수 변경",
+    "difficulty": "쉬움",
+    "question": "create_react_agent에서 prompt로 시스템 프롬프트를 넘기던 코드가 1.x에서 오류 나는데 어떤 인자로 바꿔야 해?",
+    "reference": "LangChain v1의 `create_agent`에서는 기존 `prompt` 매개변수가 `system_prompt`로 변경되었다. 따라서 정적인 시스템 프롬프트를 전달하는 경우 `prompt=\"...\"`를 `system_prompt=\"...\"`로 수정해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g03",
+    "type": "자료형 변경",
+    "difficulty": "중간",
+    "question": "기존 코드에서 SystemMessage(content=\"...\") 객체를 prompt에 넣었는데 1.x에서는 어떻게 처리해야 해?",
+    "reference": "LangChain v1의 `create_agent`에서 시스템 프롬프트에 `SystemMessage` 객체를 사용하던 기존 패턴은 문자열을 전달하는 방식으로 변경해야 한다. 기존 객체의 `content` 값을 추출하여 `system_prompt` 매개변수에 문자열로 전달하면 된다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g04",
+    "type": "동적 프롬프트 마이그레이션",
+    "difficulty": "어려움",
+    "question": "사용자 역할에 따라 prompt 함수를 다르게 반환하던 기존 에이전트 코드는 1.x에서 어떤 방식으로 옮겨야 해?",
+    "reference": "LangChain v1에서는 동적 프롬프트를 구현할 때 `@dynamic_prompt` 데코레이터를 사용하는 방식을 권장한다. 데코레이터가 적용된 함수는 `ModelRequest`를 받아 런타임 컨텍스트나 상태에 따라 프롬프트 문자열을 반환하며, 해당 함수를 `create_agent`의 `middleware` 목록에 전달한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g05",
+    "type": "훅 API 변경",
+    "difficulty": "중간",
+    "question": "기존 create_react_agent의 pre_model_hook으로 대화 기록을 요약했는데 1.x에서 이 기능은 어떻게 옮겨?",
+    "reference": "LangChain v1에서는 `pre_model_hook`이 middleware의 `before_model` 메서드를 사용하는 구조로 변경되었다. 대화 기록 요약과 메시지 정리 등의 작업을 middleware로 구현할 수 있으며, 내장 기능이 필요한 경우 `SummarizationMiddleware`를 사용할 수도 있다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g06",
+    "type": "훅 API 변경",
+    "difficulty": "중간",
+    "question": "기존 post_model_hook으로 모델 응답을 검사하던 코드는 LangChain 1.x에서 뭘 사용해야 해?",
+    "reference": "LangChain v1에서는 기존 `post_model_hook`의 기능을 middleware의 `after_model` 메서드로 옮겼다. 모델 호출 이후의 처리나 출력 가드레일, Human-in-the-loop 등의 기능을 middleware를 통해 구현할 수 있다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g07",
+    "type": "상태 스키마 호환성",
+    "difficulty": "중간",
+    "question": "1.x로 올리고 나서 Pydantic BaseModel로 만든 AgentState를 state_schema에 넣으니까 안 받아줘. 뭘로 바꿔야 하지?",
+    "reference": "LangChain v1의 `create_agent`는 상태 스키마로 `TypedDict`만 지원한다. 기존에 `Pydantic BaseModel`이나 dataclass로 정의한 상태 스키마는 `TypedDict` 기반으로 변경해야 한다. 유효성 검증이 필요한 경우 middleware hook에서 처리하는 방법을 권장한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g08",
+    "type": "커스텀 상태 마이그레이션",
+    "difficulty": "어려움",
+    "question": "기존 에이전트에 커스텀 상태 필드를 추가해서 사용 중인데 1.x에서는 state_schema랑 middleware 중 뭘 쓰는 게 맞아?",
+    "reference": "LangChain v1에서는 커스텀 상태를 `create_agent`의 `state_schema`로 정의하거나 middleware 내부에서 정의할 수 있다. 도구에서도 접근해야 하는 상태라면 `state_schema`를 사용할 수 있으며, 특정 middleware hook과 도구에서만 관리하는 상태라면 middleware 내부에 정의하는 방식을 권장한다. 공식 가이드는 상태 확장을 관련 middleware에 한정하는 방식을 더 선호한다고 설명한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g09",
+    "type": "동적 모델 선택 변경",
+    "difficulty": "어려움",
+    "question": "기존에는 create_react_agent의 model에 함수를 넣어서 상황별로 모델을 선택했는데 1.x에서는 어떻게 구현해?",
+    "reference": "LangChain v1에서는 동적 모델 선택 기능이 middleware 인터페이스로 이동했다. `AgentMiddleware`를 상속하고 `wrap_model_call` 메서드를 구현하면 요청 상태나 런타임 조건에 따라 모델을 선택할 수 있다. 이렇게 정의한 middleware를 `create_agent`의 `middleware`에 전달하면 된다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g10",
+    "type": "모델 초기화 호환성",
+    "difficulty": "어려움",
+    "question": "ChatOpenAI().bind_tools()로 미리 도구를 바인딩한 모델을 create_agent에 넘기고 있는데 1.x에서 안 된다고 해. 어떻게 수정해?",
+    "reference": "LangChain v1의 `create_agent`는 도구나 설정이 미리 바인딩된 모델을 직접 받는 방식을 지원하지 않는다. 대신 기본 모델을 전달하고, 도구는 `tools` 인자에 별도로 전달해야 한다. 단, 구조화된 출력을 사용하지 않는 경우 동적 모델 함수가 미리 바인딩된 모델을 반환하는 것은 가능하다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g11",
+    "type": "도구 전달 방식 변경",
+    "difficulty": "중간",
+    "question": "기존에 ToolNode로 도구들을 묶어서 create_react_agent의 tools에 넣었는데 1.x의 create_agent에서도 그대로 쓸 수 있어?",
+    "reference": "LangChain v1의 `create_agent`는 `ToolNode` 인스턴스를 `tools` 인자로 받지 않는다. 대신 `BaseTool` 인스턴스, 적절한 타입 힌트와 docstring을 가진 호출 가능한 함수, 또는 내장 provider tool을 나타내는 dict 목록을 전달해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g12",
+    "type": "에러 처리 API 변경",
+    "difficulty": "어려움",
+    "question": "기존 ToolNode의 handle_tool_errors로 도구 실행 예외를 처리했는데 1.x에서는 에러 처리를 어디로 옮겨야 해?",
+    "reference": "LangChain v1에서는 도구 실행 오류를 처리할 때 `wrap_tool_call` 메서드를 구현한 middleware를 사용한다. 이 middleware에서 도구 호출을 감싸고 실행 중 발생한 오류를 처리한 후 `ToolMessage` 등을 반환할 수 있다. 스키마 불일치 오류나 네트워크 실패 등 모든 오류를 동일하게 처리하는 방식은 권장되지 않는다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g13",
+    "type": "구조화된 출력 변경",
+    "difficulty": "어려움",
+    "question": "create_react_agent에서 Pydantic 스키마를 response_format에 바로 넘겼는데 1.x에서는 ToolStrategy랑 ProviderStrategy 중 뭘 써야 해?",
+    "reference": "LangChain v1에서는 구조화된 출력을 위해 `ToolStrategy`와 `ProviderStrategy`를 제공한다. `ToolStrategy`는 인공적인 도구 호출을 활용하고, `ProviderStrategy`는 모델 제공자의 네이티브 구조화 출력 기능을 활용한다. `create_agent`의 `response_format`에 원하는 전략을 명시적으로 전달할 수 있다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g14",
+    "type": "기능 제거",
+    "difficulty": "중간",
+    "question": "1.x로 바꾸니까 response_format에 프롬프트와 Pydantic 스키마를 튜플로 넣던 방식이 안 되는데 이거 대체할 방법 있어?",
+    "reference": "LangChain v1에서는 `response_format` 인자를 통한 prompted output 방식이 제거되었다. 기존처럼 프롬프트를 추가해 모델이 스키마를 따르도록 유도하는 방식 대신 `ToolStrategy` 또는 `ProviderStrategy`를 사용해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g15",
+    "type": "스트리밍 동작 변경",
+    "difficulty": "중간",
+    "question": "에이전트를 stream으로 실행하면서 노드 이름이 agent일 때만 처리하도록 했는데 1.x 업그레이드 후 이벤트가 안 잡혀. 뭐가 바뀐 거야?",
+    "reference": "LangChain v1에서는 에이전트 스트리밍 이벤트의 노드 이름이 기존 `agent`에서 `model`로 변경되었다. 따라서 기존 코드에서 `agent`라는 노드 이름을 기준으로 이벤트를 필터링했다면 `model`로 수정해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g16",
+    "type": "런타임 컨텍스트 변경",
+    "difficulty": "어려움",
+    "question": "기존에 invoke할 때 config={\"configurable\": {...}}로 사용자 정보를 전달했는데 1.x에서는 context로 바꾸는 게 맞아?",
+    "reference": "LangChain v1에서는 대화 중 변경되지 않는 사용자 메타데이터와 같은 정적 컨텍스트를 `invoke` 또는 `stream`의 `context` 인자로 전달하는 방식을 권장한다. 기존 `config[\"configurable\"]` 방식도 하위 호환성을 위해 계속 작동하지만, v1로 마이그레이션하는 애플리케이션에는 `context` 사용이 권장된다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g17",
+    "type": "패키지 분리",
+    "difficulty": "쉬움",
+    "question": "1.x로 업그레이드했더니 예전에 쓰던 LLMChain import가 깨졌어. LLMChain 같은 레거시 체인은 어디서 가져와야 해?",
+    "reference": "LangChain v1에서는 기존의 레거시 체인 기능이 핵심 에이전트 기능과 분리되어 `langchain-classic` 패키지로 이동했다. `LLMChain`, `ConversationChain` 등을 계속 사용하려면 `langchain-classic`을 설치하고 해당 패키지의 import 경로를 사용해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g18",
+    "type": "패키지 분리 및 import 변경",
+    "difficulty": "중간",
+    "question": "기존 langchain.retrievers랑 langchain.indexes, langchain에서 가져오던 hub가 1.x에서 다 사라졌는데 대체 어디로 옮겨졌어?",
+    "reference": "LangChain v1에서는 기존 retriever 모듈, indexing API 및 hub 모듈이 `langchain-classic` 패키지로 이동했다. 기존 기능을 계속 사용하려면 retriever는 `langchain_classic.retrievers`, indexing은 `langchain_classic.indexes`, hub는 `langchain_classic`에서 가져오도록 import를 수정해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g19",
+    "type": "의존성 업그레이드",
+    "difficulty": "쉬움",
+    "question": "레거시 체인 때문에 langchain-classic을 쓰려고 하는데 pip 설치 명령이 뭐야?",
+    "reference": "LangChain v1 마이그레이션 가이드에서는 레거시 기능을 사용하기 위해 `langchain-classic`을 별도로 설치하도록 안내한다. pip를 사용하는 경우 `pip install langchain-classic` 명령으로 설치할 수 있다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g20",
+    "type": "네임스페이스 변경",
+    "difficulty": "중간",
+    "question": "1.x부터 langchain 패키지에서 어떤 것들이 그대로 제공되는지 모르겠어. messages, tools, chat_models 같은 import는 어디서 해야 해?",
+    "reference": "LangChain v1에서는 `langchain` 패키지의 네임스페이스가 에이전트 개발에 필요한 핵심 기능 중심으로 축소되었다. `langchain.messages`와 `langchain.tools`는 `langchain-core`에서 재노출되며, `langchain.chat_models`에는 `init_chat_model`과 `BaseChatModel`이 제공된다. 임베딩 관련 핵심 인터페이스는 `langchain.embeddings`에서 사용할 수 있다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g21",
+    "type": "Python 버전 호환성",
+    "difficulty": "쉬움",
+    "question": "LangChain 1.x로 올리려는데 서버가 Python 3.9야. 버전만 올려도 문제없을까?",
+    "reference": "LangChain v1의 모든 패키지는 Python 3.10 이상을 요구한다. 따라서 Python 3.9 환경에서는 LangChain 1.x를 설치하기 위한 Python 버전 업그레이드가 필요하다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g22",
+    "type": "반환 타입 변경",
+    "difficulty": "어려움",
+    "question": "커스텀 ChatModel을 구현했는데 bind_tools의 반환 타입을 BaseMessage로 선언해 놨어. 1.x에서는 이 타입도 바꿔야 하나?",
+    "reference": "LangChain v1에서는 채팅 모델 호출의 반환 타입 시그니처가 기존 `BaseMessage`에서 `AIMessage`로 수정되었다. 따라서 `bind_tools`를 구현한 커스텀 채팅 모델도 `Runnable[LanguageModelInput, AIMessage]`를 반환하도록 타입 시그니처를 업데이트해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g23",
+    "type": "속성 접근 방식 변경",
+    "difficulty": "쉬움",
+    "question": "1.x에서 response.text() 쓰면 경고가 뜨는데 이제 괄호를 빼야 하는 거야? 기존 코드가 바로 깨지는지도 궁금해.",
+    "reference": "LangChain v1에서는 메시지 객체의 `.text()`가 메서드가 아니라 속성으로 변경되었으므로 `response.text` 형태로 접근하는 것이 권장된다. 기존 `.text()` 호출도 당장은 동작하지만 경고를 발생시키며, 해당 메서드 형태는 v2에서 제거될 예정이다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g24",
+    "type": "매개변수 제거",
+    "difficulty": "중간",
+    "question": "AIMessage 만들 때 example=True를 넣던 코드가 1.x에서 오류 나. 이 값은 이제 어디에 넣어야 해?",
+    "reference": "LangChain v1에서는 `AIMessage`의 `example` 매개변수가 제거되었다. 추가 메타데이터를 전달해야 한다면 공식 가이드에서 권장하는 `additional_kwargs`를 사용해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g25",
+    "type": "기본 동작 변경",
+    "difficulty": "어려움",
+    "question": "langchain-openai에서 Responses API 쓰는데 업그레이드하고 나서 메시지 content 형식이 달라졌어. 예전 동작으로 되돌릴 수 있어?",
+    "reference": "LangChain v1에서 `langchain-openai`의 Responses API를 사용할 때 응답 항목을 메시지의 `content`에 저장하는 방식이 기본값으로 변경되었다. 기존 동작으로 되돌리려면 `LC_OUTPUT_VERSION=v0` 환경 변수를 설정하거나 `ChatOpenAI` 초기화 시 `output_version=\"v0\"`를 지정하면 된다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g26",
+    "type": "기본값 변경",
+    "difficulty": "중간",
+    "question": "Anthropic 모델 업그레이드했더니 출력 토큰 수가 예전이랑 달라졌어. max_tokens 기본값이 바뀐 거야?",
+    "reference": "LangChain v1의 `langchain-anthropic`에서는 `max_tokens` 기본값이 기존의 1024에서 선택한 모델에 따라 더 높은 값으로 변경되었다. 기존 동작을 유지해야 한다면 초기화할 때 `max_tokens=1024`를 명시적으로 지정해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g27",
+    "type": "메시지 콘텐츠 구조 변경",
+    "difficulty": "어려움",
+    "question": "모델마다 이미지나 reasoning 응답의 content 구조가 달라서 파싱 코드가 복잡했는데 LangChain 1.x에서는 공통으로 접근할 수 있는 방법이 생겼어?",
+    "reference": "LangChain v1에서는 제공자별 콘텐츠 형식을 표준화한 `content_blocks` 속성이 메시지에 추가되었다. `message.content_blocks`를 사용하면 모델 제공자에 관계없이 표준화된 콘텐츠 블록에 접근할 수 있다. 기존 `message.content` 필드는 문자열이나 제공자 고유 구조에 대한 접근을 위해 그대로 유지된다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": []
+  },
+  {
+    "id": "g28",
+    "type": "문서에 없는 마이그레이션 옵션",
+    "difficulty": "어려움",
+    "question": "LangChain 1.x에 langchain migrate --auto-fix 같은 공식 CLI가 있어? 기존 0.3 코드를 자동으로 찾아서 import까지 바꿔주는 옵션이 있는지 알려줘.",
+    "reference": "공식 LangChain v1 마이그레이션 가이드에는 `langchain migrate --auto-fix` CLI 명령이나 해당 자동 변환 옵션의 사용법이 설명되어 있지 않다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": [],
+    "unanswerable": true
+  },
+  {
+    "id": "g29",
+    "type": "문서에 없는 마이그레이션 옵션",
+    "difficulty": "어려움",
+    "question": "기존 ConversationBufferMemory를 쓰고 있는데 1.x에서 설치할 때 auto_migrate_memory=True 옵션을 주면 자동으로 새 메모리 구조로 바꿔주는 거 맞아?",
+    "reference": "공식 LangChain v1 마이그레이션 가이드에는 `auto_migrate_memory=True` 옵션이나 `ConversationBufferMemory`를 자동 변환하는 절차가 설명되어 있지 않다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": [],
+    "unanswerable": true
+  },
+  {
+    "id": "g30",
+    "type": "범위 외",
+    "difficulty": "쉬움",
+    "question": "LangChain으로 PDF 파일을 불러와서 FAISS 벡터 데이터베이스에 저장하고 RAG 챗봇 만드는 전체 코드를 알려줘.",
+    "reference": "해당 질문은 LangChain 0.x에서 1.x로의 버전 변경이나 마이그레이션이 아닌 일반적인 RAG 시스템 구현 방법에 관한 내용이므로 이 챗봇의 질의응답 범위에 포함되지 않는다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "gold_ids": [],
+    "unanswerable": true
+  }
+]
