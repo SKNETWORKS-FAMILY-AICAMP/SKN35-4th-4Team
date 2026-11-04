@@ -199,3 +199,4 @@ data/vectordb/
 
 # macOS
 .DS_Store
+*.pem
