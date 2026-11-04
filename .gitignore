@@ -196,3 +196,6 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode
 # 로컬 벡터 DB (용량 큼, 각자 생성/복사)
 data/vectordb/
+
+# macOS
+.DS_Store
