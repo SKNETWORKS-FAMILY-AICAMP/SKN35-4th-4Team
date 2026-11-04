@@ -32,9 +32,7 @@ const state = {
 
 // ─────────────── 1. 처음 열렸을 때 ───────────────
 function init() {
-    const initial = (state.user || "?").slice(0, 1).toUpperCase();
-    $("avatar").textContent = initial;
-    $("avatar-side").textContent = initial;
+    $("avatar-side").textContent = (state.user || "?").slice(0, 1).toUpperCase();
     if (window.DOMPurify) {                                     // 답 안의 링크는 새 탭으로
         DOMPurify.addHook("afterSanitizeAttributes", (node) => {
             if (node.tagName === "A") { node.target = "_blank"; node.rel = "noopener noreferrer"; }
