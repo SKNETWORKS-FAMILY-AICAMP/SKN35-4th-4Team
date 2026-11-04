@@ -93,32 +93,40 @@ def facts_block(facts: dict) -> str:
     )
 
 
-def normalize_route(raw: str) -> str:
-    """LLM 출력 정리: ' Search.' · '"search"' · 'search\\n' → 'search'. 세 값 밖이면 DEFAULT_ROUTE"""
+def parse_route(raw: str) -> str | None:
+    """LLM 출력 정리: ' Search.' · '"search"' · 'search\\n' → 'search'. 세 값으로 읽을 수 없으면 None (= 해석 실패)"""
     words = (raw or "").strip().strip("`'\".").lower().split()
     word = words[0].strip("`'\".,") if words else ""
-    return word if word in ROUTES else DEFAULT_ROUTE
+    return word if word in ROUTES else None
 
 
-def llm_route(text: str, facts: dict) -> str:
+def llm_route(text: str, facts: dict) -> tuple[str, str]:
+    """→ (경로, 실패 내용). 실패 내용은 정상이면 "".
+    실패해도 화면은 멈추지 않게 DEFAULT_ROUTE 로 답하고, 실패 사실은 route_error 로 따로 남긴다
+    (예외를 여기서 잡기 때문에, 남기지 않으면 평가 스크립트가 실패를 '정상 general' 로 센다)."""
     try:
         response = llm.invoke([
             SystemMessage(content=classifier_prompt),
             HumanMessage(content=facts_block(facts) + "\n[사용자 메시지]\n" + text),
         ])
-        return normalize_route(_text(response))
-    except Exception as e:  # API 오류 → 그래프가 멈추지 않게 기본 경로
+    except Exception as e:  # API 키 · 네트워크 · 요청 제한 등
         print(f"classifier_node llm error: {e!r}")
-        return DEFAULT_ROUTE
+        return DEFAULT_ROUTE, f"llm_error: {type(e).__name__}"
+    raw = _text(response)
+    route = parse_route(raw)
+    if route is None:
+        return DEFAULT_ROUTE, f"parse_failed: {raw.strip()[:40]!r}"
+    return route, ""
 
 
 def classifier_node(state: MigrationState):
     text = _text(state["messages"][-1])   # 이번 질문 (대화가 쌓여도 마지막 사용자 메시지)
 
     route, reason, facts = rule_route(text)
+    error = ""
     if route is None:
-        route = llm_route(text, facts)
-        reason = f"LLM → {route}"
+        route, error = llm_route(text, facts)
+        reason = f"LLM 실패({error}) → {route}" if error else f"LLM → {route}"
         if route == "migration" and not facts["code"]:
             # R2: 코드 없이 migration → analyzer 가 질문 문장을 코드로 '변환'하는 사고 방지
             route = DEFAULT_ROUTE
@@ -129,4 +137,5 @@ def classifier_node(state: MigrationState):
         "classification": route,
         "question": text if route != "general" else "",
         "route_reason": reason,
+        "route_error": error,
     }
