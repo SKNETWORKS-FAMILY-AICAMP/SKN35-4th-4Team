@@ -15,6 +15,7 @@ dependencies = [
     "pydantic>=2.14.1",
     "pymysql>=1.2.3",
     "sqlalchemy>=2.1.4",
+    "gunicorn>=26.2.0",
 ]
 
 [dependency-groups]
