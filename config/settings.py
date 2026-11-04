@@ -31,6 +31,9 @@ DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
+# 외부 주소(https 터널 · EC2 도메인)에서 오는 POST 허용. 예: https://xxxx.trycloudflare.com,http://13.1.2.3
+CSRF_TRUSTED_ORIGINS = [o for o in os.getenv('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',') if o]
+
 
 # Application definition
 
@@ -78,6 +81,17 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# TiDB Cloud 는 TLS 필수. 인증서: TIDB_CA_PATH → 저장소의 isrgrootx1.pem → 없으면 certifi 묶음(ISRG Root X1 포함)
+def _tidb_ca():
+    for path in (os.getenv("TIDB_CA_PATH"), BASE_DIR / "isrgrootx1.pem"):
+        if path and Path(path).exists():
+            return path
+    import certifi
+    return certifi.where()
+
+
+TIDB_CA = _tidb_ca()
+
 DATABASES = {
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
@@ -93,7 +107,7 @@ DATABASES = {
         "OPTIONS": {
             "charset": "utf8mb4",
             # "ssl": {"ca": os.environ["TIDB_CA_PATH"]},  # TiDB Cloud는 TLS 필수
-            "ssl": { "ca": BASE_DIR / 'isrgrootx1.pem' }
+            "ssl": {"ca": str(TIDB_CA)},
         },
     }
 }
@@ -141,3 +155,4 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATICFILES_DIRS = [BASE_DIR / "static"]
