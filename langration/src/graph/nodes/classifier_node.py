@@ -6,7 +6,7 @@ from langration.src.prompt.classifier_prompt import classifier_prompt
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 def classifier_node(state: MigrationState):
     response = llm.invoke(

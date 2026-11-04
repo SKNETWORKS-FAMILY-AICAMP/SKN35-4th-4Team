@@ -13,7 +13,7 @@ from . import (
     IMPORT_LINK_BOOST, MAX_PER_PAGE, RRF_K,
 )
 from .bm25 import BM25
-from .import_lookup import MapHit, lookup, lookup_methods, parse_import_paths
+from .import_lookup import MapHit, lookup, lookup_methods, lookup_names, parse_import_paths
 
 
 @dataclass
@@ -171,7 +171,12 @@ class RetrievalEngine:
         exclude_ids: set[str] | frozenset[str] = frozenset(),
         attempt: int = 0,
         target_version: str | None = None,
+        name_lookup: bool = False,
+        era_weight: dict[str, float] | None = None,
     ) -> list[Evidence]:
+        """name_lookup: import 문 없이 이름만 적은 질문도 대응표에서 찾는다 (search 경로).
+        era_weight: ⑤ 버전 가중치를 덮어쓴다. 코드 변환은 1.x 문서 우선(기본값)이 맞지만, 문서 질의응답은
+        질문에 나온 옛 클래스의 마이그레이션 가이드(0.3)가 정답인 경우가 많아 search 경로는 가중치를 끈다."""
         width = attempt + 1
         paths = parse_import_paths(old_path) if old_path else parse_import_paths(query)
         target = normalize_version(target_version)
@@ -202,6 +207,14 @@ class RetrievalEngine:
             elif hit.record["id"] not in exclude_ids:
                 map_evidence.append(self._map_evidence(hit, "exact", 1.0))
 
+        # ①-b 이름만 적은 질문 ("Chroma는 어디서 import해요?") → 대응표 이름 매칭 (search 경로만)
+        if name_lookup and latest:
+            for hit in lookup_names(query, skip_paths=paths):
+                if hit.record["id"] not in exclude_ids and all(e.evidence_id != hit.record["id"] for e in map_evidence):
+                    ev = self._map_evidence(hit, "name", 1.0)
+                    ev.signals.append("name_only")
+                    map_evidence.append(ev)
+
         # ② 메서드 호출 정확매칭 (chain.run(), llm.predict(), llm("...") 등)
         #    최신이 아니면 목표 버전에서 이미 deprecated된 메서드만 (그 전 버전엔 대체 메서드가 없을 수 있다)
         method_hits = [r for r in lookup_methods(query) if r["id"] not in exclude_ids
@@ -228,7 +241,7 @@ class RetrievalEngine:
                     break
 
         # ④ 문서 하이브리드 검색 (정확매칭된 1.x 경로·대안 텍스트로 질의 확장)
-        exact = [e for e in map_evidence if e.match == "exact"]
+        exact = [e for e in map_evidence if e.match in ("exact", "name")]
         expansion = [e.new for e in exact if e.new] + [e.alternative for e in exact if e.alternative]
         expansion += [r["alternative"] for r in method_hits if r.get("alternative")]
         doc_query = "\n".join([query, *expansion])
@@ -244,7 +257,8 @@ class RetrievalEngine:
 
         # ⑤ 규칙 기반 재정렬
         target_keys = {loose_key(e.new) for e in exact if e.new}
-        era_weight = ERA_WEIGHT_0X if version_key(target)[0] < 1 else ERA_WEIGHT
+        if era_weight is None:
+            era_weight = ERA_WEIGHT_0X if version_key(target)[0] < 1 else ERA_WEIGHT
         ranked = []
         for chunk_id, score in scores.items():
             if chunk_id in exclude_ids:

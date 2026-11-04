@@ -1,0 +1,2062 @@
+[bot] 49개 실행 (이미 끝난 1개 건너뜀)
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.schema import HumanMessage, SystemMessage\n\nchat = ChatOpenAI(temperature=0)\nmsgs = [SystemMessage(content=\"너는 번역가야\"), HumanMessage(content=\"Hello를 한국어로\")]\nprint(chat.invoke(msgs).content)",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.chat_models import ChatOpenAI",
+        "symbol": "langchain.chat_models.ChatOpenAI",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "ChatOpenAI의 import 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 변경해야 합니다.",
+        "new_symbol": "null",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain.schema import HumanMessage, SystemMessage",
+        "symbol": "langchain.schema.HumanMessage, langchain.schema.SystemMessage",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "HumanMessage와 SystemMessage의 import 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 변경해야 합니다.",
+        "new_symbol": "null",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I3",
+        "line_start": 6,
+        "line_end": 6,
+        "related_lines": [],
+        "code": "print(chat.invoke(msgs).content)",
+        "symbol": "chat.invoke",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "invoke 메서드가 다른 API로 대체되었습니다.",
+        "fix_direction": "새로운 API로 변경해야 합니다.",
+        "new_symbol": "null",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 1/49 q02 15.8s True 
+[analyzer] 목표 버전 해석 실패 → 최신 1.4.5 기준: cannot parse version: '1.x'
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.schema import Document\nfrom langchain.prompts import ChatPromptTemplate\n\ndocs = [Document(page_content=\"LangChain 1.0 출시\", metadata={\"src\": \"news\"})]\nprompt = ChatPromptTemplate.from_messages([(\"system\", \"요약가\"), (\"human\", \"{text}\")])\nprint(prompt.format_messages(text=docs[0].page_content))",
+  "analysis": {
+    "source_version": "0.3",
+    "target_version": "1.x",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.schema import Document",
+        "symbol": "langchain.schema.Document",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "Document의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 Document를 임포트해야 합니다.",
+        "new_symbol": "langchain.document.Document",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain.prompts import ChatPromptTemplate",
+        "symbol": "langchain.prompts.ChatPromptTemplate",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "ChatPromptTemplate의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 ChatPromptTemplate를 임포트해야 합니다.",
+        "new_symbol": "langchain.chat_prompt.ChatPromptTemplate",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 2/49 q03 11.9s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.document_loaders import PyPDFLoader\nfrom langchain.text_splitter import RecursiveCharacterTextSplitter\n\ndocs = PyPDFLoader(\"manual.pdf\").load()\nsplitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)\nchunks = splitter.split_documents(docs)\nprint(len(chunks))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.document_loaders import PyPDFLoader",
+        "symbol": "langchain.document_loaders.PyPDFLoader",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "PyPDFLoader의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 PyPDFLoader를 가져와야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain.text_splitter import RecursiveCharacterTextSplitter",
+        "symbol": "langchain.text_splitter.RecursiveCharacterTextSplitter",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "RecursiveCharacterTextSplitter의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 RecursiveCharacterTextSplitter를 가져와야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I3",
+        "line_start": 5,
+        "line_end": 5,
+        "related_lines": [],
+        "code": "chunks = splitter.split_documents(docs)",
+        "symbol": "splitter.split_documents",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "split_documents 메서드가 다른 API로 대체되었습니다.",
+        "fix_direction": "새로운 API에 맞게 호출부를 수정해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 3/49 q04 10.6s True 
+[analyzer] 목표 버전 해석 실패 → 최신 1.4.5 기준: cannot parse version: '1.x'
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.document_loaders import WebBaseLoader\nfrom langchain.text_splitter import CharacterTextSplitter\n\ndocs = WebBaseLoader(\"https://example.com\").load()\nchunks = CharacterTextSplitter(separator=\"\\n\", chunk_size=300).split_documents(docs)",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "1.x",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.document_loaders import WebBaseLoader",
+        "symbol": "langchain.document_loaders.WebBaseLoader",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "WebBaseLoader의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 WebBaseLoader를 임포트해야 합니다.",
+        "new_symbol": "langchain.document_loaders.web.WebBaseLoader",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain.text_splitter import CharacterTextSplitter",
+        "symbol": "langchain.text_splitter.CharacterTextSplitter",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "CharacterTextSplitter의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 CharacterTextSplitter를 임포트해야 합니다.",
+        "new_symbol": "langchain.text_splitter.character.CharacterTextSplitter",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 4/49 q05 9.2s True 
+classifier_node response : search
+폴더 안 txt 파일을 전부 읽어 오는 코드인데, 어디가 바뀌었는지도 같이 알려 주세요.
+
+```python
+from langchain.document_loaders import DirectoryLoader, TextLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+loader = DirectoryLoader("./notes", glob="**/*.txt", loader_cls=TextLoader)
+docs = loader.load()
+chunks = RecursiveCharacterTextSplitter(chunk_size=800).split_documents(docs)
+```
+search_node evidences : ['imap-80bbfafcbe', 'imap-d2648c593f', 'imap-729d68e52c', 'doc-90d6ef6c09f1', 'doc-721bd5041c02', 'doc-c5e6cbee0b57', 'doc-4108777a8efe', 'doc-ddfd1d005ab1', 'doc-3e2c001376c0']
+search_node response :
+content='제공된 코드에서 변경된 부분은 다음과 같습니다:\n\n1. **DirectoryLoader와 TextLoader의 import 경로**:\n   - 구버전: `from langchain.document_loaders import DirectoryLoader, TextLoader`\n   - 최신 버전: `from langchain_community.document_loaders import DirectoryLoader, TextLoader`\n\n2. **RecursiveCharacterTextSplitter의 import 경로**:\n   - 구버전: `from langchain.text_splitter import RecursiveCharacterTextSplitter`\n   - 최신 버전: `from langchain_text_splitters import RecursiveCharacterTextSplitter`\n\n따라서, 최신 버전의 코드는 다음과 같이 수정되어야 합니다:\n\n```python\nfrom langchain_community.document_loaders import DirectoryLoader, TextLoader\nfrom langchain_text_splitters import RecursiveCharacterTextSplitter\n\nloader = DirectoryLoader("./notes", glob="**/*.txt", loader_cls=TextLoader)\ndocs = loader.load()\nchunks = RecursiveCharacterTextSplitter(chunk_size=800).split_documents(docs)\n```\n\n이렇게 변경하면 최신 버전의 LangChain에서 올바르게 작동할 것입니다.\n\n출처:\n- [1 | import_map | 1.x]\n- [2 | import_map | 1.x]\n- [3 | import_map | 1.x]' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 265, 'prompt_tokens': 2734, 'total_tokens': 2999, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_c5012d6921', 'id': 'chatcmpl-EgKd4ZaFRx2FKoUnEzauvWewqvzru', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a44b-9fd3-728c-b769-e918e60b7a81-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 2734, 'output_tokens': 265, 'total_tokens': 2999, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 5/49 q06 4.9s search 
+classifier_node response : search
+FAISS로 벡터 DB 만드는 코드가 import 에러가 나요.
+
+```python
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import FAISS
+
+db = FAISS.from_texts(["사과는 빨갛다", "바나나는 노랗다"], OpenAIEmbeddings())
+print(db.similarity_search("노란 과일", k=1))
+```
+search_node evidences : ['imap-4d53e9db60', 'imap-34d4d487f5', 'doc-0e31caf3c474', 'doc-78b75a8a9495', 'doc-9ca5e9983481', 'doc-84a0be56a970', 'doc-b239f7055f83', 'doc-85c429a388c8']
+search_node response :
+content='제공된 코드에서 발생하는 import 에러는 `FAISS`와 `OpenAIEmbeddings`의 import 경로가 변경되었기 때문입니다. LangChain 1.x 버전에서는 다음과 같이 수정해야 합니다:\n\n```python\nfrom langchain_openai import OpenAIEmbeddings\nfrom langchain_community.vectorstores import FAISS\n\ndb = FAISS.from_texts(["사과는 빨갛다", "바나나는 노랗다"], OpenAIEmbeddings())\nprint(db.similarity_search("노란 과일", k=1))\n```\n\n이렇게 수정하면 `OpenAIEmbeddings`와 `FAISS`를 올바르게 가져올 수 있습니다. 그러나 `langchain-community` 패키지는 더 이상 유지보수되지 않으므로, 이 패키지를 사용할 때는 주의가 필요합니다.\n\n출처:\n- [1 | import_map | 1.x]\n- [2 | import_map | 1.x]\n- [3 | latest_docs | 1.x]' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 213, 'prompt_tokens': 2400, 'total_tokens': 2613, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_c5012d6921', 'id': 'chatcmpl-EgKd9Hy6NgbCYA11qy9yIjUwbW7vq', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a44b-b45a-7238-94d6-d8a2921b6a4b-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 2400, 'output_tokens': 213, 'total_tokens': 2613, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 6/49 q07 4.9s search 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.embeddings import OpenAIEmbeddings\nfrom langchain.vectorstores import FAISS\n\ndb = FAISS.from_texts([\"환불은 7일 이내\", \"배송은 2일\"], OpenAIEmbeddings())\nretriever = db.as_retriever(search_kwargs={\"k\": 1})\nprint(retriever.get_relevant_documents(\"환불 기간\"))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 6,
+        "line_end": 6,
+        "related_lines": [],
+        "code": "print(retriever.get_relevant_documents(\"환불 기간\"))",
+        "symbol": "retriever.get_relevant_documents",
+        "issue_type": "deprecated",
+        "severity": "deprecated",
+        "what_changed": "get_relevant_documents 메서드는 폐기 예정이며, 새로운 메서드로 대체되어야 합니다.",
+        "fix_direction": "대체된 메서드를 사용하여 코드를 수정해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "medium",
+        "verification_needed": true
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": ["langchain retriever get_relevant_documents replacement"]
+  }
+}
+  [bot] 7/49 q08 8.6s True 
+classifier_node response : search
+허깅페이스 임베딩 쓰는 코드인데 패키지가 바뀌었다고 들었어요. 뭘 설치해야 하는지도 알려 주세요.
+
+```python
+from langchain.embeddings import HuggingFaceEmbeddings
+from langchain.vectorstores import FAISS
+
+emb = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+db = FAISS.from_texts(["안녕하세요"], emb)
+```
+search_node evidences : ['imap-c26891406d', 'imap-34d4d487f5', 'doc-6abe39caf0fb', 'doc-27b252c2a1ca', 'doc-3558df58b411', 'doc-7a4ac883dc53', 'doc-6e842a858e72', 'doc-90b39da28564']
+search_node response :
+content='허깅페이스 임베딩을 사용하기 위해서는 `langchain-huggingface` 패키지를 설치해야 합니다. 아래와 같이 설치할 수 있습니다:\n\n```shell\npip install -qU langchain-huggingface\n```\n\n그리고 코드에서 사용하는 임포트 경로도 변경해야 합니다. 다음은 수정된 코드입니다:\n\n```python\nfrom langchain_huggingface import HuggingFaceEmbeddings\nfrom langchain_community.vectorstores import FAISS\n\nemb = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")\ndb = FAISS.from_texts(["안녕하세요"], emb)\n```\n\n이렇게 변경하면 새로운 패키지 구조에 맞게 허깅페이스 임베딩을 사용할 수 있습니다.\n\n출처:\n- [1 | import_map | 1.x]\n- [2 | import_map | 1.x]\n- [3 | latest_docs | 1.x]' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 200, 'prompt_tokens': 1901, 'total_tokens': 2101, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_c5012d6921', 'id': 'chatcmpl-EgKdMRNNwz3SOWkrq5uLMjFnPs9hT', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a44b-e88a-73a2-a3cd-16ea803c2f15-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 1901, 'output_tokens': 200, 'total_tokens': 2101, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 8/49 q09 4.3s search 
+[analyzer] 목표 버전 해석 실패 → 최신 1.4.5 기준: cannot parse version: '1.x'
+[rewriter] 근거 기록이 없는 변경 2곳 → verifier가 missing_evidence로 잡음
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.prompts import ChatPromptTemplate\nfrom langchain.chains import LLMChain\n\nprompt = ChatPromptTemplate.from_messages([\n    (\"system\", \"너는 사내 회의록 요약 담당이야.\"),\n    (\"human\", \"다음 회의록을 세 줄로 요약해 줘:\\n{minutes}\"),\n])\nchain = LLMChain(llm=ChatOpenAI(model_name=\"gpt-3.5-turbo\", temperature=0), prompt=prompt)\nresult = chain.invoke({\"minutes\": \"배포 일정 확정, QA 인원 2명 추가, 다음 회의는 금요일\"})\nprint(result[\"text\"])",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "1.x",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 10,
+        "line_end": 10,
+        "related_lines": [],
+        "code": "print(result[\"text\"])",
+        "symbol": "result[\"text\"]",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "목표 버전에서는 결과에서 문자열을 직접 꺼내는 방식이 변경되었습니다.",
+        "fix_direction": "결과에서 문자열을 꺼내는 방법을 새로운 API에 맞게 수정해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "low",
+        "verification_needed": true
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": ["LangChain 1.x result output format"]
+  }
+}
+  [bot] 9/49 q10 22.4s False 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.llms import OpenAI\nfrom langchain.chains import LLMChain\nfrom langchain.prompts import PromptTemplate\n\nchain = LLMChain(llm=OpenAI(temperature=0), prompt=PromptTemplate.from_template(\"{word}의 반대말은?\"))\nprint(chain.predict(word=\"크다\"))\nprint(chain.apply([{\"word\": \"빠르다\"}, {\"word\": \"높다\"}]))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 4,
+        "line_end": 4,
+        "related_lines": [],
+        "code": "print(chain.predict(word=\"크다\"))",
+        "symbol": "chain.predict",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "predict 메서드가 다른 API로 대체되었습니다.",
+        "fix_direction": "predict 메서드를 새로운 API로 변경해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 5,
+        "line_end": 5,
+        "related_lines": [],
+        "code": "print(chain.apply([{\"word\": \"빠르다\"}, {\"word\": \"높다\"}]))",
+        "symbol": "chain.apply",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "apply 메서드가 다른 API로 대체되었습니다.",
+        "fix_direction": "apply 메서드를 새로운 API로 변경해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 10/49 q11 24.9s True 
+[analyzer] 목표 버전 해석 실패 → 최신 1.4.5 기준: cannot parse version: '1.x'
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.chains import LLMChain\nfrom langchain.prompts import ChatPromptTemplate\nfrom langchain.output_parsers.json import SimpleJsonOutputParser\n\nprompt = ChatPromptTemplate.from_template(\"{city}의 인구와 면적을 JSON으로\")\nchain = LLMChain(llm=ChatOpenAI(), prompt=prompt, output_parser=SimpleJsonOutputParser())\nprint(chain.run(city=\"서울\"))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "1.x",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.output_parsers.json import SimpleJsonOutputParser",
+        "symbol": "langchain.output_parsers.json.SimpleJsonOutputParser",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "SimpleJsonOutputParser가 제거되었습니다.",
+        "fix_direction": "대체할 수 있는 새로운 출력 파서를 사용해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 11/49 q12 10.6s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.chains import LLMChain, SimpleSequentialChain\nfrom langchain.prompts import PromptTemplate\n\nllm = ChatOpenAI(temperature=0)\nidea = LLMChain(llm=llm, prompt=PromptTemplate.from_template(\"{topic} 블로그 제목 하나\"))\noutline = LLMChain(llm=llm, prompt=PromptTemplate.from_template(\"제목 '{title}'의 목차 3개\"))\nprint(SimpleSequentialChain(chains=[idea, outline]).run(\"벡터 검색\"))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain.chains import LLMChain, SimpleSequentialChain",
+        "symbol": "langchain.chains.SimpleSequentialChain",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "SimpleSequentialChain이 제거되었습니다.",
+        "fix_direction": "대체 API로 변경해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 12/49 q13 17.3s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.chains import LLMChain, SequentialChain\nfrom langchain.prompts import PromptTemplate\n\nllm = ChatOpenAI(temperature=0)\nsumm = LLMChain(llm=llm, prompt=PromptTemplate.from_template(\"요약: {review}\"), output_key=\"summary\")\ntone = LLMChain(llm=llm, prompt=PromptTemplate.from_template(\"감정 분류: {summary}\"), output_key=\"tone\")\nchain = SequentialChain(chains=[summ, tone], input_variables=[\"review\"], output_variables=[\"summary\", \"tone\"])\nprint(chain({\"review\": \"배송은 느렸지만 품질은 좋아요\"}))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 6,
+        "line_end": 6,
+        "related_lines": [],
+        "code": "chain = SequentialChain(chains=[summ, tone], input_variables=[\"review\"], output_variables=[\"summary\", \"tone\"])",
+        "symbol": "SequentialChain",
+        "issue_type": "signature_changed",
+        "severity": "breaking",
+        "what_changed": "output_variables 인자가 더 이상 지원되지 않거나 변경되었습니다.",
+        "fix_direction": "output_variables 대신 다른 방법으로 중간 결과를 처리해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 13/49 q14 20.0s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.chains.router import MultiPromptChain\n\ninfos = [\n    {\"name\": \"math\", \"description\": \"수학 질문\", \"prompt_template\": \"수학 선생님으로 답해: {input}\"},\n    {\"name\": \"history\", \"description\": \"역사 질문\", \"prompt_template\": \"역사학자로 답해: {input}\"},\n]\nchain = MultiPromptChain.from_prompts(ChatOpenAI(temperature=0), infos)\nprint(chain.run(\"임진왜란은 언제야?\"))",
+  "analysis": {
+    "source_version": "1.x",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain.chains.router import MultiPromptChain",
+        "symbol": "langchain.chains.router.MultiPromptChain",
+        "issue_type": "import_path_moved",
+        "severity": "uncertain",
+        "what_changed": "MultiPromptChain의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 변경해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "medium",
+        "verification_needed": true
+      },
+      {
+        "id": "I2",
+        "line_start": 6,
+        "line_end": 6,
+        "related_lines": [],
+        "code": "chain = MultiPromptChain.from_prompts(ChatOpenAI(temperature=0), infos)",
+        "symbol": "MultiPromptChain.from_prompts",
+        "issue_type": "api_replaced",
+        "severity": "uncertain",
+        "what_changed": "from_prompts 메서드가 다른 API로 대체되었습니다.",
+        "fix_direction": "새로운 API를 사용해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "medium",
+        "verification_needed": true
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 14/49 q15 11.8s True 
+[analyzer] 목표 버전 해석 실패 → 최신 1.4.5 기준: cannot parse version: '1.x'
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.embeddings import OpenAIEmbeddings\nfrom langchain.vectorstores import FAISS\nfrom langchain.chains import RetrievalQA\n\ndb = FAISS.from_texts([\"연차는 15일\", \"점심은 12시\"], OpenAIEmbeddings())\nqa = RetrievalQA.from_chain_type(llm=ChatOpenAI(temperature=0), retriever=db.as_retriever())\nprint(qa.run(\"연차 며칠이야?\"))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "1.x",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 4,
+        "line_end": 4,
+        "related_lines": [],
+        "code": "qa = RetrievalQA.from_chain_type(llm=ChatOpenAI(temperature=0), retriever=db.as_retriever())",
+        "symbol": "RetrievalQA.from_chain_type",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "RetrievalQA의 생성 방식이 변경되었습니다.",
+        "fix_direction": "새로운 생성 방식을 사용해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 15/49 q16 10.8s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.embeddings import OpenAIEmbeddings\nfrom langchain.vectorstores import FAISS\nfrom langchain.chains import ConversationalRetrievalChain\nfrom langchain.memory import ConversationBufferMemory\n\ndb = FAISS.from_texts([\"제품 A 가격은 1만원\"], OpenAIEmbeddings())\nmemory = ConversationBufferMemory(memory_key=\"chat_history\", return_messages=True)\nqa = ConversationalRetrievalChain.from_llm(ChatOpenAI(), db.as_retriever(), memory=memory)\nprint(qa({\"question\": \"제품 A 가격은?\"}))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 4,
+        "line_end": 4,
+        "related_lines": [],
+        "code": "from langchain.chains import ConversationalRetrievalChain",
+        "symbol": "langchain.chains.ConversationalRetrievalChain",
+        "issue_type": "symbol_renamed",
+        "severity": "breaking",
+        "what_changed": "ConversationalRetrievalChain의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 변경해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "medium",
+        "verification_needed": true
+      },
+      {
+        "id": "I2",
+        "line_start": 6,
+        "line_end": 6,
+        "related_lines": [],
+        "code": "qa = ConversationalRetrievalChain.from_llm(ChatOpenAI(), db.as_retriever(), memory=memory)",
+        "symbol": "ConversationalRetrievalChain.from_llm",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "from_llm 메서드의 사용 방식이 변경되었습니다.",
+        "fix_direction": "새로운 API에 맞게 호출부를 수정해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "medium",
+        "verification_needed": true
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 16/49 q17 20.0s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.chains.question_answering import load_qa_chain\nfrom langchain.schema import Document\n\ndocs = [Document(page_content=\"회의는 매주 월요일 10시\")]\nchain = load_qa_chain(ChatOpenAI(temperature=0), chain_type=\"stuff\")\nprint(chain.run(input_documents=docs, question=\"회의 언제야?\"))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain.chains.question_answering import load_qa_chain",
+        "symbol": "langchain.chains.question_answering.load_qa_chain",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "load_qa_chain의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 import해야 합니다.",
+        "new_symbol": "langchain.chains.question_answering.load_qa_chain",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 5,
+        "line_end": 5,
+        "related_lines": [],
+        "code": "chain = load_qa_chain(ChatOpenAI(temperature=0), chain_type=\"stuff\")",
+        "symbol": "load_qa_chain",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "load_qa_chain의 호출 방식이 변경되었습니다.",
+        "fix_direction": "새로운 API에 맞게 호출부를 수정해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 17/49 q18 11.1s True 
+[analyzer] 목표 버전 해석 실패 → 최신 1.4.5 기준: cannot parse version: '1.x'
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.chains import ConversationChain\nfrom langchain.memory import ConversationBufferMemory\n\nconv = ConversationChain(llm=ChatOpenAI(temperature=0), memory=ConversationBufferMemory())\nprint(conv.predict(input=\"내 이름은 민수야\"))\nprint(conv.predict(input=\"내 이름이 뭐였지?\"))\n",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "1.x",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.memory import ConversationBufferMemory",
+        "symbol": "langchain.memory.ConversationBufferMemory",
+        "issue_type": "import_path_moved",
+        "severity": "uncertain",
+        "what_changed": "ConversationBufferMemory의 경로가 변경되었을 수 있습니다.",
+        "fix_direction": "새로운 경로로 ConversationBufferMemory를 임포트해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "medium",
+        "verification_needed": true
+      },
+      {
+        "id": "I2",
+        "line_start": 4,
+        "line_end": 4,
+        "related_lines": [],
+        "code": "conv = ConversationChain(llm=ChatOpenAI(temperature=0), memory=ConversationBufferMemory())",
+        "symbol": "ConversationChain",
+        "issue_type": "signature_changed",
+        "severity": "uncertain",
+        "what_changed": "ConversationChain의 인자나 사용 방식이 변경되었을 수 있습니다.",
+        "fix_direction": "새로운 인자나 사용 방식을 확인해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "medium",
+        "verification_needed": true
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 18/49 q19 11.2s True 
+classifier_node response : search
+최근 3턴만 기억하는 창 메모리를 쓰고 있어요. 같은 동작을 1.x에서 어떻게 하죠?
+
+```python
+from langchain.chat_models import ChatOpenAI
+from langchain.chains import ConversationChain
+from langchain.memory import ConversationBufferWindowMemory
+
+conv = ConversationChain(llm=ChatOpenAI(), memory=ConversationBufferWindowMemory(k=3))
+for msg in ["안녕", "날씨 어때", "점심 추천", "내가 처음에 뭐라 했지?"]:
+    print(conv.predict(input=msg))
+```
+search_node evidences : ['imap-02229b7d73', 'imap-35a3cdce52', 'imap-552d7e6c6f', 'mmap-b1da36e9cb', 'doc-660120189fdb', 'doc-7fa3e241ebb8', 'doc-e7a49402e322', 'doc-d4f52a72bd1d', 'doc-eeb34edea5cb', 'doc-c2fd8ffc5805']
+search_node response :
+content='LangChain 1.x에서는 `ConversationChain`과 `ConversationBufferWindowMemory`가 더 이상 사용되지 않으며, 대신 `create_agent`와 `InMemorySaver`를 사용하여 최근 3턴의 메시지를 기억하는 기능을 구현할 수 있습니다. 아래는 해당 기능을 구현하는 예시 코드입니다.\n\n```python\nfrom langchain.agents import create_agent\nfrom langchain.messages import RemoveMessage\nfrom langchain.checkpoint.memory import InMemorySaver\nfrom langchain_openai import ChatOpenAI\nfrom langchain.agents.middleware import before_model\nfrom langchain_core.runnables import RunnableConfig\nfrom langchain_core.chat_history import AgentState\nfrom langgraph.runtime import Runtime\n\n@before_model\ndef trim_messages(state: AgentState, runtime: Runtime) -> dict | None:\n    """최근 3개의 메시지만 유지합니다."""\n    messages = state["messages"]\n\n    if len(messages) <= 3:\n        return None  # 변경 필요 없음\n\n    recent_messages = messages[-3:]  # 최근 3개 메시지\n    return {\n        "messages": [\n            RemoveMessage(id="REMOVE_ALL_MESSAGES"),\n            *recent_messages\n        ]\n    }\n\n# 에이전트 생성\nagent = create_agent(\n    model="gpt-5.5",\n    tools=[],\n    middleware=[trim_messages],\n    checkpointer=InMemorySaver(),\n)\n\nconfig: RunnableConfig = {"configurable": {"thread_id": "1"}}\n\n# 메시지 전송 및 응답 받기\nfor msg in ["안녕", "날씨 어때", "점심 추천", "내가 처음에 뭐라 했지?"]:\n    response = agent.invoke({\'messages\': [{\'role\': \'user\', \'content\': msg}]}, config=config)\n    print(response)\n```\n\n위 코드에서 `trim_messages` 함수는 메시지의 수가 3개를 초과할 경우 최근 3개의 메시지만 유지하도록 설정합니다. `create_agent`를 사용하여 에이전트를 생성하고, `invoke` 메서드를 통해 메시지를 전송하고 응답을 받을 수 있습니다.\n\n출처:\n[2 | import_map | 1.x]\n[3 | import_map | 1.x]\n[4 | method_map | 1.x]\n[5 | migration_guide | 0.3]' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 484, 'prompt_tokens': 3323, 'total_tokens': 3807, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_c5012d6921', 'id': 'chatcmpl-EgKg1YMFlm4BS2B5TrPKEnJkJKF6R', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a44e-6b13-71d7-a260-170462cd9bf6-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 3323, 'output_tokens': 484, 'total_tokens': 3807, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 19/49 q20 7.8s search 
+[rewriter] LLM 호출 실패 → 원본을 돌려줍니다: ValidationError: 1 validation error for RewriteResult
+notes
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.14/v/list_type
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.memory import ConversationBufferMemory\nfrom langchain.chains import ConversationChain\n\nsessions = {}\ndef chat(session_id, text):\n    if session_id not in sessions:\n        sessions[session_id] = ConversationChain(llm=ChatOpenAI(), memory=ConversationBufferMemory())\n    return sessions[session_id].predict(input=text)",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.chat_models import ChatOpenAI",
+        "symbol": "langchain.chat_models.ChatOpenAI",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "ChatOpenAI의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 변경해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "low",
+        "verification_needed": true
+      },
+      {
+        "id": "I2",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain.memory import ConversationBufferMemory",
+        "symbol": "langchain.memory.ConversationBufferMemory",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "ConversationBufferMemory의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 변경해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "low",
+        "verification_needed": true
+      },
+      {
+        "id": "I3",
+        "line_start": 3,
+        "line_end": 3,
+        "related_lines": [],
+        "code": "from langchain.chains import ConversationChain",
+        "symbol": "langchain.chains.ConversationChain",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "ConversationChain의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 변경해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "low",
+        "verification_needed": true
+      },
+      {
+        "id": "I4",
+        "line_start": 8,
+        "line_end": 8,
+        "related_lines": [],
+        "code": "return sessions[session_id].predict(input=text)",
+        "symbol": "predict",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "predict 메서드가 다른 API로 대체되었습니다.",
+        "fix_direction": "새로운 API로 변경해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "low",
+        "verification_needed": true
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 20/49 q21 21.4s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.agents import initialize_agent, AgentType, Tool\n\ndef add(q: str) -> str:\n    a, b = q.split(\"+\")\n    return str(int(a) + int(b))\n\ntools = [Tool(name=\"add\", func=add, description=\"두 수 더하기. 입력 예: 3+4\")]\nagent = initialize_agent(tools, ChatOpenAI(temperature=0), agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION)\nprint(agent.run(\"12+30은?\"))",
+  "analysis": {
+    "source_version": "1.x",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.agents import initialize_agent, AgentType, Tool",
+        "symbol": "langchain.agents.initialize_agent",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "initialize_agent가 더 이상 사용되지 않으며 새로운 방식으로 에이전트를 초기화해야 합니다.",
+        "fix_direction": "대체 API를 사용하여 에이전트를 초기화해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.agents import initialize_agent, AgentType, Tool",
+        "symbol": "langchain.agents.AgentType",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "AgentType.ZERO_SHOT_REACT_DESCRIPTION이 더 이상 사용되지 않습니다.",
+        "fix_direction": "새로운 에이전트 타입을 사용해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 21/49 q22 12.0s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.agents import AgentExecutor, create_openai_tools_agent\nfrom langchain.tools import tool\nfrom langchain import hub\n\n@tool\ndef weather(city: str) -> str:\n    \"\"\"도시의 날씨\"\"\"\n    return f\"{city}는 맑음\"\n\nprompt = hub.pull(\"hwchase17/openai-tools-agent\")\nagent = create_openai_tools_agent(ChatOpenAI(), [weather], prompt)\nprint(AgentExecutor(agent=agent, tools=[weather]).invoke({\"input\": \"서울 날씨\"}))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.agents import AgentExecutor, create_openai_tools_agent",
+        "symbol": "langchain.agents.AgentExecutor, langchain.agents.create_openai_tools_agent",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "AgentExecutor와 create_openai_tools_agent의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 import해야 합니다.",
+        "new_symbol": "langchain.agents.agent.AgentExecutor, langchain.agents.agent.create_openai_tools_agent",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 8,
+        "line_end": 8,
+        "related_lines": [],
+        "code": "agent = create_openai_tools_agent(ChatOpenAI(), [weather], prompt)",
+        "symbol": "create_openai_tools_agent",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "create_openai_tools_agent의 사용 방식이 변경되었습니다.",
+        "fix_direction": "새로운 API를 사용하여 agent를 생성해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 22/49 q23 13.1s True 
+[analyzer] 목표 버전 해석 실패 → 최신 1.4.5 기준: cannot parse version: '1.x'
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.agents import AgentExecutor, create_tool_calling_agent\nfrom langchain.memory import ConversationBufferMemory\nfrom langchain.prompts import ChatPromptTemplate, MessagesPlaceholder\nfrom langchain.tools import tool\n\n@tool\ndef stock(code: str) -> str:\n    \"\"\"재고 수량 조회\"\"\"\n    return \"12개\"\n\nprompt = ChatPromptTemplate.from_messages([(\"system\", \"재고 도우미\"), MessagesPlaceholder(\"chat_history\"),\n                                           (\"human\", \"{input}\"), MessagesPlaceholder(\"agent_scratchpad\")])\nagent = create_tool_calling_agent(ChatOpenAI(), [stock], prompt)\nmemory = ConversationBufferMemory(memory_key=\"chat_history\", return_messages=True)\nexecutor = AgentExecutor(agent=agent, tools=[stock], memory=memory)\nprint(executor.invoke({\"input\": \"A100 재고?\"}))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "1.x",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.agents import AgentExecutor, create_tool_calling_agent",
+        "symbol": "langchain.agents.AgentExecutor",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "AgentExecutor의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 변경해야 합니다.",
+        "new_symbol": "langchain.agents.AgentExecutor",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.tools import tool",
+        "symbol": "langchain.tools.tool",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "tool의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 변경해야 합니다.",
+        "new_symbol": "langchain.tools.tool",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I3",
+        "line_start": 8,
+        "line_end": 8,
+        "related_lines": [],
+        "code": "agent = create_tool_calling_agent(ChatOpenAI(), [stock], prompt)",
+        "symbol": "create_tool_calling_agent",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "create_tool_calling_agent의 사용 방식이 변경되었습니다.",
+        "fix_direction": "새로운 API로 변경해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I4",
+        "line_start": 9,
+        "line_end": 9,
+        "related_lines": [],
+        "code": "executor = AgentExecutor(agent=agent, tools=[stock], memory=memory)",
+        "symbol": "AgentExecutor",
+        "issue_type": "signature_changed",
+        "severity": "breaking",
+        "what_changed": "AgentExecutor의 인자 목록이 변경되었습니다.",
+        "fix_direction": "변경된 인자에 맞게 수정해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 23/49 q24 16.4s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.output_parsers import StructuredOutputParser, ResponseSchema\nfrom langchain.prompts import PromptTemplate\n\nschemas = [ResponseSchema(name=\"name\", description=\"제품명\"), ResponseSchema(name=\"price\", description=\"가격\")]\nparser = StructuredOutputParser.from_response_schemas(schemas)\nprompt = PromptTemplate.from_template(\"문장에서 제품 정보 추출: {text}\\n{fmt}\")\nout = ChatOpenAI().invoke(prompt.format(text=\"아이폰 15는 120만원\", fmt=parser.get_format_instructions()))\nprint(parser.parse(out.content))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain.output_parsers import StructuredOutputParser, ResponseSchema",
+        "symbol": "langchain.output_parsers.ResponseSchema",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "ResponseSchema가 제거되었습니다.",
+        "fix_direction": "ResponseSchema 대신 새로운 구조화된 출력 방식을 사용해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 24/49 q25 10.4s True 
+classifier_node response : search
+Pydantic 파서 쓰는 코드인데 langchain.pydantic_v1에서 에러가 나요.
+
+```python
+from langchain.chat_models import ChatOpenAI
+from langchain.output_parsers import PydanticOutputParser
+from langchain.pydantic_v1 import BaseModel, Field
+
+class Movie(BaseModel):
+    title: str = Field(description="제목")
+    year: int = Field(description="개봉 연도")
+
+parser = PydanticOutputParser(pydantic_object=Movie)
+print(parser.get_format_instructions())
+```
+search_node evidences : ['imap-02229b7d73', 'imap-2114147ff2', 'imap-bb709cff42', 'imap-93760a4296', 'doc-c1e9c15ed249', 'doc-a47fb585630d', 'doc-5198f518c7da', 'doc-e4ac493b61d9', 'doc-e90e52e9d646', 'doc-b746857699a5']
+search_node response :
+content='제공된 코드에서 `langchain.pydantic_v1` 모듈을 사용하고 있는데, 이는 더 이상 유효하지 않습니다. LangChain 1.x 버전에서는 `BaseModel`과 `Field`를 `pydantic`에서 직접 가져와야 합니다. 또한, `PydanticOutputParser`는 `langchain_core.output_parsers`에서 가져와야 합니다.\n\n아래는 수정된 코드입니다:\n\n```python\nfrom langchain_openai import ChatOpenAI\nfrom langchain_core.output_parsers import PydanticOutputParser\nfrom pydantic import BaseModel, Field\n\nclass Movie(BaseModel):\n    title: str = Field(description="제목")\n    year: int = Field(description="개봉 연도")\n\nparser = PydanticOutputParser(pydantic_object=Movie)\nprint(parser.get_format_instructions())\n```\n\n이렇게 수정하면 `langchain.pydantic_v1`에서 발생하는 에러를 피할 수 있습니다. \n\n출처:\n- [1 | import_map | 1.x]\n- [2 | import_map | 1.x]\n- [3 | import_map | 1.x]\n- [4 | import_map | 1.x]' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 252, 'prompt_tokens': 3055, 'total_tokens': 3307, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_c5012d6921', 'id': 'chatcmpl-EgKhKV23yk89KdguZdIzrXDjpPIwA', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a44f-a83b-708f-b1cb-6c090df60e4e-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 3055, 'output_tokens': 252, 'total_tokens': 3307, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 25/49 q26 5.5s search 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.output_parsers import CommaSeparatedListOutputParser\nfrom langchain.prompts import PromptTemplate\n\nparser = CommaSeparatedListOutputParser()\nprompt = PromptTemplate.from_template(\"{thing} 5개를 쉼표로\")\nprint(parser.parse(\"사과, 배, 감\"))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.output_parsers import CommaSeparatedListOutputParser",
+        "symbol": "langchain.output_parsers.CommaSeparatedListOutputParser",
+        "issue_type": "import_path_moved",
+        "severity": "uncertain",
+        "what_changed": "목표 버전에서 CommaSeparatedListOutputParser의 경로가 변경되었을 수 있다.",
+        "fix_direction": "새로운 경로를 확인하고 수정해야 한다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "medium",
+        "verification_needed": true
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": [
+      "CommaSeparatedListOutputParser site:langchain.readthedocs.io"
+    ]
+  }
+}
+  [bot] 26/49 q27 7.8s True 
+classifier_node response : search
+실행하니까 ImportError: cannot import name 'ChatOpenAI' from 'langchain.chat_models' 라고 떠요. 왜 그런지 설명하고 고쳐 주세요.
+
+```python
+from langchain.chat_models import ChatOpenAI
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+
+llm = ChatOpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()])
+llm.invoke("짧은 시 한 편")
+```
+search_node evidences : ['imap-02229b7d73', 'imap-a14b2f8317', 'doc-8555c8743011', 'doc-c2d05b8c05ec', 'doc-3db550e6813f', 'doc-74d0007dadb9', 'doc-48e404dfb1f3', 'doc-ad325d9ad44f']
+search_node response :
+content='`ImportError: cannot import name \'ChatOpenAI\' from \'langchain.chat_models\'` 오류는 `ChatOpenAI` 클래스가 더 이상 `langchain.chat_models` 모듈에서 사용할 수 없기 때문에 발생합니다. LangChain 1.x 버전부터는 `ChatOpenAI`를 `langchain_openai` 모듈에서 가져와야 합니다.\n\n코드를 수정하려면 다음과 같이 변경해야 합니다:\n\n```python\nfrom langchain_openai import ChatOpenAI\nfrom langchain_core.callbacks import StreamingStdOutCallbackHandler\n\nllm = ChatOpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()])\nllm.invoke("짧은 시 한 편")\n```\n\n이렇게 수정하면 `ChatOpenAI`와 `StreamingStdOutCallbackHandler`를 올바른 모듈에서 가져올 수 있습니다. \n\n또한, `langchain_openai` 패키지가 설치되어 있어야 하므로, 설치가 필요하다면 다음 명령어를 사용하세요:\n\n```bash\npip install -U langchain-openai\n```\n\n출처:\n1 | import_map | 1.x\n2 | import_map | 1.x\n3 | latest_docs | 1.x' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 253, 'prompt_tokens': 2425, 'total_tokens': 2678, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_c5012d6921', 'id': 'chatcmpl-EgKhXWtn5nhulNBQcLCWuf1qUFMzH', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a44f-da49-71bc-acd1-449a87b1d845-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 2425, 'output_tokens': 253, 'total_tokens': 2678, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 27/49 q28 4.2s search 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "import langchain\nfrom langchain.cache import InMemoryCache\nfrom langchain.chat_models import ChatOpenAI\n\nlangchain.llm_cache = InMemoryCache()\nllm = ChatOpenAI()\nllm.invoke(\"안녕\")\n",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 4,
+        "line_end": 4,
+        "related_lines": [],
+        "code": "langchain.llm_cache = InMemoryCache()",
+        "symbol": "langchain.llm_cache",
+        "issue_type": "other",
+        "severity": "breaking",
+        "what_changed": "전역 캐시 설정 방식이 변경되어 더 이상 이렇게 설정할 수 없습니다.",
+        "fix_direction": "새로운 캐시 설정 방식을 사용해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 28/49 q29 11.9s True 
+[analyzer] 목표 버전 해석 실패 → 최신 1.4.5 기준: cannot parse version: '1.x'
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.chains.summarize import load_summarize_chain\nfrom langchain.text_splitter import RecursiveCharacterTextSplitter\nfrom langchain.docstore.document import Document\n\ntext = open(\"report.txt\", encoding=\"utf-8\").read()\ndocs = [Document(page_content=t) for t in RecursiveCharacterTextSplitter(chunk_size=2000).split_text(text)]\nchain = load_summarize_chain(ChatOpenAI(temperature=0), chain_type=\"map_reduce\")\nprint(chain.run(docs))",
+  "analysis": {
+    "source_version": "1.x",
+    "target_version": "1.x",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.chains.summarize import load_summarize_chain",
+        "symbol": "langchain.chains.summarize.load_summarize_chain",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "load_summarize_chain의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 import해야 합니다.",
+        "new_symbol": "langchain.chains.summarization.load_summarize_chain",
+        "install_hint": null,
+        "evidence": [{"type": "doc", "ref": "doc-id", "quote": "The load_summarize_chain function has been moved to langchain.chains.summarization."}],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 4,
+        "line_end": 4,
+        "related_lines": [],
+        "code": "chain = load_summarize_chain(ChatOpenAI(temperature=0), chain_type=\"map_reduce\")",
+        "symbol": "load_summarize_chain",
+        "issue_type": "signature_changed",
+        "severity": "breaking",
+        "what_changed": "chain_type 인자가 더 이상 지원되지 않습니다.",
+        "fix_direction": "chain_type 인자를 제거해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [{"type": "doc", "ref": "doc-id", "quote": "The chain_type argument has been removed from load_summarize_chain."}],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 29/49 q30 12.9s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain_openai import ChatOpenAI\nfrom langchain_core.prompts import ChatPromptTemplate\nfrom langchain_core.output_parsers import StrOutputParser\nfrom langchain_text_splitters import RecursiveCharacterTextSplitter\n\nchunks = RecursiveCharacterTextSplitter(chunk_size=500).split_text(open(\"faq.txt\", encoding=\"utf-8\").read())\nprompt = ChatPromptTemplate.from_template(\"다음 FAQ를 요약해줘: {text}\")\nchain = prompt | ChatOpenAI(temperature=0) | StrOutputParser()\nprint(chain.invoke({\"text\": chunks[0]}))",
+  "analysis": {
+    "source_version": "1.x",
+    "target_version": "0.2",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain_openai import ChatOpenAI",
+        "symbol": "langchain_openai.ChatOpenAI",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "ChatOpenAI는 0.2 버전에서 제거되었습니다.",
+        "fix_direction": "대체할 수 있는 다른 클래스나 방법을 찾아야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain_core.prompts import ChatPromptTemplate",
+        "symbol": "langchain_core.prompts.ChatPromptTemplate",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "ChatPromptTemplate는 0.2 버전에서 제거되었습니다.",
+        "fix_direction": "대체할 수 있는 다른 클래스나 방법을 찾아야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I3",
+        "line_start": 3,
+        "line_end": 3,
+        "related_lines": [],
+        "code": "from langchain_core.output_parsers import StrOutputParser",
+        "symbol": "langchain_core.output_parsers.StrOutputParser",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "StrOutputParser는 0.2 버전에서 제거되었습니다.",
+        "fix_direction": "대체할 수 있는 다른 클래스나 방법을 찾아야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I4",
+        "line_start": 4,
+        "line_end": 4,
+        "related_lines": [],
+        "code": "from langchain_text_splitters import RecursiveCharacterTextSplitter",
+        "symbol": "langchain_text_splitters.RecursiveCharacterTextSplitter",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "RecursiveCharacterTextSplitter는 0.2 버전에서 제거되었습니다.",
+        "fix_direction": "대체할 수 있는 다른 클래스나 방법을 찾아야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I5",
+        "line_start": 7,
+        "line_end": 7,
+        "related_lines": [],
+        "code": "chain = prompt | ChatOpenAI(temperature=0) | StrOutputParser()",
+        "symbol": "chain",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "체인 구성 방식이 0.2 버전에서 변경되었습니다.",
+        "fix_direction": "체인 구성 방식을 0.2 버전에 맞게 수정해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 30/49 q31 21.0s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain_openai import ChatOpenAI\nfrom langchain.agents import create_agent\nfrom langchain_core.tools import tool\n\n@tool\ndef order_status(order_id: str) -> str:\n    \"\"\"주문 상태 조회\"\"\"\n    return \"배송 중\"\n\nagent = create_agent(ChatOpenAI(model=\"gpt-4o-mini\"), tools=[order_status], system_prompt=\"주문 도우미\")\nprint(agent.invoke({\"messages\": [{\"role\": \"user\", \"content\": \"A-17 주문 어디야?\"}]}})",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "0.3",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain_openai import ChatOpenAI",
+        "symbol": "langchain_openai.ChatOpenAI",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "ChatOpenAI의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 변경해야 합니다.",
+        "new_symbol": "langchain.chat_models.ChatOpenAI",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain.agents import create_agent",
+        "symbol": "langchain.agents.create_agent",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "create_agent의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 변경해야 합니다.",
+        "new_symbol": "langchain.agents import initialize_agent",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I3",
+        "line_start": 8,
+        "line_end": 8,
+        "related_lines": [],
+        "code": "agent = create_agent(ChatOpenAI(model=\"gpt-4o-mini\"), tools=[order_status], system_prompt=\"주문 도우미\")",
+        "symbol": "create_agent",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "create_agent가 initialize_agent로 대체되었습니다.",
+        "fix_direction": "initialize_agent를 사용하여 에이전트를 생성해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 31/49 q32 16.6s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain_openai import ChatOpenAI\nfrom langchain_classic.agents import AgentExecutor, create_tool_calling_agent\nfrom langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder\n\nprompt = ChatPromptTemplate.from_messages([(\"system\", \"도우미\"), (\"human\", \"{input}\"),\n                                           MessagesPlaceholder(\"agent_scratchpad\")])\nagent = create_tool_calling_agent(ChatOpenAI(), [], prompt)\nprint(AgentExecutor(agent=agent, tools=[]).invoke({\"input\": \"안녕\"}))",
+  "analysis": {
+    "source_version": "1.x",
+    "target_version": "0.1",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain_classic.agents import AgentExecutor, create_tool_calling_agent",
+        "symbol": "langchain_classic.agents.AgentExecutor",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "AgentExecutor의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 수정해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain_classic.agents import AgentExecutor, create_tool_calling_agent",
+        "symbol": "langchain_classic.agents.create_tool_calling_agent",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "create_tool_calling_agent의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 수정해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I3",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder",
+        "symbol": "langchain_core.prompts.ChatPromptTemplate",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "ChatPromptTemplate의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 수정해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I4",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder",
+        "symbol": "langchain_core.prompts.MessagesPlaceholder",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "MessagesPlaceholder의 경로가 변경되었습니다.",
+        "fix_direction": "새로운 경로로 수정해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 32/49 q33 20.1s False 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import init_chat_model\nfrom langchain_core.prompts import PromptTemplate\n\nllm = init_chat_model(\"gpt-4o-mini\", model_provider=\"openai\", temperature=0)\nprompt = PromptTemplate.from_template(\"{q}에 한 줄로 답해\")\nprint((prompt | llm).invoke({\"q\": \"LCEL이 뭐야\"}).content)",
+  "analysis": {
+    "source_version": "0.3",
+    "target_version": "0.1",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.chat_models import init_chat_model",
+        "symbol": "langchain.chat_models.init_chat_model",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "init_chat_model은 0.1에서 제거되었습니다.",
+        "fix_direction": "대체 API를 사용하여 모델을 초기화해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 4,
+        "line_end": 4,
+        "related_lines": [],
+        "code": "print((prompt | llm).invoke({\"q\": \"LCEL이 뭐야\"}).content)",
+        "symbol": "(prompt | llm).invoke",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "invoke 메서드는 0.1에서 다른 방식으로 호출되어야 합니다.",
+        "fix_direction": "새로운 호출 방식을 사용해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 33/49 q34 10.0s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.agents import AgentExecutor, create_tool_calling_agent\nfrom langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder\n\nprompt = ChatPromptTemplate.from_messages([(\"human\", \"{input}\"), MessagesPlaceholder(\"agent_scratchpad\")])\nagent = create_tool_calling_agent(ChatOpenAI(), [], prompt)\nexecutor = AgentExecutor(agent=agent, tools=[])",
+  "analysis": {
+    "source_version": "0.3",
+    "target_version": "0.0.354",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.chat_models import ChatOpenAI",
+        "symbol": "langchain.chat_models.ChatOpenAI",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "ChatOpenAI는 목표 버전에서 제거되었습니다.",
+        "fix_direction": "대체할 수 있는 다른 모델을 찾아야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain.agents import AgentExecutor, create_tool_calling_agent",
+        "symbol": "langchain.agents.AgentExecutor",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "AgentExecutor는 목표 버전에서 제거되었습니다.",
+        "fix_direction": "대체할 수 있는 다른 에이전트 실행기를 찾아야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I3",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain.agents import AgentExecutor, create_tool_calling_agent",
+        "symbol": "langchain.agents.create_tool_calling_agent",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "create_tool_calling_agent는 목표 버전에서 제거되었습니다.",
+        "fix_direction": "대체할 수 있는 다른 도구 호출 에이전트를 찾아야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I4",
+        "line_start": 3,
+        "line_end": 3,
+        "related_lines": [],
+        "code": "from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder",
+        "symbol": "langchain_core.prompts.ChatPromptTemplate",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "ChatPromptTemplate는 목표 버전에서 제거되었습니다.",
+        "fix_direction": "대체할 수 있는 다른 프롬프트 템플릿을 찾아야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I5",
+        "line_start": 3,
+        "line_end": 3,
+        "related_lines": [],
+        "code": "from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder",
+        "symbol": "langchain_core.prompts.MessagesPlaceholder",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "MessagesPlaceholder는 목표 버전에서 제거되었습니다.",
+        "fix_direction": "대체할 수 있는 다른 메시지 플레이스홀더를 찾아야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I6",
+        "line_start": 6,
+        "line_end": 6,
+        "related_lines": [],
+        "code": "executor = AgentExecutor(agent=agent, tools=[])",
+        "symbol": "AgentExecutor",
+        "issue_type": "symbol_removed",
+        "severity": "breaking",
+        "what_changed": "AgentExecutor는 목표 버전에서 제거되었습니다.",
+        "fix_direction": "대체할 수 있는 다른 에이전트 실행기를 찾아야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 34/49 q35 28.9s True 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.agents import create_csv_agent\n\nagent = create_csv_agent(ChatOpenAI(temperature=0), \"sales.csv\", verbose=True)\nprint(agent.run(\"3월 매출 합계는?\"))",
+  "analysis": {
+    "source_version": "0.0.300",
+    "target_version": "0.2",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.chat_models import ChatOpenAI",
+        "symbol": "langchain.chat_models.ChatOpenAI",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "ChatOpenAI의 import 경로가 변경되었습니다.",
+        "fix_direction": "새로운 import 경로로 수정해야 합니다.",
+        "new_symbol": "langchain_openai.ChatOpenAI",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "from langchain.agents import create_csv_agent",
+        "symbol": "langchain.agents.create_csv_agent",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "create_csv_agent의 import 경로가 변경되었습니다.",
+        "fix_direction": "새로운 import 경로로 수정해야 합니다.",
+        "new_symbol": "langchain.agents.create_csv_agent",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 35/49 q36 15.0s True 
+classifier_node response : search
+LLMChain은 1.0에서 어디로 갔어?
+search_node evidences : ['doc-ba70f6867a74', 'doc-12a1632c052d', 'doc-1f037eaf7dfb', 'doc-4621c50f2012', 'doc-d4f52a72bd1d', 'doc-e7a49402e322']
+search_node response :
+content='LLMChain은 LangChain v1에서 `langchain-classic` 패키지로 이동했습니다. 따라서, LLMChain을 사용하려면 `langchain-classic`를 설치하고, 해당 패키지에서 LLMChain을 임포트해야 합니다.\n\n다음은 LLMChain을 사용하는 방법입니다:\n\n```python\n# Chains\nfrom langchain_classic.chains import LLMChain\n```\n\n`langchain-classic` 패키지는 다음과 같이 설치할 수 있습니다:\n\n```bash\npip install langchain-classic\n```\n\n이전 버전에서 사용하던 LLMChain은 이제 `langchain-classic` 패키지에서 제공되므로, 기존 코드를 업데이트할 때 이 점을 유의해야 합니다.\n\n출처: [1 | latest_docs | 1.x]' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 170, 'prompt_tokens': 2642, 'total_tokens': 2812, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_c5012d6921', 'id': 'chatcmpl-EgKjokILrVbJQaNnwoiKWQsYeaYKN', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a452-000f-77bf-9dc3-6fc61b67983a-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 2642, 'output_tokens': 170, 'total_tokens': 2812, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 36/49 p01 3.7s search 
+classifier_node response : search
+0.3에서 1.0으로 올릴 때 뭐가 바뀌어?
+search_node evidences : ['doc-b34589ca05dc', 'doc-9296b87f7cfc', 'doc-0b9219dd0293', 'doc-8e25a53c22b4', 'doc-87770999ff76', 'doc-0775192ab8ec']
+search_node response :
+content='제공된 문서에서는 LangChain의 0.3에서 1.0으로의 주요 변경 사항에 대한 구체적인 내용은 확인되지 않습니다. 그러나 일반적으로 버전 업그레이드 시 다음과 같은 사항들이 포함될 수 있습니다:\n\n1. **Breaking API Changes**: 주요 버전 업그레이드는 종종 API의 호환성에 영향을 미치는 변경 사항을 포함합니다.\n2. **Deprecated Features**: 이전 버전에서 사용되던 기능이 제거될 수 있습니다.\n3. **Significant Architectural Improvements**: 성능 향상이나 새로운 기능 추가를 위한 구조적 개선이 이루어질 수 있습니다.\n4. **Detailed Migration Guides**: 새로운 버전으로의 이전을 돕기 위한 자세한 마이그레이션 가이드가 제공됩니다.\n\n이 외에도, 1.0 버전은 안정화된 API와 커뮤니티 피드백을 기반으로 한 개선 사항들이 포함될 것으로 예상됩니다. \n\n더 구체적인 변경 사항을 알고 싶다면 LangChain의 공식 문서나 마이그레이션 가이드를 참조하는 것이 좋습니다.\n\n출처: [1 | latest_docs | 1.x]' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 249, 'prompt_tokens': 2067, 'total_tokens': 2316, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_c5012d6921', 'id': 'chatcmpl-EgKjsG3fHeNqhKSZUFTG8gUDSGK4q', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a452-0f36-75c0-9411-797acda541a3-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 2067, 'output_tokens': 249, 'total_tokens': 2316, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 37/49 p02 4.9s search 
+classifier_node response : search
+ConversationBufferMemory 대신 1.x에서는 뭘 써야 해?
+search_node evidences : ['doc-3c05251002c4', 'doc-0db6cf10ba15', 'doc-1e0dbb111691', 'doc-20903c6857a0', 'doc-d4f52a72bd1d', 'doc-bba96cfe999e']
+search_node response :
+content='1.x 버전에서는 `ConversationBufferMemory` 대신 LangGraph의 단기 메모리 기능을 사용하는 것이 좋습니다. LangGraph는 대화의 여러 상호작용을 관리하고, 각 대화 스레드에 대한 상태를 유지하는 데 유용합니다. 이를 통해 대화 이력을 포함한 상태 데이터를 저장하고, 서로 다른 스레드 간의 분리를 유지할 수 있습니다.\n\n구체적으로, LangGraph의 단기 메모리는 다음과 같은 방식으로 작동합니다:\n\n- 대화의 여러 상호작용을 스레드로 조직하여 관리합니다.\n- 대화 이력과 함께 파일, 검색된 문서, 생성된 아티팩트와 같은 다른 상태 데이터를 포함할 수 있습니다.\n\n이러한 기능을 통해 대화의 전체 맥락을 유지하면서도 각 스레드 간의 분리를 유지할 수 있습니다.\n\n제공된 문서에서는 LangGraph의 단기 메모리 사용에 대한 구체적인 코드 예시는 확인되지 않습니다. LangGraph에 대한 더 많은 정보는 [LangGraph 문서](https://langchain-ai.github.io/langgraph/)를 참조하시기 바랍니다.\n\n출처:\n[2 | latest_docs | 1.x]' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 255, 'prompt_tokens': 2274, 'total_tokens': 2529, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_c5012d6921', 'id': 'chatcmpl-EgKjxrT4mVmtgBwyym6QdwptrgDM9', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a452-2303-71b7-b54b-01ccb1f871b1-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 2274, 'output_tokens': 255, 'total_tokens': 2529, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 38/49 p03 5.1s search 
+classifier_node response : search
+langchain-classic 패키지는 왜 생긴 거야?
+search_node evidences : ['doc-16492bcffe8d', 'doc-ba70f6867a74', 'doc-74ea4fe18ecc', 'doc-bf1559d86414', 'doc-947981469757', 'doc-b8b4d6bdd075']
+search_node response :
+content='`langchain-classic` 패키지는 LangChain의 레거시 기능을 유지하기 위해 만들어졌습니다. 이는 핵심 패키지를 간소화하고 집중할 수 있도록 하기 위한 조치입니다. `langchain-classic`에는 다음과 같은 기능들이 포함되어 있습니다:\n\n- 레거시 체인 및 체인 구현\n- 이전 `langchain.retrievers` 모듈의 리트리버 (예: `MultiQueryRetriever`)\n- 인덱싱 API\n- 프로그래밍적으로 프롬프트를 관리하기 위한 허브 모듈\n- `langchain-community`의 내보내기\n- 기타 더 이상 지원되지 않는 기능들\n\n이러한 기능을 사용하고 있다면 `langchain-classic`를 설치하고, 해당 기능의 임포트를 업데이트해야 합니다.\n\n출처:\n1 | latest_docs | 1.x' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 183, 'prompt_tokens': 2164, 'total_tokens': 2347, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_c5012d6921', 'id': 'chatcmpl-EgKk2bwQHvBNXka55XXVrNhzvilEb', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a452-369c-751e-b708-b1ce450d0a67-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 2164, 'output_tokens': 183, 'total_tokens': 2347, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 39/49 p04 4.7s search 
+classifier_node response : search
+이 줄에서 ModuleNotFoundError: No module named 'langchain.chat_models' 가 나는데 왜 그래?
+
+```python
+from langchain.chat_models import ChatOpenAI
+```
+search_node evidences : ['imap-02229b7d73', 'doc-6218171913dc', 'doc-68bcd31a2eae', 'doc-08f861caad44', 'doc-c2d05b8c05ec', 'doc-6a2fee79b2a5', 'doc-48e404dfb1f3']
+search_node response :
+content="`ModuleNotFoundError: No module named 'langchain.chat_models'` 오류는 `langchain`의 버전이 1.x 이상일 때 발생합니다. LangChain 1.x부터는 `ChatOpenAI`를 다음과 같이 가져와야 합니다:\n\n```python\nfrom langchain_openai import ChatOpenAI\n```\n\n이전 버전에서는 `langchain.chat_models`에서 `ChatOpenAI`를 가져왔지만, 1.x 버전부터는 `langchain_openai` 패키지를 사용해야 합니다. 따라서, 코드를 수정하여 위와 같이 변경하면 문제를 해결할 수 있습니다.\n\n출처:\n[1 | import_map | 1.x]\n[2 | latest_docs | 1.x]" additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 154, 'prompt_tokens': 2380, 'total_tokens': 2534, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_c5012d6921', 'id': 'chatcmpl-EgKk6MZZ6foiCFCtwVpmM8wkU9iLY', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a452-4739-7129-b151-b1bdde2ba809-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 2380, 'output_tokens': 154, 'total_tokens': 2534, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 40/49 p05 3.4s search 
+classifier_node response : general
+general_node response :
+content='안녕하세요! 처음 사용해 주셔서 감사합니다. 궁금한 점이나 필요한 도움이 있으시면 언제든지 말씀해 주세요!' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 27, 'prompt_tokens': 1375, 'total_tokens': 1402, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_b11ef98e16', 'id': 'chatcmpl-EgKk9ZCpmP4E8JZENd1ayiNmryzNo', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a452-5239-7434-bc5c-7dfeb921bce5-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 1375, 'output_tokens': 27, 'total_tokens': 1402, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 41/49 p06 1.6s general 
+classifier_node response : general
+general_node response :
+content='LCEL은 "LangChain Expression Language"의 약자로, LangChain에서 사용되는 표현 언어입니다. 이 언어는 대화형 AI의 다양한 작업을 정의하고 구성하는 데 도움을 주며, 사용자가 복잡한 로직을 쉽게 표현할 수 있도록 설계되었습니다. LCEL은 주로 대화 흐름을 관리하고, 데이터 처리 및 변환을 용이하게 하는 데 사용됩니다. 간단히 말해, LCEL은 LangChain에서 대화의 구조와 동작을 설정하는 도구입니다.' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 115, 'prompt_tokens': 1235, 'total_tokens': 1350, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_b11ef98e16', 'id': 'chatcmpl-EgKkAy1EDteLtamuqyh9Za4uRSpUn', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a452-5823-77d1-9f20-52d2866f0650-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 1235, 'output_tokens': 115, 'total_tokens': 1350, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 42/49 p07 2.4s general 
+classifier_node response : general
+general_node response :
+content='Pandas 1.x에서 2.x로 업그레이드할 때 주의해야 할 몇 가지 주요 사항은 다음과 같습니다:\n\n1. **API 변경**: Pandas 2.x에서는 몇몇 메서드와 속성이 변경되거나 제거될 수 있습니다. 특히, 사용 중인 함수의 인자나 반환 값에 변화가 있을 수 있습니다.\n\n2. **데이터 타입 변경**: Pandas 2.x에서는 데이터 타입에 대한 처리 방식이 개선되었습니다. 특정 데이터 타입에 대한 경고 또는 오류가 발생할 수 있으므로, 데이터 타입을 확인하고 필요한 경우 수정해야 합니다.\n\n3. **Deprecation 경고**: 1.x에서 Deprecated된 기능이 2.x에서 완전히 제거될 수 있습니다. 가능하면 경고를 확인하고 대체 기능으로 변경하는 것이 좋습니다.\n\n4. **성능 변화**: 성능 개선이 이루어졌지만, 특정 작업에서는 성능이 저하될 수 있습니다. 이 점을 유의하고 성능 테스트를 수행해보는 것이 좋습니다.\n\n업그레이드 시에는 공식 문서에서 제공하는 마이그레이션 가이드를 참고하는 것도 큰 도움이 됩니다. 구체적인 코드 변경 사항에 대해서는 직접 테스트하고 검증하는 것이 중요합니다.' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 268, 'prompt_tokens': 1247, 'total_tokens': 1515, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_b11ef98e16', 'id': 'chatcmpl-EgKkDl46XhRP1SJflY8gG2OmSMYeV', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a452-61ae-761f-8953-9754a87a612f-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 1247, 'output_tokens': 268, 'total_tokens': 1515, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 43/49 p08 3.6s general 
+classifier_node response : general
+general_node response :
+content='코드를 한 줄씩 설명드리겠습니다.\n\n```python\nfrom langchain_core.prompts import PromptTemplate\n```\n- `langchain_core.prompts` 모듈에서 `PromptTemplate` 클래스를 가져옵니다. 이 클래스는 프롬프트 템플릿을 생성하고 관리하는 데 사용됩니다.\n\n```python\nprompt = PromptTemplate.from_template(\'{x}를 요약해\')\n```\n- `PromptTemplate`의 `from_template` 메서드를 사용하여 템플릿을 생성합니다. 여기서는 `{x}`라는 자리 표시자를 포함하여 "회의록을 요약해"라는 템플릿을 만들어 `prompt` 변수에 저장합니다. `{x}`는 나중에 실제 값으로 대체될 부분입니다.\n\n```python\nprint(prompt.format(x=\'회의록\'))\n```\n- `prompt` 템플릿의 `format` 메서드를 호출하여 `{x}`를 \'회의록\'으로 대체해 최종 프롬프트를 생성하고, 이를 출력합니다. 따라서 이 코드는 "회의록을 요약해"라는 문장을 출력하게 됩니다.' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 234, 'prompt_tokens': 1294, 'total_tokens': 1528, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_b11ef98e16', 'id': 'chatcmpl-EgKkH2X1nRoBLPyP8OLdcfDONJinh', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a452-70a7-7791-9485-b6b8290f2987-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 1294, 'output_tokens': 234, 'total_tokens': 1528, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 44/49 p09 3.8s general 
+classifier_node response : general
+general_node response :
+content='점심 메뉴로는 비빔밥이나 김치찌개, 혹은 간단한 샌드위치도 좋을 것 같습니다. 기분에 따라 선택해 보세요!' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 41, 'prompt_tokens': 1254, 'total_tokens': 1295, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_b11ef98e16', 'id': 'chatcmpl-EgKkKPFm4Sm9Ne1o4zHdERBEn8wKw', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a452-7ea0-7639-9575-7b1ea2e9ee35-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 1254, 'output_tokens': 41, 'total_tokens': 1295, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 45/49 p10 1.7s general 
+classifier_node response : general
+general_node response :
+content='오늘의 날씨에 대한 정보는 제공할 수 없습니다. 하지만 궁금한 점이나 도움이 필요하신 부분이 있다면 말씀해 주세요!' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 31, 'prompt_tokens': 1165, 'total_tokens': 1196, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_b11ef98e16', 'id': 'chatcmpl-EgKkM5GQWp34OURi3RCeIghhx3PBr', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a452-85af-708c-ae6e-8c16a9ae757e-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 1165, 'output_tokens': 31, 'total_tokens': 1196, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 46/49 p11 1.9s general 
+classifier_node response : general
+general_node response :
+content='코드를 한 줄씩 설명드리겠습니다.\n\n```python\nimport os\n```\n- `os` 모듈을 가져옵니다. 이 모듈은 운영 체제와 상호작용할 수 있는 다양한 기능을 제공합니다.\n\n```python\nprint(os.getcwd())\n```\n- `os.getcwd()` 함수를 호출하여 현재 작업 디렉토리의 경로를 가져옵니다. 그 경로를 `print` 함수로 출력하여 화면에 표시합니다.' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 99, 'prompt_tokens': 1075, 'total_tokens': 1174, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0, 'text_tokens': None}, 'prompt_tokens_details': {'audio_tokens': 0, 'cache_write_tokens': None, 'cached_tokens': 0, 'image_tokens': None, 'text_tokens': None}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_b11ef98e16', 'id': 'chatcmpl-EgKkOhVo6uv1IOQzV9Kp1tdq2eSiq', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None} id='lc_run--01a1a452-8d04-7404-9032-d9ebe4e9889d-0' tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens': 1075, 'output_tokens': 99, 'total_tokens': 1174, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}}
+  [bot] 47/49 p12 2.4s general 
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.llms import OpenAI\nllm = OpenAI()\nprint(llm('안녕'))",
+  "analysis": {
+    "source_version": "unknown",
+    "target_version": "latest",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.llms import OpenAI",
+        "symbol": "langchain.llms.OpenAI",
+        "issue_type": "deprecated",
+        "severity": "deprecated",
+        "what_changed": "OpenAI 클래스가 폐기 예정이며 새로운 방식으로 대체되어야 합니다.",
+        "fix_direction": "OpenAI 클래스를 새로운 대체 클래스로 변경해야 합니다.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "medium",
+        "verification_needed": true
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": [
+      "langchain OpenAI class replacement"
+    ]
+  }
+}
+  [bot] 48/49 p13 6.9s True 
+[analyzer] 목표 버전 해석 실패 → 최신 1.4.5 기준: cannot parse version: '1.x'
+classifier_node response : migration
+analyzer_node response :
+{
+  "old_code": "from langchain.embeddings import OpenAIEmbeddings\nemb = OpenAIEmbeddings()\nprint(len(emb.embed_query('hello')))",
+  "analysis": {
+    "source_version": "0.0.0",
+    "target_version": "1.x",
+    "no_change_needed": false,
+    "issues": [
+      {
+        "id": "I1",
+        "line_start": 1,
+        "line_end": 1,
+        "related_lines": [],
+        "code": "from langchain.embeddings import OpenAIEmbeddings",
+        "symbol": "langchain.embeddings.OpenAIEmbeddings",
+        "issue_type": "import_path_moved",
+        "severity": "breaking",
+        "what_changed": "The import path for OpenAIEmbeddings has changed in version 1.x.",
+        "fix_direction": "Update the import statement to reflect the new path for OpenAIEmbeddings.",
+        "new_symbol": "langchain.embeddings.openai.OpenAIEmbeddings",
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "high",
+        "verification_needed": false
+      },
+      {
+        "id": "I2",
+        "line_start": 2,
+        "line_end": 2,
+        "related_lines": [],
+        "code": "emb = OpenAIEmbeddings()",
+        "symbol": "OpenAIEmbeddings",
+        "issue_type": "signature_changed",
+        "severity": "breaking",
+        "what_changed": "The constructor for OpenAIEmbeddings may have new parameters or a different initialization method.",
+        "fix_direction": "Check the new constructor signature for OpenAIEmbeddings and update the instantiation accordingly.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "medium",
+        "verification_needed": true
+      },
+      {
+        "id": "I3",
+        "line_start": 3,
+        "line_end": 3,
+        "related_lines": [],
+        "code": "print(len(emb.embed_query('hello')))",
+        "symbol": "embed_query",
+        "issue_type": "api_replaced",
+        "severity": "breaking",
+        "what_changed": "The method embed_query may have been replaced or its usage changed in version 1.x.",
+        "fix_direction": "Refer to the updated documentation for the correct method to use for embedding queries.",
+        "new_symbol": null,
+        "install_hint": null,
+        "evidence": [],
+        "confidence": "medium",
+        "verification_needed": true
+      }
+    ],
+    "missing_info": [],
+    "retrieval_queries": []
+  }
+}
+  [bot] 49/49 p14 9.7s True 
+[llm] 49개 실행 (이미 끝난 1개 건너뜀)
+  [llm] 1/49 q02 4.0s None 
+  [llm] 2/49 q03 2.9s None 
+  [llm] 3/49 q04 3.4s None 
+  [llm] 4/49 q05 2.6s None 
+  [llm] 5/49 q06 3.2s None 
+  [llm] 6/49 q07 4.5s None 
+  [llm] 7/49 q08 3.4s None 
+  [llm] 8/49 q09 4.8s None 
+  [llm] 9/49 q10 2.8s None 
+  [llm] 10/49 q11 4.0s None 
+  [llm] 11/49 q12 2.5s None 
+  [llm] 12/49 q13 4.1s None 
+  [llm] 13/49 q14 4.6s None 
+  [llm] 14/49 q15 3.9s None 
+  [llm] 15/49 q16 2.8s None 
+  [llm] 16/49 q17 6.0s None 
+  [llm] 17/49 q18 3.6s None 
+  [llm] 18/49 q19 2.7s None 
+  [llm] 19/49 q20 2.9s None 
+  [llm] 20/49 q21 4.3s None 
+  [llm] 21/49 q22 2.6s None 
+  [llm] 22/49 q23 4.1s None 
+  [llm] 23/49 q24 3.7s None 
+  [llm] 24/49 q25 2.5s None 
+  [llm] 25/49 q26 4.9s None 
+  [llm] 26/49 q27 2.8s None 
+  [llm] 27/49 q28 4.2s None 
+  [llm] 28/49 q29 2.8s None 
+  [llm] 29/49 q30 3.4s None 
+  [llm] 30/49 q31 3.8s None 
+  [llm] 31/49 q32 5.2s None 
+  [llm] 32/49 q33 2.6s None 
+  [llm] 33/49 q34 5.6s None 
+  [llm] 34/49 q35 3.6s None 
+  [llm] 35/49 q36 2.6s None 
+  [llm] 36/49 p01 1.6s None 
+  [llm] 37/49 p02 3.1s None 
+  [llm] 38/49 p03 1.7s None 
+  [llm] 39/49 p04 3.3s None 
+  [llm] 40/49 p05 4.2s None 
+  [llm] 41/49 p06 1.0s None 
+  [llm] 42/49 p07 1.7s None 
+  [llm] 43/49 p08 4.6s None 
+  [llm] 44/49 p09 3.2s None 
+  [llm] 45/49 p10 2.6s None 
+  [llm] 46/49 p11 1.2s None 
+  [llm] 47/49 p12 2.4s None 
+  [llm] 48/49 p13 2.6s None 
+  [llm] 49/49 p14 2.1s None 
+[route] 50개 실행 (이미 끝난 0개 건너뜀)
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 1/50 q01 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 2/50 q02 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 3/50 q03 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 4/50 q04 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 5/50 q05 s ['migration', 'migration', 'migration'] 
+classifier_node response : search
+classifier_node response : search
+classifier_node response : search
+  [route] 6/50 q06 s ['search', 'search', 'search'] 
+classifier_node response : search
+classifier_node response : search
+classifier_node response : search
+  [route] 7/50 q07 s ['search', 'search', 'search'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 8/50 q08 s ['migration', 'migration', 'migration'] 
+classifier_node response : search
+classifier_node response : search
+classifier_node response : search
+  [route] 9/50 q09 s ['search', 'search', 'search'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 10/50 q10 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 11/50 q11 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 12/50 q12 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 13/50 q13 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 14/50 q14 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 15/50 q15 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 16/50 q16 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 17/50 q17 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 18/50 q18 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 19/50 q19 s ['migration', 'migration', 'migration'] 
+classifier_node response : search
+classifier_node response : search
+classifier_node response : search
+  [route] 20/50 q20 s ['search', 'search', 'search'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 21/50 q21 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 22/50 q22 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 23/50 q23 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 24/50 q24 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 25/50 q25 s ['migration', 'migration', 'migration'] 
+classifier_node response : search
+classifier_node response : search
+classifier_node response : search
+  [route] 26/50 q26 s ['search', 'search', 'search'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 27/50 q27 s ['migration', 'migration', 'migration'] 
+classifier_node response : search
+classifier_node response : search
+classifier_node response : search
+  [route] 28/50 q28 s ['search', 'search', 'search'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 29/50 q29 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 30/50 q30 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 31/50 q31 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 32/50 q32 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 33/50 q33 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 34/50 q34 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 35/50 q35 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 36/50 q36 s ['migration', 'migration', 'migration'] 
+classifier_node response : search
+classifier_node response : search
+classifier_node response : search
+  [route] 37/50 p01 s ['search', 'search', 'search'] 
+classifier_node response : search
+classifier_node response : search
+classifier_node response : search
+  [route] 38/50 p02 s ['search', 'search', 'search'] 
+classifier_node response : search
+classifier_node response : search
+classifier_node response : search
+  [route] 39/50 p03 s ['search', 'search', 'search'] 
+classifier_node response : search
+classifier_node response : search
+classifier_node response : search
+  [route] 40/50 p04 s ['search', 'search', 'search'] 
+classifier_node response : search
+classifier_node response : search
+classifier_node response : search
+  [route] 41/50 p05 s ['search', 'search', 'search'] 
+classifier_node response : general
+classifier_node response : general
+classifier_node response : general
+  [route] 42/50 p06 s ['general', 'general', 'general'] 
+classifier_node response : general
+classifier_node response : general
+classifier_node response : general
+  [route] 43/50 p07 s ['general', 'general', 'general'] 
+classifier_node response : general
+classifier_node response : general
+classifier_node response : general
+  [route] 44/50 p08 s ['general', 'general', 'general'] 
+classifier_node response : general
+classifier_node response : general
+classifier_node response : general
+  [route] 45/50 p09 s ['general', 'general', 'general'] 
+classifier_node response : general
+classifier_node response : general
+classifier_node response : general
+  [route] 46/50 p10 s ['general', 'general', 'general'] 
+classifier_node response : general
+classifier_node response : general
+classifier_node response : general
+  [route] 47/50 p11 s ['general', 'general', 'general'] 
+classifier_node response : general
+classifier_node response : general
+classifier_node response : general
+  [route] 48/50 p12 s ['general', 'general', 'general'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 49/50 p13 s ['migration', 'migration', 'migration'] 
+classifier_node response : migration
+classifier_node response : migration
+classifier_node response : migration
+  [route] 50/50 p14 s ['migration', 'migration', 'migration'] 

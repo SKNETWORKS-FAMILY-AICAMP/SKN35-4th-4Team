@@ -9,6 +9,11 @@ from langration.src.prompt.search_prompt import search_prompt, search_user_templ
 load_dotenv()
 
 SEARCH_K = 6
+# 문서 질의응답 검색 설정 (eval/ragas 평가로 정함, 2026-11-04)
+# - name_lookup: "Chroma는 어디서 import해요?" 처럼 이름만 물어도 import 대응표를 찾는다
+# - era_weight: 코드 변환용 기본값(0.3 문서 ×0.8)은 "StuffDocumentsChain 대신 뭐 써요?" 같은 질문에서
+#   정답인 0.3 마이그레이션 가이드를 6위 밖으로 밀어낸다 → search 는 0.9 로 약하게만 1.x 를 우선
+SEARCH_RETRIEVE = dict(name_lookup=True, era_weight={"1.x": 1.0, "0.3": 0.9})
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 def format_context(evidences: list[dict]) -> str:
@@ -30,7 +35,7 @@ def format_context(evidences: list[dict]) -> str:
 def search_node(state: MigrationState):
     question = state["messages"][-1].content.strip()
     print(question)
-    evidences = [e.to_dict() for e in get_retriever_engine().retrieve(question, k=SEARCH_K)]
+    evidences = [e.to_dict() for e in get_retriever_engine().retrieve(question, k=SEARCH_K, **SEARCH_RETRIEVE)]
     print(f'search_node evidences : {[e["evidence_id"] for e in evidences]}')
 
     response = llm.invoke(
