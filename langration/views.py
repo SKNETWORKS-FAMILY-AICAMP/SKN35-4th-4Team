@@ -1,5 +1,5 @@
 from django.shortcuts import render
-import json
+from django.http import JsonResponse
 from langchain_core.messages import HumanMessage
 from langration.src.graph.supervisor import supervisor
 
@@ -7,7 +7,8 @@ from langration.src.graph.supervisor import supervisor
 def home(request):
     return render(request, 'langration/home.html')
 
-def execute_langration(requeset):
+def execute_langration(request):
+    # question = request.GET.get('question')
     question = """Document 만들어서 쓰는 부분인데 0.3 코드예요. 1.x로 바꿔 주세요.
     
     ```python
@@ -22,3 +23,6 @@ def execute_langration(requeset):
     graph = supervisor()
     result = graph.invoke({ "messages": [HumanMessage(content=question)] })
     print(result)
+
+    # return render(request, 'langration/home.html', { 'result': result })
+    return JsonResponse(result)
