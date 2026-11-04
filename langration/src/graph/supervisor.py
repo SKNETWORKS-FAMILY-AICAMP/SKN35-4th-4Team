@@ -19,12 +19,18 @@ HISTORY_CHARS = 300      # 메시지 하나당 최대 글자 (코드가 길어�
 TURN_RESET = {
     "old_code": "", "analysis": None, "target_version": None, "new_code": "", "changes": [],
     "install_packages": [], "verify_result": None, "attempt": 0, "rewrite_notes": [], "unresolved": [],
-    "evidences": [], "shown_evidence_ids": None, "rewrite_failed": False,
+    "evidences": [], "shown_evidence_ids": None, "rewrite_failed": False, "route_reason": "",
+    "exclude_ids": None,   # merge_ids reducer 에 None = 비우기 (앞 질문에서 제외한 근거가 다음 변환에 남지 않게)
 }
 
 
+ROUTES = ("migration", "search", "general")
+
+
 def prompt_classification(state: MigrationState):
-    return state["classification"]
+    """조건 분기 키. classifier_node 가 이미 세 값으로 정리하지만, 다른 코드가 state 를 넣어도 KeyError 가 안 나게 한 번 더 막는다."""
+    route = state.get("classification")
+    return route if route in ROUTES else "general"
 
 
 def _text(m) -> str:
@@ -32,12 +38,9 @@ def _text(m) -> str:
 
 
 def classifier_turn(state: MigrationState):
-    """classifier_node 그대로 분류하고, 이번 질문으로 question 을 맞춘 뒤 질문별 값을 비운다.
-    (classifier_node 는 대화가 쌓이면 '첫' 사용자 메시지를 question 으로 잡기 때문에 마지막 메시지로 바로잡는다)"""
-    out = classifier_node(state)
-    if out.get("classification") != "general":
-        out["question"] = _text(state["messages"][-1])
-    return {**TURN_RESET, **out}
+    """classifier_node 로 분류하고 질문별 값을 비운다.
+    (11-04: classifier_node 가 마지막 메시지를 question 으로 잡도록 고쳐져서, 여기서 다시 맞추던 코드는 뺐다)"""
+    return {**TURN_RESET, **classifier_node(state)}
 
 
 def general_with_history(state: MigrationState):
