@@ -1,0 +1,70 @@
+[ragas:search] ragas_questions_gpt2.json → eval/results/gpt2/raw_ragas.jsonl
+[ragas:search] 30개 실행 (이미 끝난 0개 건너뜀)
+  [ragas:search] 1/30 h01 route=search bot 7.9s 
+  [ragas:search] 2/30 h02 route=search bot 7.0s 
+  [ragas:search] 3/30 h03 route=search bot 5.0s 
+  [ragas:search] 4/30 h04 route=search bot 4.2s 
+  [ragas:search] 5/30 h05 route=search bot 3.7s 
+  [ragas:search] 6/30 h06 route=search bot 5.3s 
+  [ragas:search] 7/30 h07 route=search bot 2.9s 
+  [ragas:search] 8/30 h08 route=search bot 3.6s 
+  [ragas:search] 9/30 h09 route=search bot 4.0s 
+  [ragas:search] 10/30 h10 route=search bot 2.6s 
+  [ragas:search] 11/30 h11 route=search bot 4.6s 
+  [ragas:search] 12/30 h12 route=search bot 4.0s 
+  [ragas:search] 13/30 h13 route=search bot 4.1s 
+  [ragas:search] 14/30 h14 route=search bot 3.4s 
+  [ragas:search] 15/30 h15 route=search bot 2.6s 
+  [ragas:search] 16/30 h16 route=search bot 4.2s 
+  [ragas:search] 17/30 h17 route=general bot 3.4s 
+  [ragas:search] 18/30 h18 route=search bot 3.1s 
+  [ragas:search] 19/30 h19 route=search bot 2.6s 
+  [ragas:search] 20/30 h20 route=search bot 3.6s 
+  [ragas:search] 21/30 h21 route=search bot 3.0s 
+  [ragas:search] 22/30 h22 route=search bot 2.7s 
+  [ragas:search] 23/30 h23 route=general bot 8.6s 
+  [ragas:search] 24/30 h24 route=general bot 5.2s 
+  [ragas:search] 25/30 h25 route=general bot 4.4s 
+  [ragas:search] 26/30 h26 route=search bot 6.2s 
+  [ragas:search] 27/30 h27 route=general bot 6.0s 
+  [ragas:search] 28/30 h28 route=search bot 5.2s 
+  [ragas:search] 29/30 h29 route=general bot 3.7s 
+  [ragas:search] 30/30 h30 route=search bot 4.9s 
+  h30 37s bot={'faithfulness': 1.0, 'answer_relevancy': 0.4984, 'context_precision': 0.5333, 'context_recall': 1.0, 'factual_correctness': 0.76} llm={'answer_relevancy': 0.4478, 'factual_correctness': 0.5}
+→ /Users/chaeyeong/Developer/sk-encoa/SKN35-4th-4Team/eval/results/gpt2/ragas_scorecard.md
+=== SEARCH DONE
+[ragas:e2e] ragas_questions_gpt2.json → eval/results/gpt2/raw_ragas_e2e.jsonl
+[ragas:e2e] 30개 실행 (이미 끝난 0개 건너뜀)
+  [ragas:e2e] 1/30 h01 route=search bot 7.4s 
+  [ragas:e2e] 2/30 h02 route=search bot 7.6s 
+  [ragas:e2e] 3/30 h03 route=search bot 6.2s 
+  [ragas:e2e] 4/30 h04 route=search bot 4.9s 
+  [ragas:e2e] 5/30 h05 route=search bot 5.9s 
+  [ragas:e2e] 6/30 h06 route=search bot 6.2s 
+  [ragas:e2e] 7/30 h07 route=search bot 4.3s 
+  [ragas:e2e] 8/30 h08 route=search bot 5.5s 
+  [ragas:e2e] 9/30 h09 route=search bot 5.6s 
+  [ragas:e2e] 10/30 h10 route=search bot 5.0s 
+  [ragas:e2e] 11/30 h11 route=search bot 6.0s 
+  [ragas:e2e] 12/30 h12 route=search bot 5.3s 
+  [ragas:e2e] 13/30 h13 route=search bot 5.7s 
+  [ragas:e2e] 14/30 h14 route=search bot 4.9s 
+  [ragas:e2e] 15/30 h15 route=search bot 4.6s 
+  [ragas:e2e] 16/30 h16 route=search bot 6.8s 
+  [ragas:e2e] 17/30 h17 route=general bot 2.1s 
+  [ragas:e2e] 18/30 h18 route=search bot 4.4s 
+  [ragas:e2e] 19/30 h19 route=search bot 4.7s 
+  [ragas:e2e] 20/30 h20 route=search bot 6.0s 
+  [ragas:e2e] 21/30 h21 route=search bot 4.6s 
+  [ragas:e2e] 22/30 h22 route=search bot 4.9s 
+  [ragas:e2e] 23/30 h23 route=general bot 2.7s 
+  [ragas:e2e] 24/30 h24 route=general bot 2.0s 
+  [ragas:e2e] 25/30 h25 route=general bot 2.8s 
+  [ragas:e2e] 26/30 h26 route=search bot 6.6s 
+  [ragas:e2e] 27/30 h27 route=general bot 2.5s 
+  [ragas:e2e] 28/30 h28 route=search bot 6.7s 
+  [ragas:e2e] 29/30 h29 route=general bot 2.7s 
+  [ragas:e2e] 30/30 h30 route=search bot 6.3s 
+  h30 56s bot={'faithfulness': 1.0, 'answer_relevancy': 0.4984, 'context_precision': 0.5333, 'context_recall': 1.0, 'factual_correctness': 0.76} llm={'answer_relevancy': 0.4478, 'factual_correctness': 0.5}
+→ /Users/chaeyeong/Developer/sk-encoa/SKN35-4th-4Team/eval/results/gpt2/ragas_scorecard_e2e.md
+=== E2E DONE
