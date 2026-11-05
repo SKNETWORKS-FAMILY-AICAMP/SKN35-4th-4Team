@@ -419,15 +419,15 @@ bash deploy/deploy.sh
 
 ## 14. 문서
 
-| 문서 | 내용 |
-|---|---|
-| [eval/README.md](eval/README.md) | 코드 변환 평가 · RAGAS 평가 방법, 문항, 결과 |
-| [docs/검증_결과_정리.pdf](docs/검증_결과_정리.pdf) · [HTML](docs/검증_결과_정리.html) | 4차 검증 결과 보고서 |
-| [docs/분류기_개선안.md](docs/분류기_개선안.md) | search → general 오분류 발견과 분류기 보완안 |
-| [docs/API_명세.md](docs/API_명세.md) | API 엔드포인트별 요청 · 응답 · 오류, 채팅 스트리밍 이벤트 형식 |
-| [docs/배포_가이드.md](docs/배포_가이드.md) | EC2 준비 · 환경 변수 · `deploy.sh` · Nginx 설정 · 재배포 · 자주 나는 문제 |
-| [docs/DB_설계.md](docs/DB_설계.md) | ERD, 비밀번호 칸 추가, 대화 세션 저장 방식 |
-| 발표자료 (추가 예정) | 발표 PDF 15장 · 발표 대본 · 예상 질문 |
+| 문서 | 내용 | 작성자 |
+|---|---|---|
+| [eval/README.md](eval/README.md) | 코드 변환 평가 · RAGAS 평가 방법, 문항, 결과 | 손채영 |
+| [docs/검증_결과_정리.pdf](docs/검증_결과_정리.pdf) · [HTML](docs/검증_결과_정리.html) | 4차 검증 결과 보고서 | 손채영 |
+| [docs/분류기_개선안.md](docs/분류기_개선안.md) | search → general 오분류 발견과 분류기 보완안 | 손채영 |
+| [docs/API_명세.md](docs/API_명세.md) | API 엔드포인트별 요청 · 응답 · 오류, 채팅 스트리밍 이벤트 형식 | 심성욱 |
+| [docs/배포_가이드.md](docs/배포_가이드.md) | EC2 준비 · 환경 변수 · `deploy.sh` · Nginx 설정 · 재배포 · 자주 나는 문제 | 심성욱 |
+| [docs/DB_설계.md](docs/DB_설계.md) | ERD, 비밀번호 칸 추가, 대화 세션 저장 방식 | 심성욱 |
+| 발표자료 (추가 예정) | 발표 PDF 15장 · 발표 대본 · 예상 질문 | 심성욱 |
 
 ## 15. 한 줄 회고
 

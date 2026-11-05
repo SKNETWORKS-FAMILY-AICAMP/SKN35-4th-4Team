@@ -2,6 +2,7 @@
 
 Langration 4차 Django API 정리입니다. 화면(`static/js/api.js`)은 이 API만 불러서 동작합니다.
 
+- 작성자: 심성욱
 - 기준: 2026-11-05 `dev`
 - 형식: 요청 · 응답 모두 JSON (채팅만 NDJSON 스트리밍)
 - 실패 응답은 모두 `{"ok": false, "error": "이유"}`

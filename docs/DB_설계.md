@@ -2,6 +2,7 @@
 
 Langration 4차 데이터베이스(TiDB Cloud) 정리입니다. Django 모델 · 마이그레이션으로 관리합니다.
 
+- 작성자: 심성욱
 - 기준: 2026-11-05 `dev`
 - 연결: `django-tidb` (`config/settings.py`, `TIDB_*` 환경 변수, SSL 인증서)
 
