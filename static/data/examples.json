@@ -238,5 +238,245 @@
   "request": "긴 보고서를 map_reduce로 요약하는 배치 코드예요. 결과는 같게, 코드는 1.x로 바꿔 주세요. 꼭 못 바꾸는 부분이 있으면 알려 주세요.",
   "code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.chains.summarize import load_summarize_chain\nfrom langchain.text_splitter import RecursiveCharacterTextSplitter\nfrom langchain.docstore.document import Document\n\ntext = open(\"report.txt\", encoding=\"utf-8\").read()\ndocs = [Document(page_content=t) for t in RecursiveCharacterTextSplitter(chunk_size=2000).split_text(text)]\nchain = load_summarize_chain(ChatOpenAI(temperature=0), chain_type=\"map_reduce\")\nprint(chain.run(docs))\n",
   "source_version": "0.1.20"
+ },
+ {
+  "id": "h01",
+  "type": "문서 질문",
+  "difficulty": "쉬움",
+  "request": "1.x로 올리니까 `from langchain.chains import LLMChain` import가 깨졌어. 기존 체인을 당장 유지하려면 어디서 가져오고 뭘 설치해야 해?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h02",
+  "type": "문서 질문",
+  "difficulty": "어려움",
+  "request": "예전에는 model 자리에 함수를 넘겨서 메시지 길이에 따라 저렴한 모델이랑 비싼 모델을 골랐는데, 1.x에서 똑같이 하려면 어디로 옮겨야 해?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h03",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "기존 상태 클래스를 Pydantic으로 정의해 뒀는데 1.x에서 state_schema에 넣으니까 지원하지 않는다는 에러가 나. 뭘로 바꿔야 해?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h04",
+  "type": "문서 질문",
+  "difficulty": "쉬움",
+  "request": "업그레이드하고 나서 `response.text()`를 호출하면 경고가 뜨는데, 이거 당장 수정해야 해? 괄호만 빼면 되는 건가?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h05",
+  "type": "문서 질문",
+  "difficulty": "어려움",
+  "request": "LangChain 1.x로 올리면서 기존 프로젝트의 import 경로를 자동으로 찾아 바꿔주는 `langchain migrate --rewrite-imports` 명령이 공식적으로 제공돼?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h06",
+  "type": "문서 질문",
+  "difficulty": "쉬움",
+  "request": "LangGraph 1.x로 올렸더니 기존 에이전트 생성 코드에서 deprecated 경고가 떠. 공식적으로 권장하는 새 방식이 뭐야?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h07",
+  "type": "문서 질문",
+  "difficulty": "쉬움",
+  "request": "기존 서버가 Python 3.9인데 LangChain 1.x 설치가 안 돼. 기존 코드 문제야, 아니면 파이썬 버전부터 올려야 하는 거야?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h08",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "LangGraph 1.x 업그레이드 후 `AgentStatePydantic`이 deprecated됐다는 메시지가 나와. 공식적으로 어떤 클래스로 변경해야 해?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h09",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "예전에는 도구 입력값 검증을 별도 노드로 처리했는데 1.x 업그레이드 이후 그 노드를 찾을 수 없다는 오류가 나. 검증은 어떻게 처리해야 해?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h10",
+  "type": "문서 질문",
+  "difficulty": "어려움",
+  "request": "기존 LangGraph 프로젝트를 올릴 때 `langgraph migrate --auto-fix`를 실행하면 deprecated API를 전부 자동으로 새 API로 바꿔준다는 게 맞아?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h11",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "기존 에이전트 생성 코드를 1.x로 옮기는데 새 API는 단순히 함수 이름만 바뀐 거야? 기존보다 커스터마이징하는 방법도 달라졌어?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h12",
+  "type": "문서 질문",
+  "difficulty": "쉬움",
+  "request": "모델마다 reasoning이나 text 응답을 꺼내는 방법이 달라서 파싱 코드가 복잡했는데 1.x부터 공통으로 접근할 수 있는 속성이 생긴 거야?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h13",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "1.x로 바꾸고 보니까 예전처럼 에이전트 실행 단계마다 프롬프트를 수정하거나 대화 기록을 정리하는 구조가 달라졌어. 새 구조에서는 이런 작업을 어디서 처리해?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h14",
+  "type": "문서 질문",
+  "difficulty": "어려움",
+  "request": "기존 에이전트 코드를 최대한 수정하지 않으려고 하는데 `create_agent(..., legacy_prompt=True)` 같은 옵션으로 0.x의 프롬프트 동작을 유지할 수 있어?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h15",
+  "type": "문서 질문",
+  "difficulty": "쉬움",
+  "request": "Python 3.9 환경에서 LangChain을 최신 버전으로 설치하려고 하는데 버전 호환 문제가 발생해. 설치하려면 최소 Python 버전이 얼마야?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h16",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "1.x로 올린 뒤 langchain만 설치했는데 OpenAI나 Anthropic 연결 라이브러리가 따로 설치되지 않은 것 같아. 예전처럼 한 패키지만 설치하면 되는 게 아니야?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h17",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "LangChain 1.x에서 `pip install \"langchain[all-providers]\"`를 사용하면 OpenAI, Anthropic 등 모든 모델 연동 패키지를 한 번에 설치할 수 있는 공식 extra가 있어?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h18",
+  "type": "문서 질문",
+  "difficulty": "쉬움",
+  "request": "업그레이드하고 `ModuleNotFoundError: No module named 'langchain_openai'` 오류가 나는데 langchain은 이미 설치했어. 추가로 뭘 설치해야 해?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h19",
+  "type": "문서 질문",
+  "difficulty": "쉬움",
+  "request": "ChatOpenAI를 쓰던 코드를 정리 중인데 새 패키지 기준으로 import 경로가 어디야?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h20",
+  "type": "문서 질문",
+  "difficulty": "어려움",
+  "request": "OpenAI 호환 API를 제공하는 다른 서비스로 바꿨는데 예전에는 나오던 `reasoning_content`나 `reasoning_details`가 응답에서 사라졌어. 1.x에서 왜 이런 현상이 생겨?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h21",
+  "type": "문서 질문",
+  "difficulty": "쉬움",
+  "request": "업그레이드하고 Chroma 벡터 저장소를 불러오려는데 예전과 다르게 모듈을 찾지 못해. 어떤 패키지를 설치해야 해?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h22",
+  "type": "문서 질문",
+  "difficulty": "쉬움",
+  "request": "기존 Chroma 코드를 유지하려는데 이제 `Chroma` 클래스를 어디서 import해야 해?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h23",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "예전에는 체인에 메모리를 붙여서 대화를 기억하게 했는데 새 에이전트로 바꾸고 나니까 질문할 때마다 처음부터 시작해. 대화 기록을 유지하려면 뭘 설정해야 해?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h24",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "같은 사용자가 연속해서 질문하는데 이전 대화 내용을 기억하지 못해. 매번 호출할 때 어떤 설정을 동일하게 전달해야 해?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h25",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "대화방이 달라져도 사용자의 선호 정보나 이전에 저장한 데이터를 계속 기억해야 하는데, 지금 사용하는 대화 메모리 설정만으로 가능한 거야?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h26",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "예전처럼 대화 기록을 계속 쌓다 보니까 입력 토큰이 너무 커지고 응답도 느려져. 1.x에서 이전 대화를 줄이거나 정리하는 방법은 뭐가 있어?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h27",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "기존 그래프 기반 챗봇 코드를 업그레이드하면서 여러 차례 실행해도 대화 상태가 유지되게 만들고 싶어. 그래프를 만들 때 어떤 설정을 추가해야 해?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h28",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "기존에는 메모리를 프로세스 안에만 저장했는데 운영 환경에서는 서버가 재시작돼도 대화 기록이 남아야 해. 공식 문서에서 안내하는 PostgreSQL 기반 저장 방식이 있어?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h29",
+  "type": "문서 질문",
+  "difficulty": "쉬움",
+  "request": "PostgreSQL 기반으로 메모리 저장소를 변경했는데 처음 실행할 때 초기화 작업도 필요해? 연결만 하면 바로 쓸 수 있는 거야?",
+  "code": "",
+  "source_version": ""
+ },
+ {
+  "id": "h30",
+  "type": "문서 질문",
+  "difficulty": "중간",
+  "request": "기존에는 대화 기록이랑 사용자별로 저장하는 정보를 메모리 하나로 관리했는데, 새 구조에서는 두 가지를 구분해서 관리해야 한다고 하더라. 어떤 기준으로 나뉘는 거야?",
+  "code": "",
+  "source_version": ""
  }
 ]

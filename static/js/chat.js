@@ -406,8 +406,8 @@ function fmtTime(v) {
 }
 
 
-// ─────────────── 7. 확인용 예제 (3차 평가 질문 중 1.x 로 올리는 30개) ───────────────
-const TYPE_ICON = { "LLMChain → LCEL": ["code", "v"], "메모리": ["history", "b"], "RAG": ["book", "g"], "에이전트 · 도구": ["flask", "o"] };
+// ─────────────── 7. 확인용 예제 (3차 평가 질문 중 1.x 로 올리는 30개 + RAGAS 문서 질문 30개) ───────────────
+const TYPE_ICON = { "LLMChain → LCEL": ["code", "v"], "메모리": ["history", "b"], "RAG": ["book", "g"], "에이전트 · 도구": ["flask", "o"], "문서 질문": ["book", "g"] };
 
 async function loadExamples() {
     try {
@@ -438,7 +438,9 @@ function suggestButton(text, tag, [ic, color], onClick) {
     return b;
 }
 
-function exampleText(q) { return `${q.request}\n\n\`\`\`python\n${q.code}\`\`\``; }
+// 코드가 없는 예제(문서 질문)는 질문만 보낸다
+function exampleText(q) { return q.code ? `${q.request}\n\n\`\`\`python\n${q.code}\`\`\`` : q.request; }
+function exampleTag(q) { return q.source_version ? `${q.difficulty} · ${q.source_version} → 1.x` : `${q.difficulty} · 문서 질문`; }
 function sendExample(q) { closeModals(); sendQuestion(exampleText(q)); }
 
 function renderExampleList(word) {
@@ -450,7 +452,7 @@ function renderExampleList(word) {
     let last = null;
     hits.forEach((q) => {
         if (q.type !== last) { box.append(h("div", "group", q.type)); last = q.type; }
-        const b = suggestButton(`${q.id} · ${q.request}`, `${q.difficulty} · ${q.source_version} → 1.x`, TYPE_ICON[q.type] || ["code", "v"], () => sendExample(q));
+        const b = suggestButton(`${q.id} · ${q.request}`, exampleTag(q), TYPE_ICON[q.type] || ["code", "v"], () => sendExample(q));
         box.append(b);
     });
 }
