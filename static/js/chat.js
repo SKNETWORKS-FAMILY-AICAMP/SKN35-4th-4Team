@@ -375,12 +375,12 @@ function markActive() {
     el.sessions.querySelectorAll(".item").forEach((b) => b.classList.toggle("on", b.dataset.id === state.sessionId));
 }
 
-// 대화 위 안내: "세션 2137eb0d · 11/04 14:30 시작 · 질문 3개"
+// 대화 위 안내: "11/04 14:30 시작 · 질문 3개" (대화 번호는 속으로만 쓰고 화면에는 안 보임)
 function updateHead() {
     const s = state.sessions.find((x) => x.session_id === state.sessionId);
     if (!state.sessionId) { el.title.textContent = "새 대화"; el.meta.textContent = ""; return; }
     el.title.textContent = (s && s.title) || "새 대화";
-    const parts = [`세션 ${String(state.sessionId).slice(0, 8)}`];
+    const parts = [];
     if (s && s.started_at) parts.push(`${fmtTime(s.started_at)} 시작`);
     if (s && s.turns) parts.push(`질문 ${s.turns}개`);
     el.meta.textContent = parts.join(" · ");
