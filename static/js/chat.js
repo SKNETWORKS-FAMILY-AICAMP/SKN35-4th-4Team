@@ -7,6 +7,7 @@
 //                     done = 3차 client.ask() 결과 그대로 { kind, reply, result, steps, seconds }
 //   내 대화 목록    → GET  API.sessions      → { ok, sessions: [{ session_id, title, last_at, started_at?, turns? }] }
 //   대화 다시 열기  → GET  API.session(id)   → { ok, messages: [{ question, answer, created_at }] }
+//   대화 삭제       → DELETE API.session(id) → { ok, deleted }
 //   로그아웃        → POST API.logout        → { ok }
 // ─────────────────────────────────────────────
 
@@ -126,19 +127,20 @@ function fail(bot, progress, error) {
     scrollDown();
 }
 
-// 진행 상자: "Langration이 생각 중입니다… · ② 근거 찾는 중" + 끝난 단계 목록 (항상 펼쳐 둠 — 3차 화면 기록 ⑤ 문제)
+// 진행 상자: 펼친 채로 끝난 단계가 위에 쌓이고, 맨 아래 한 줄에 [로딩 표시 · 지금 하는 단계]가 항상 보임
+// (답이 나오면 이 상자는 사라지고, 답 위에 접힌 "처리 과정 보기"로 남음)
 function progressBox() {
     const node = h("div", "progress");
-    const head = h("div", "head");
-    const label = h("span", "", "Langration이 생각 중입니다…");
-    head.append(h("span", "spin"), label);
     const list = h("div", "list");
-    node.append(head, list);
+    const foot = h("div", "foot");
+    const now = h("span", "now", "Langration이 생각 중입니다… · 질문을 살펴보는 중");
+    foot.append(h("span", "spin"), now);
+    node.append(list, foot);
     return {
         node,
         add(ev) {
             list.append(stepRow(ev));
-            if (ev.next) label.textContent = `Langration이 생각 중입니다… · ${ev.next}`;
+            if (ev.next) now.textContent = `Langration이 생각 중입니다… · ${ev.next}`;
             scrollDown();
         },
     };
@@ -148,13 +150,18 @@ function progressBox() {
 function showAnswer(bot, data, request, fresh) {
     const steps = data.steps || [];
     if (steps.length) {
-        // 가장 최근 답의 처리 과정만 펼쳐 둠
-        el.messages.querySelectorAll("details.steps[open]").forEach((d) => d.removeAttribute("open"));
+        // 처리 과정은 기본으로 접어 두고, 사용자가 눌러서 펼침
         const d = h("details", "steps");
-        d.open = fresh;
         const sum = h("summary");
         sum.append(icon("tree"), document.createTextNode(
-            `처리 과정 보기 · ${steps.length}단계${data.seconds != null ? ` · ${Math.round(data.seconds)}초` : ""}`), icon("chev", "chev"));
+            `처리 과정 보기 · ${steps.length}단계${data.seconds != null ? ` · ${Math.round(data.seconds)}초` : ""}`));
+        // 접힌 채로도 결과를 알 수 있게 한 마디: ✓ 검사 1회 통과 / ✗ 검사 3회 실패 (코드 변환일 때만)
+        const v = data.result && data.result.verification;
+        if (v && data.result.mode === "graph") {
+            sum.append(document.createTextNode(" · "),
+                h("span", `outcome ${v.success ? "ok" : "bad"}`, v.success ? `✓ 검사 ${v.attempts}회 통과` : `✗ 검사 ${v.attempts}회 실패`));
+        }
+        sum.append(icon("chev", "chev"));
         d.append(sum, stepsView(steps, data.seconds, false));
         bot.body.append(d);
     }
@@ -283,8 +290,11 @@ $("new-chat").addEventListener("click", async () => {
     focusComposer();
 });
 
+let sessionsReq = 0;                                        // 목록 요청이 겹치면 가장 마지막 응답만 그림
 async function loadSessions() {
+    const mine = ++sessionsReq;
     const data = await callApi(API.sessions);
+    if (mine !== sessionsReq) return;                        // 그사이 더 새 요청이 나갔으면 이 응답은 버림
     el.sessions.replaceChildren();
     if (!data.ok) { el.sessions.append(h("p", "empty", data.error)); return; }
     state.sessions = data.sessions || [];
@@ -294,17 +304,51 @@ async function loadSessions() {
     state.sessions.forEach((s) => {
         const group = dayGroup(s.last_at);
         if (group !== lastGroup) { el.sessions.append(h("div", "group", group)); lastGroup = group; }
+        const row = h("div", "item-row");
         const b = h("button", "item");
         b.type = "button";
         b.dataset.id = s.session_id;
         b.title = s.title || "";
         b.append(icon("chat"), h("span", "t", s.title || "(제목 없음)"));
         b.addEventListener("click", () => openSession(s.session_id));
-        el.sessions.append(b);
+        const del = h("button", "del");                     // 마우스를 올리면 보이는 삭제 버튼
+        del.type = "button";
+        del.title = "이 대화 지우기";
+        del.setAttribute("aria-label", "이 대화 지우기");
+        del.append(icon("trash"));
+        del.addEventListener("click", () => askDelete(s));
+        row.append(b, del);
+        el.sessions.append(row);
     });
     markActive();
     updateHead();
 }
+
+// 대화 삭제: 확인창 → DELETE → 목록 새로고침. 지금 보고 있던 대화를 지우면 새 대화로
+let pendingDelete = null;
+function askDelete(session) {
+    if (state.busy) return;
+    pendingDelete = session;
+    $("delete-title").textContent = session.title || "(제목 없음)";
+    openModal("delete-confirm");
+}
+
+$("delete-ok").addEventListener("click", async () => {
+    const s = pendingDelete;
+    if (!s) return;
+    const button = $("delete-ok");
+    button.disabled = true;
+    const data = await callApi(API.session(s.session_id), { method: "DELETE" });
+    button.disabled = false;
+    closeModals();
+    pendingDelete = null;
+    if (!data.ok) { toast(data.error || "대화를 지우지 못했어요"); return; }
+    toast("대화를 지웠어요");
+    const gone = el.sessions.querySelector(`.item[data-id="${CSS.escape(s.session_id)}"]`);
+    if (gone) gone.closest(".item-row").remove();            // 목록에서 바로 빼고
+    if (s.session_id === state.sessionId) await startNewChat();
+    await loadSessions();                                    // 서버 목록으로 다시 맞춤
+});
 
 async function openSession(id) {
     if (state.busy) return;
@@ -331,12 +375,12 @@ function markActive() {
     el.sessions.querySelectorAll(".item").forEach((b) => b.classList.toggle("on", b.dataset.id === state.sessionId));
 }
 
-// 대화 위 안내: "세션 2137eb0d · 11/04 14:30 시작 · 질문 3개"
+// 대화 위 안내: "11/04 14:30 시작 · 질문 3개" (대화 번호는 속으로만 쓰고 화면에는 안 보임)
 function updateHead() {
     const s = state.sessions.find((x) => x.session_id === state.sessionId);
     if (!state.sessionId) { el.title.textContent = "새 대화"; el.meta.textContent = ""; return; }
     el.title.textContent = (s && s.title) || "새 대화";
-    const parts = [`세션 ${String(state.sessionId).slice(0, 8)}`];
+    const parts = [];
     if (s && s.started_at) parts.push(`${fmtTime(s.started_at)} 시작`);
     if (s && s.turns) parts.push(`질문 ${s.turns}개`);
     el.meta.textContent = parts.join(" · ");
