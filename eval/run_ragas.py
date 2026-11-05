@@ -93,7 +93,7 @@ def run_search(q: dict, engine, bot_llm) -> dict:
     rec = {"id": q["id"], "mode": "search", "error": None}
     try:
         label = classifier_node({"question": q["question"], "messages": [HumanMessage(content=q["question"])]})
-        rec["route"] = label.get("classification")
+        rec["route"] = f"error: {label['route_error']}" if label.get("route_error") else label.get("classification")
     except Exception as exc:  # 분류 실패는 기록만
         rec["route"] = f"error: {type(exc).__name__}"
 
@@ -120,7 +120,7 @@ def run_e2e(q: dict, engine, graph) -> dict:
         # 질문마다 thread 를 따로 (같은 thread 면 앞 질문이 '이전 대화'로 붙는다)
         state = graph.invoke({"messages": [HumanMessage(content=q["question"])]},
                              config={"configurable": {"thread_id": f"ragas-e2e-{q['id']}-{time.time()}"}})
-        rec["route"] = state.get("classification")
+        rec["route"] = f"error: {state['route_error']}" if state.get("route_error") else state.get("classification")
         rec["bot_answer"] = next((m.content for m in reversed(state.get("messages", [])) if m.type == "ai"), "")
         if not rec["bot_answer"] and rec["route"] == "migration":
             # migration 경로는 답을 메시지가 아니라 state(new_code · changes)에 담고 화면이 그려 준다 → 같은 내용을 글로

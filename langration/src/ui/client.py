@@ -141,7 +141,7 @@ def _last_ai_text(state: dict) -> str:
     return ""
 
 
-KIND_NAME = {"migration": "코드 변환 요청", "search": "LangChain 질문", "general": "일반 질문"}
+KIND_NAME = {"migration": "코드 변환 요청", "search": "버전 변경 질문", "general": "일반 질문"}
 
 
 ISSUE_NAME = {"import_path_moved": "import 경로 이동", "symbol_renamed": "이름 바뀜", "symbol_removed": "없어짐",
@@ -172,10 +172,13 @@ def _step_message(node: str, upd: dict) -> tuple[str, str, list[str]]:
     if node == "classifier":
         kind = upd.get("classification", "")
         nxt = {"migration": "① 바꿀 부분 찾는 중", "search": "문서에서 답 찾는 중"}.get(kind, "답 쓰는 중")
-        why = {"migration": "코드와 바꿔 달라는 요청이 있어 변환 파이프라인으로 보냄",
+        why = {"migration": "코드가 있고 다른 버전에서 돌아가는 코드가 필요해 변환 파이프라인으로 보냄",
                "search": "버전 변화를 묻는 질문이라 문서 검색으로 답함",
-               "general": "LangChain 버전 변화와 관계없는 질문이라 일반 답변"}.get(kind)
-        return f"질문 종류: {KIND_NAME.get(kind, kind)}", nxt, [why] if why else []
+               "general": "버전 변화가 주제가 아닌 질문이라 일반 답변"}.get(kind)
+        details = [why] if why else []
+        if upd.get("route_reason"):                  # 분류 이유 (R1~R4 규칙 또는 LLM)
+            details.append(f"판단 근거: {upd['route_reason']}")
+        return f"질문 종류: {KIND_NAME.get(kind, kind)}", nxt, details
     if node == "analyzer":
         a = upd.get("analysis") if isinstance(upd.get("analysis"), dict) else {}
         issues = a.get("issues") or []
@@ -241,6 +244,8 @@ def _step_message(node: str, upd: dict) -> tuple[str, str, list[str]]:
         return "문서에서 답을 찾았어요", "정리하는 중", ["찾은 문서 조각만 근거로 답하고, 끝에 출처를 붙여요"]
     if node == "general":
         return "답을 썼어요", "정리하는 중", []
+    if node == "no_code":
+        return "바꿀 코드를 찾지 못했어요", "안내하는 중", ["코드 블록으로 코드를 붙여 넣으면 변환해요"]
     return f"{node} 완료", "다음 단계 진행 중", []
 
 
@@ -285,12 +290,16 @@ def ask(text: str, on_step=None, thread_id: str | None = None) -> dict | None:
     # 답의 종류는 '이번 질문'의 분류로 정한다. 그래프가 대화를 기억하면(체크포인터) 앞 질문의
     # verify_result · old_code 가 state에 남아 있어, 인사에도 이전 변환 결과를 보여 주는 문제가 있었다 (10-15)
     kind = turn_kind or state.get("classification") or ("migration" if _entry == "migration" else "general")
-    if kind == "migration" or (turn_kind is None and ran_migration):
+    # migration 으로 갔지만 코드가 없어 no_code 로 끝난 경우: 변환 결과 대신 안내 글을 보여 준다
+    no_code = kind == "migration" and not (state.get("old_code") or "").strip()
+    if not no_code and (kind == "migration" or (turn_kind is None and ran_migration)):
         target = state.get("target_version") or LATEST["langchain"]
         result = _from_graph(state, state.get("old_code", ""), target)
         result["steps"], result["seconds"] = steps, seconds
         return {"kind": "migration", "reply": None, "result": result, "steps": steps, "seconds": seconds}
-    return {"kind": kind, "reply": _last_ai_text(state) or "답을 만들지 못했어요. 다시 물어봐 주세요.", "result": None,
+    # no_code 는 화면에서 글 답으로 보여야 하므로 kind 를 general 로 돌려준다 (migration 이면 화면이 변환 결과 패널을 찾음)
+    return {"kind": "general" if no_code else kind,
+            "reply": _last_ai_text(state) or "답을 만들지 못했어요. 다시 물어봐 주세요.", "result": None,
             "steps": steps, "seconds": seconds}
 
 

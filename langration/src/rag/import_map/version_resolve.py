@@ -28,6 +28,8 @@ MAX_DISTANCE = 6
 CORE_TOPS = {"langchain", "langchain_core", "langchain_community"}
 ONLY_1X_TOPS = {"langchain_classic"}  # 1.0 이전에는 없던 패키지 — 0.x 목표에서는 후보가 될 수 없다
 VERSION_TEXT = re.compile(r"(\d+)\.(\d+)(?:\.(\d+))?")
+# 앞자리만 쓴 버전: "1", "1.x", "0.X", "v0", "1.*"
+MAJOR_ONLY_TEXT = re.compile(r"(?<![\d.])(\d+)(?:\.[xX*])?(?![\d.])")
 
 
 @dataclass(frozen=True)
@@ -49,7 +51,14 @@ def normalize_version(text: str | None) -> str:
         return LATEST_VERSION
     m = VERSION_TEXT.search(text)
     if not m:
-        raise ValueError(f"cannot parse version: {text!r}")
+        # "1.x", "0.x" 처럼 앞자리만 오면 그 앞자리의 최신 지원 버전 (1 → 1.4.5, 0 → 0.3.30)
+        mm = MAJOR_ONLY_TEXT.search(text)
+        if not mm:
+            raise ValueError(f"cannot parse version: {text!r}")
+        same_major = sorted((v for v in VERSION_SETS if version_key(v)[0] == int(mm[1])), key=version_key)
+        if not same_major:
+            raise ValueError(f"unsupported version: {text!r} (supported: {', '.join(VERSION_SETS)})")
+        return same_major[-1]
     major, minor, patch = int(m[1]), int(m[2]), m[3]
     same_minor = sorted((v for v in VERSION_SETS if version_key(v)[:2] == (major, minor)), key=version_key)
     if not same_minor:

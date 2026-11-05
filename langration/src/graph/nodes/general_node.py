@@ -6,7 +6,7 @@ from langration.src.prompt.general_prompt import general_prompt
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.3)
 
 def general_node(state: MigrationState):
     response = llm.invoke(

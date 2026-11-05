@@ -203,7 +203,8 @@ def self_eval(questions: dict, bot: dict, route: dict, judged_bot: dict) -> list
                      [q["id"] for q in mig + probe_mig])
     out["A2"] = item("A2", [bot[p["id"]].get("classification") == p["expected_route"] for p in probe_other],
                      [p["id"] for p in probe_other])
-    out["A3"] = item("A3", [len(set(r["labels"])) == 1 for r in route.values()], list(route))
+    out["A3"] = item("A3", [len(set(r["labels"])) == 1 and not str(r["labels"][0]).startswith("error")
+                            for r in route.values()], list(route))
 
     def b1(q):
         return norm(bot[q["id"]].get("old_code")) == norm(q["code"])
