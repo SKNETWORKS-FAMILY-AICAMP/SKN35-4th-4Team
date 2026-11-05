@@ -602,6 +602,58 @@ def check_invoke_subscript(tree: ast.AST, parent: dict, evidence_id: str | None 
     return errors
 
 
+# 10-2. 문자열을 돌려주는 LLM(completion) 결과에서 .content 꺼내기
+# 11-05 QA: `from langchain_openai import OpenAI` + llm.predict(x) → llm.invoke(x).content 로 바꾼 코드가 11가지 검사를
+# 모두 통과했다. OpenAI · OllamaLLM 같은 completion LLM 의 invoke 는 str 을 돌려줘서 실행하면 AttributeError.
+COMPLETION_LLMS = {"langchain_openai.OpenAI", "langchain_openai.AzureOpenAI", "langchain_ollama.OllamaLLM",
+                   "langchain_huggingface.HuggingFaceEndpoint", "langchain_huggingface.HuggingFacePipeline"}
+
+
+def _completion_llm_names(tree: ast.AST) -> set[str]:
+    """import 한 이름 중 completion LLM 클래스 (위 목록 또는 *.llms 모듈에서 가져온 것)."""
+    names = set()
+    for n in ast.walk(tree):
+        if isinstance(n, ast.ImportFrom) and n.module and n.level == 0:
+            for a in n.names:
+                path = f"{n.module}.{a.name}"
+                if path in COMPLETION_LLMS or (".llms" in f".{n.module}." and not a.name.startswith("Chat")):
+                    names.add(a.asname or a.name)
+    return names
+
+
+def _is_completion_llm(expr: ast.AST | None, tree: ast.AST, llm_names: set[str], depth: int = 0) -> bool:
+    """expr 이 completion LLM 이거나, 끝이 completion LLM 인 | 체인인가."""
+    if expr is None or depth > 5:
+        return False
+    if isinstance(expr, ast.Name):
+        return _is_completion_llm(_assigned_value(tree, expr.id), tree, llm_names, depth + 1)
+    if isinstance(expr, ast.Call):
+        return _callee_name(expr) in llm_names
+    if isinstance(expr, ast.BinOp) and isinstance(expr.op, ast.BitOr):
+        return _is_completion_llm(expr.right, tree, llm_names, depth + 1)
+    return False
+
+
+def check_completion_content(tree: ast.AST, parent: dict) -> list[dict]:
+    """completion LLM(.invoke 가 str) 결과에서 .content 를 꺼내는가. 10번(출력 꺼내기)과 같은 오류 종류로 낸다."""
+    llm_names = _completion_llm_names(tree)
+    if not llm_names:
+        return []
+    errors = []
+    for call in _invoke_calls(tree):
+        if not _is_completion_llm(call.func.value, tree, llm_names):
+            continue
+        for n in _result_uses(call, parent, tree) or []:
+            if isinstance(n, ast.Attribute) and n.attr == "content" and isinstance(n.ctx, ast.Load):
+                errors.append(issue(
+                    "invoke_output_subscript",
+                    "문자열을 돌려주는 LLM(OpenAI · OllamaLLM 같은 completion 모델)의 invoke 결과는 이미 str 인데 .content 로 "
+                    "꺼내고 있습니다(실행하면 AttributeError: 'str' object has no attribute 'content'). "
+                    ".content 를 지우고 결과를 그대로 쓰세요. .content 는 ChatOpenAI 같은 채팅 모델(AIMessage)에서만 씁니다.",
+                    new_line=n.lineno))
+    return errors
+
+
 # 11. 레거시 체인 입출력 키
 
 def check_chain_io_keys(tree: ast.AST, parent: dict) -> list[dict]:
@@ -677,7 +729,8 @@ def verify(
         e7, w7 = check_unused_imports(tree, used, _names(old_tree))                      # 7
         e8 = check_return_type(old_code, old_tree, tree, parent)                         # 8
         e9, w9 = check_undefined_names(tree, old_tree, ev_paths)                         # 9
-        e10 = check_invoke_subscript(tree, parent, _lcel_evidence_id(evidences, shown))  # 10
+        e10 = (check_invoke_subscript(tree, parent, _lcel_evidence_id(evidences, shown))  # 10
+               + check_completion_content(tree, parent))
         e11 = check_chain_io_keys(tree, parent)                                          # 11
         errors += e4 + e5 + e7 + e8 + e9 + e10 + e11
         warnings += w4 + w5 + w6 + w7 + w9
