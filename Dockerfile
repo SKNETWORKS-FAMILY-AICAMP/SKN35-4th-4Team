@@ -4,7 +4,9 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     UV_COMPILE_BYTECODE=1 \
-    UV_LINK_MODE=copy
+    UV_LINK_MODE=copy \
+    DJANGO_DEBUG=False
+# ↑ 배포 컨테이너는 기본 DEBUG 끔 (켜져 있으면 오류 화면에 코드 · 설정이 그대로 보임). .env 에 적은 값이 있으면 그 값이 우선
 
 # mysqlclient 빌드 도구
 RUN apt-get update \

@@ -32,6 +32,7 @@ from .models import ChatHistory
 from .reply import extract_code, summary
 
 LIST_LIMIT = 50
+MESSAGE_MAX = 20000                                      # 질문 한 번의 최대 글자 수 (코드 붙여 넣기 포함)
 
 
 def _user_id(request):
@@ -49,10 +50,18 @@ def api_login_required(view):
 
 
 def _body(request) -> dict:
+    """JSON 객체만 받는다. 목록 · 숫자 등이 오면 빈 dict (그대로 쓰면 .get 에서 500)."""
     try:
-        return json.loads(request.body or b"{}")
+        data = json.loads(request.body or b"{}")
     except (ValueError, UnicodeDecodeError):
         return {}
+    return data if isinstance(data, dict) else {}
+
+
+def _text(data: dict, key: str) -> str:
+    """문자열 칸만 꺼낸다. 숫자 · 목록 등 다른 타입이면 "" (그대로 .strip() 하면 500)."""
+    value = data.get(key)
+    return value if isinstance(value, str) else ""
 
 
 def _owner_ok(session_id: str, user_id: str) -> bool:
@@ -146,10 +155,13 @@ def _answer(text: str, user_id: str, session_id: str, emit) -> dict:
 def api_chat(request):
     user_id = _user_id(request)
     data = _body(request)
-    session_id = str(data.get("session_id") or "").strip()[:100]
-    text = (data.get("message") or "").strip()
+    session_id = _text(data, "session_id").strip()[:100]
+    text = _text(data, "message").strip()
     if not session_id or not text:
         return JsonResponse({"ok": False, "error": "대화 번호와 질문이 필요해요."}, status=400)
+    if len(text) > MESSAGE_MAX:                              # 너무 긴 글은 LLM 비용 · 시간 초과 · 문맥 한도 문제라 미리 막음
+        return JsonResponse({"ok": False, "error": f"질문이 너무 길어요 ({len(text):,}자). {MESSAGE_MAX:,}자 이내로 줄여 주세요."},
+                            status=400)
     if not _owner_ok(session_id, user_id):
         return JsonResponse({"ok": False, "error": "대화를 찾지 못했어요."}, status=404)
 
