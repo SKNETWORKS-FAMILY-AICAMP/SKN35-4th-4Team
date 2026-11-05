@@ -1,4 +1,4 @@
-"""실무형 질문 35개 검사.
+"""실무형 질문 36개 검사.
 
     python eval/check_questions.py --py <LangChain 1.x 가 깔린 python> [--map data/processed/import_map.jsonl]
 

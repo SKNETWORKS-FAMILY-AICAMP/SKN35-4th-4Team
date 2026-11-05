@@ -289,7 +289,7 @@
   <tr><td><code>eval/</code> (3rd 에서 가져옴)</td><td>코드 변환 평가. import 를 <code>langration.src</code> 로 맞추고 <code>score.py</code> 한 줄 수정</td></tr>
   <tr><td><code>eval/ragas_questions.json</code></td><td>RAGAS 질문 24개 (정답 · 정답 조각 ID)</td></tr>
   <tr><td><code>eval/run_ragas.py</code> · <code>score_ragas.py</code></td><td>답 모으기 (search / e2e) · RAGAS 채점 (격리 환경). <code>--set</code> 으로 질문 세트 선택</td></tr>
-  <tr><td><code>eval/ragas_questions_gpt.json</code> · <code>_gpt2.json</code></td><td>ChatGPT 가 만든 질문 (수정 없이 저장). 결과는 <code>eval/results/gpt/</code> · <code>gpt2/</code></td></tr>
+  <tr><td><code>eval/ragas_questions_gpt.json</code> · <code>_gpt2.json</code></td><td>ChatGPT 가 만든 질문 (수정 없이 저장). 결과는 <code>eval/results/RAGAS_gpt2-questions/</code> (<code>_gpt2.json</code>). <code>_gpt.json</code> 결과는 정리되어 삭제 (커밋 <code>892cf6d</code> 의 <code>eval/results/gpt/</code> 에서 확인)</td></tr>
   <tr><td><code>eval/run_eval.py</code></td><td>질문마다 thread_id 따로</td></tr>
   <tr><td><code>langration/src/rag/retrieval/import_lookup.py</code></td><td><code>lookup_names()</code> 추가</td></tr>
   <tr><td><code>langration/src/rag/retrieval/hybrid.py</code></td><td><code>retrieve()</code> 에 <code>name_lookup</code>, <code>era_weight</code> 옵션 (기본값은 그대로)</td></tr>

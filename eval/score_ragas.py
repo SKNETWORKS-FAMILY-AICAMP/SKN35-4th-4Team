@@ -7,9 +7,9 @@
 #     "python-dotenv>=1",
 # ]
 # ///
-"""RAGAS 채점 (문서 질의응답 · search 경로).
+"""RAGAS 채점 (문서 질의응답 · search / e2e 모드).
 
-eval/run_ragas.py 가 저장한 답(results/raw_ragas.jsonl)을 읽어 채점만 한다.
+eval/run_ragas.py 가 저장한 답(결과 폴더의 raw_ragas[_e2e].jsonl)을 읽어 채점만 한다.
 ragas 는 팀 프로젝트(uv.lock)와 버전이 부딪혀서 프로젝트에 넣지 않고, 이 파일 맨 위 의존성으로 따로 띄운다.
 
     uv run --script eval/score_ragas.py                 # 채점 모델 gpt-4o
@@ -18,13 +18,15 @@ ragas 는 팀 프로젝트(uv.lock)와 버전이 부딪혀서 프로젝트에 �
     uv run --script eval/score_ragas.py --mode e2e      # run_ragas.py --mode e2e 결과 채점 (실제 화면 기준)
     uv run --script eval/score_ragas.py --set gpt       # 다른 질문 세트 (ragas_questions_gpt.json · results/gpt/)
 
-저장: results/ragas_scores[_e2e].jsonl (질문×채점모델별 점수, 다시 실행하면 이어서) · ragas_summary[_e2e].json · ragas_scorecard[_e2e].md
+저장: 결과 폴더의 ragas_scores[_e2e].jsonl (질문×채점모델별 점수, 다시 실행하면 이어서) · ragas_summary[_e2e].json · ragas_scorecard[_e2e].md
+결과 폴더: 기본 세트는 eval/results/, --set <이름> 은 eval/results/<이름>/ (SET_DIRS 에 있으면 그 폴더. gpt2 → eval/results/RAGAS_gpt2-questions/)
 e2e 에서 general 경로로 간 질문은 찾은 문서가 없으므로 answer_relevancy · factual_correctness 만 매긴다.
 
 지표
-- 챗봇 (문서에 답이 있는 21개): faithfulness · answer_relevancy · context_precision · context_recall · factual_correctness
-- 일반 LLM (같은 21개): answer_relevancy · factual_correctness  (찾은 문서가 없으니 문서 지표는 없음)
-- LLM 없이: hit@6 (정답 조각이 찾은 6개 안에 있나) · 분류 결과 · 문서에 없는 질문 3개에 '모른다'고 답했나
+- 챗봇 (문서에 답이 있는 질문): faithfulness · answer_relevancy · context_precision · context_recall · factual_correctness
+- 일반 LLM (같은 질문): answer_relevancy · factual_correctness  (찾은 문서가 없으니 문서 지표는 없음)
+- LLM 없이: hit@6 (정답 조각이 찾은 6개 안에 있나, gold_ids 가 있는 세트만) · 분류 결과 · 문서에 없는 질문에 '모른다'고 답했나
+  (문항 수는 세트마다 다르다. 기본 세트는 답 있음 21 · 없음 3, gpt2 는 답 있음 26 · 없음 4)
 """
 import argparse
 import asyncio
@@ -38,6 +40,8 @@ from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parents[1]
 RES = ROOT / "eval" / "results"
+# 결과 폴더 이름이 세트 이름과 다른 경우 (run_ragas.py 에도 같은 표가 있음)
+SET_DIRS = {"gpt2": "RAGAS_gpt2-questions"}
 load_dotenv(ROOT / ".env")
 
 BOT_METRICS = ["faithfulness", "answer_relevancy", "context_precision", "context_recall", "factual_correctness"]
@@ -222,7 +226,7 @@ def main() -> None:
     global RES
     qfile = ROOT / "eval" / (f"ragas_questions_{args.set}.json" if args.set else "ragas_questions.json")
     if args.set:
-        RES = RES / args.set
+        RES = RES / SET_DIRS.get(args.set, args.set)
 
     qs = {q["id"]: q for q in json.loads(qfile.read_text(encoding="utf-8"))}
     raw = {r["id"]: r for r in load_jsonl(RES / f"raw_ragas{suffix(args.mode)}.jsonl")}

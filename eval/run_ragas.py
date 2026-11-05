@@ -13,9 +13,10 @@
 - search (component): "문서 검색 + 근거 답변 부품이 얼마나 좋은가". 모든 질문을 search 경로로 보내 검색·답변 품질만 본다.
   search_node 는 찾은 문서를 state 에 남기지 않으므로 같은 함수(검색기 · format_context · search_prompt)를 그대로 불러 contexts 를 함께 저장.
 - e2e: "사용자가 실제로 받는 답이 얼마나 좋은가". supervisor 그래프 전체를 돌려 분류기가 고른 경로의 최종 답을 저장.
-  search 로 간 질문만 contexts 가 있고(같은 검색을 한 번 더 불러 기록), general · migration 으로 간 질문은 문서 없이 답한 것이다.
+  search 로 간 질문은 같은 검색을 한 번 더 불러 contexts 를 기록하고, migration 으로 간 질문은 state 의 evidences 를 기록한다. general 로 간 질문은 문서 없이 답한 것이라 contexts 가 없다.
 
-저장: eval/results/raw_ragas.jsonl · raw_ragas_e2e.jsonl (질문 하나 끝날 때마다 한 줄, 다시 실행하면 이어서)
+저장: 결과 폴더의 raw_ragas.jsonl · raw_ragas_e2e.jsonl (질문 하나 끝날 때마다 한 줄, 다시 실행하면 이어서)
+결과 폴더: 기본 세트는 eval/results/, --set <이름> 은 eval/results/<이름>/ (SET_DIRS 에 있으면 그 폴더. gpt2 → eval/results/RAGAS_gpt2-questions/)
 일반 LLM: 같은 gpt-4o-mini, temperature 0, 시스템 프롬프트 없이 질문 그대로 (e2e 는 search 모드에서 받은 답을 재사용).
 """
 import argparse
@@ -34,13 +35,15 @@ from dotenv import load_dotenv  # noqa: E402
 load_dotenv(ROOT / ".env")
 
 RES = ROOT / "eval" / "results"
+# 결과 폴더 이름이 세트 이름과 다른 경우 (score_ragas.py 에도 같은 표가 있음)
+SET_DIRS = {"gpt2": "RAGAS_gpt2-questions"}
 
 
 def question_set(name: str) -> tuple[Path, Path]:
     """질문 세트 이름 → (질문 파일, 결과 폴더). 기본 세트는 이름 없음."""
     if not name:
         return ROOT / "eval" / "ragas_questions.json", RES
-    return ROOT / "eval" / f"ragas_questions_{name}.json", RES / name
+    return ROOT / "eval" / f"ragas_questions_{name}.json", RES / SET_DIRS.get(name, name)
 
 
 def out_paths(res: Path) -> dict[str, Path]:
