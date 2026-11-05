@@ -394,6 +394,15 @@ details.steps summary .outcome.bad { color: var(--bad); }
 .modal .field { margin-bottom: 10px; font-size: 14px; padding: 9px 12px; }
 .modal .ex-list { overflow-y: auto; margin: 0 -8px; padding: 0 8px; }
 .modal .ex-list .group { margin-left: 2px; }
+.modal .ex-drawers { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 4px 0 8px; }
+.modal .drawer { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 18px; border: 1px solid var(--line); border-radius: 12px; background: #fff; cursor: pointer; text-align: left; font: inherit; }
+.modal .drawer:hover { border-color: var(--accent); }
+.modal .drawer .ic { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; }
+.modal .drawer .ic svg.i { width: 16px; height: 16px; stroke-width: 2.2; }
+.modal .drawer .dt { font-size: 15px; font-weight: 700; color: var(--text); }
+.modal .drawer .dd { font-size: 13px; color: var(--text-2); }
+.modal .ex-back { margin: 2px 0 6px; padding: 6px 2px; border: none; background: none; font: inherit; font-size: 13px; font-weight: 600; color: var(--accent); cursor: pointer; }
+@media (max-width: 560px) { .modal .ex-drawers { grid-template-columns: 1fr; } }
 
 
 /* ─────────────── 좁은 화면 ─────────────── */
