@@ -32,10 +32,18 @@ def current_user_id(request):
 
 
 def _body(request) -> dict:
+    """JSON 객체만 받는다. 목록 · 숫자 등이 오면 빈 dict (그대로 쓰면 .get 에서 500)."""
     try:
-        return json.loads(request.body or b"{}")
+        data = json.loads(request.body or b"{}")
     except (ValueError, UnicodeDecodeError):
         return {}
+    return data if isinstance(data, dict) else {}
+
+
+def _text(data: dict, key: str) -> str:
+    """문자열 칸만 꺼낸다. 숫자 · 목록 등 다른 타입이면 "" (그대로 .strip() 하면 500)."""
+    value = data.get(key)
+    return value if isinstance(value, str) else ""
 
 
 def _fail(error: str, status: int = 200) -> JsonResponse:
@@ -59,13 +67,13 @@ def signup_page(request):
 @require_POST
 def api_signup(request):
     data = _body(request)
-    user_id = (data.get("user_id") or "").strip()
-    password = data.get("password") or ""
+    user_id = _text(data, "user_id").strip()
+    password = _text(data, "password")
     if not USER_ID_RULE.match(user_id):
         return _fail("아이디는 한글 · 영문 · 숫자 · _ 로 2~20자예요.")
     if not PASSWORD_MIN <= len(password) <= PASSWORD_MAX:
         return _fail(f"비밀번호는 {PASSWORD_MIN}~{PASSWORD_MAX}자로 정해 주세요.")
-    if password != (data.get("password_confirm") or ""):
+    if password != _text(data, "password_confirm"):
         return _fail("비밀번호 확인이 맞지 않아요. 같은 비밀번호를 두 번 입력해 주세요.")
     if User.objects.filter(user_id=user_id).exists():
         return _fail(f"'{user_id}'은 이미 있는 아이디예요. 다른 아이디를 쓰거나 로그인해 주세요.")
@@ -81,8 +89,8 @@ def api_signup(request):
 @require_POST
 def api_login(request):
     data = _body(request)
-    user_id = (data.get("user_id") or "").strip()
-    password = data.get("password") or ""
+    user_id = _text(data, "user_id").strip()
+    password = _text(data, "password")
     user = User.objects.filter(user_id=user_id).first() if user_id else None
     if user is None or not user.password:
         check_password(password, _DUMMY_HASH)    # 결과는 버림. 있는 아이디일 때와 같은 시간이 걸리게

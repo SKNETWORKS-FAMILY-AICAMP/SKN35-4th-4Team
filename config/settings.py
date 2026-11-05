@@ -29,6 +29,11 @@ SECRET_KEY = os.getenv(
 
 DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 
+# 저장소에 공개된 기본 키는 개발용. 배포(DEBUG=False)에서 그대로 쓰면 서명값(쿠키 등)을 누구나 만들 수 있음
+if not DEBUG and SECRET_KEY.startswith('django-insecure-'):
+    import warnings
+    warnings.warn("DJANGO_SECRET_KEY 가 설정되지 않아 저장소의 공개 키를 쓰고 있어요. 서버 .env 에 DJANGO_SECRET_KEY 를 넣어 주세요.")
+
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 # 외부 주소(https 터널 · EC2 도메인)에서 오는 POST 허용. 예: https://xxxx.trycloudflare.com,http://13.1.2.3
