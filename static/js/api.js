@@ -7,7 +7,7 @@ const API = {
     login: "/api/users/login/",
     logout: "/api/users/logout/",
     sessions: "/api/langration/sessions/",                                     // GET 목록 · POST 새 대화
-    session: (id) => `/api/langration/sessions/${encodeURIComponent(id)}/`,   // GET 대화 내용
+    session: (id) => `/api/langration/sessions/${encodeURIComponent(id)}/`,   // GET 대화 내용 · DELETE 대화 삭제
     chat: "/api/langration/chat/",                                            // POST · 한 줄씩 흘려보내는 응답 (스트리밍)
 };
 

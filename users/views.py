@@ -23,6 +23,8 @@ from .models import User
 USER_ID_RULE = re.compile(r"^[0-9A-Za-z가-힣_]{2,20}$")   # 3차와 같은 규칙
 PASSWORD_MIN, PASSWORD_MAX = 6, 64
 LOGIN_FAIL = "아이디 또는 비밀번호가 맞지 않아요."        # 어느 쪽이 틀렸는지는 알려 주지 않음
+# 없는 아이디일 때도 같은 해시 계산을 한 번 해서 응답 시간을 맞춤 (시간 차이로 아이디가 있는지 알 수 없게)
+_DUMMY_HASH = make_password("timing-equalizer")
 
 
 def current_user_id(request):
@@ -82,11 +84,12 @@ def api_login(request):
     user_id = (data.get("user_id") or "").strip()
     password = data.get("password") or ""
     user = User.objects.filter(user_id=user_id).first() if user_id else None
-    if user is None or not password:
-        return _fail(LOGIN_FAIL)
-    if not user.password:                        # 비밀번호 기능 전에 만든 아이디
-        return _fail("비밀번호가 없는 예전 아이디예요. 새 아이디를 만들어 주세요.")
-    if not check_password(password, user.password):
+    if user is None or not user.password:
+        check_password(password, _DUMMY_HASH)    # 결과는 버림. 있는 아이디일 때와 같은 시간이 걸리게
+        if user is None:
+            return _fail(LOGIN_FAIL)
+        return _fail("비밀번호가 없는 예전 아이디예요. 새 아이디를 만들어 주세요.")   # 비밀번호 기능 전에 만든 아이디
+    if not password or not check_password(password, user.password):
         return _fail(LOGIN_FAIL)
     request.session.cycle_key()                  # 로그인할 때 세션 키를 새로 (세션 고정 공격 방지)
     request.session["user_id"] = user_id
