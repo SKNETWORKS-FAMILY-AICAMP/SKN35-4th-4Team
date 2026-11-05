@@ -1,0 +1,1162 @@
+{
+ "run_at": "2026-11-05 09:55:11",
+ "judge": "gpt-4o",
+ "mode": "search",
+ "n": 30,
+ "answerable": 26,
+ "overall": {
+  "bot": {
+   "faithfulness": 0.829,
+   "answer_relevancy": 0.505,
+   "context_precision": 0.63,
+   "context_recall": 0.692,
+   "factual_correctness": 0.497
+  },
+  "llm": {
+   "answer_relevancy": 0.535,
+   "factual_correctness": 0.305
+  }
+ },
+ "hit_at_6": null,
+ "by_type": {
+  "레거시 체인 패키지 이동": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 1.0,
+   "bot_answer_relevancy": 0.674,
+   "bot_context_precision": 1.0,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.8,
+   "llm_factual_correctness": 0.36
+  },
+  "동적 모델 선택 마이그레이션": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.857,
+   "bot_answer_relevancy": 0.365,
+   "bot_context_precision": 0.292,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.29,
+   "llm_factual_correctness": 0.27
+  },
+  "상태 스키마 호환성": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.5,
+   "bot_answer_relevancy": 0.564,
+   "bot_context_precision": 0.325,
+   "bot_context_recall": 0.0,
+   "bot_factual_correctness": 0.0,
+   "llm_factual_correctness": 0.15
+  },
+  "메시지 속성 변경": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.889,
+   "bot_answer_relevancy": 0.545,
+   "bot_context_precision": 0.5,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.93,
+   "llm_factual_correctness": 0.71
+  },
+  "에이전트 API 지원 종료 및 대체": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.909,
+   "bot_answer_relevancy": 0.506,
+   "bot_context_precision": 0.167,
+   "bot_context_recall": 0.0,
+   "bot_factual_correctness": 0.33,
+   "llm_factual_correctness": 0.46
+  },
+  "Python 버전 호환성": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.8,
+   "bot_answer_relevancy": 0.681,
+   "bot_context_precision": 0.2,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.89,
+   "llm_factual_correctness": 0.36
+  },
+  "상태 클래스 이름 변경": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.5,
+   "bot_answer_relevancy": 0.726,
+   "bot_context_precision": 1.0,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.67,
+   "llm_factual_correctness": 0.2
+  },
+  "입력 검증 API 변경": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.75,
+   "bot_answer_relevancy": 0.0,
+   "bot_context_precision": 0.25,
+   "bot_context_recall": 0.0,
+   "bot_factual_correctness": 0.36,
+   "llm_factual_correctness": 0.31
+  },
+  "에이전트 인터페이스 변경": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.455,
+   "bot_answer_relevancy": 0.372,
+   "bot_context_precision": 0.0,
+   "bot_context_recall": 0.0,
+   "bot_factual_correctness": 0.5,
+   "llm_factual_correctness": 0.4
+  },
+  "메시지 콘텐츠 구조 변경": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.556,
+   "bot_answer_relevancy": 0.498,
+   "bot_context_precision": 1.0,
+   "bot_context_recall": 0.0,
+   "bot_factual_correctness": 0.0,
+   "llm_factual_correctness": 0.22
+  },
+  "미들웨어 기반 구조 변경": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 1.0,
+   "bot_answer_relevancy": 0.341,
+   "bot_context_precision": 0.167,
+   "bot_context_recall": 0.5,
+   "bot_factual_correctness": 0.44,
+   "llm_factual_correctness": 0.14
+  },
+  "업그레이드 및 환경 설정": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.667,
+   "bot_answer_relevancy": 0.756,
+   "bot_context_precision": 0.833,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 1.0,
+   "llm_factual_correctness": 0.0
+  },
+  "파트너 패키지 분리": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.889,
+   "bot_answer_relevancy": 0.627,
+   "bot_context_precision": 0.875,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.86,
+   "llm_factual_correctness": 0.75
+  },
+  "OpenAI 패키지 설치 오류": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 1.0,
+   "bot_answer_relevancy": 0.758,
+   "bot_context_precision": 0.722,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.75,
+   "llm_factual_correctness": 0.4
+  },
+  "OpenAI import 경로 변경": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.75,
+   "bot_answer_relevancy": 0.575,
+   "bot_context_precision": 1.0,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.4,
+   "llm_factual_correctness": 0.0
+  },
+  "파트너 API 호환성": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 1.0,
+   "bot_answer_relevancy": 0.558,
+   "bot_context_precision": 0.71,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.75,
+   "llm_factual_correctness": 0.47
+  },
+  "Chroma 패키지 분리": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 1.0,
+   "bot_answer_relevancy": 0.418,
+   "bot_context_precision": 0.853,
+   "bot_context_recall": 0.5,
+   "bot_factual_correctness": 0.33,
+   "llm_factual_correctness": 0.0
+  },
+  "Chroma import 경로 변경": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 1.0,
+   "bot_answer_relevancy": 0.685,
+   "bot_context_precision": 0.768,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.5,
+   "llm_factual_correctness": 0.2
+  },
+  "대화 메모리 마이그레이션": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.889,
+   "bot_answer_relevancy": 0.433,
+   "bot_context_precision": 0.667,
+   "bot_context_recall": 0.5,
+   "bot_factual_correctness": 0.36,
+   "llm_factual_correctness": 0.0
+  },
+  "대화 스레드 유지": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.929,
+   "bot_answer_relevancy": 0.295,
+   "bot_context_precision": 0.608,
+   "bot_context_recall": 0.5,
+   "bot_factual_correctness": 0.0,
+   "llm_factual_correctness": 0.29
+  },
+  "단기·장기 메모리 구분": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 1.0,
+   "bot_answer_relevancy": 0.466,
+   "bot_context_precision": 0.95,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.89,
+   "llm_factual_correctness": 1.0
+  },
+  "대화 기록 관리 방식 변경": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.818,
+   "bot_answer_relevancy": 0.463,
+   "bot_context_precision": 0.806,
+   "bot_context_recall": 0.5,
+   "bot_factual_correctness": 0.22,
+   "llm_factual_correctness": 0.4
+  },
+  "LangGraph 메모리 설정 변경": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": null,
+   "bot_answer_relevancy": 0.258,
+   "bot_context_precision": 1.0,
+   "bot_context_recall": 0.5,
+   "bot_factual_correctness": 0.0,
+   "llm_factual_correctness": 0.0
+  },
+  "운영 환경 메모리 저장소 변경": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 0.571,
+   "bot_answer_relevancy": 0.456,
+   "bot_context_precision": 0.967,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.4,
+   "llm_factual_correctness": 0.0
+  },
+  "PostgreSQL 마이그레이션 초기화": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 1.0,
+   "bot_answer_relevancy": 0.597,
+   "bot_context_precision": 0.2,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.5,
+   "llm_factual_correctness": 0.35
+  },
+  "메모리 구조 변경": {
+   "n": 1,
+   "hit": null,
+   "bot_faithfulness": 1.0,
+   "bot_answer_relevancy": 0.498,
+   "bot_context_precision": 0.533,
+   "bot_context_recall": 1.0,
+   "bot_factual_correctness": 0.76,
+   "llm_factual_correctness": 0.5
+  }
+ },
+ "routes": {
+  "search": 24,
+  "general": 6
+ },
+ "unanswerable": {
+  "h05": {
+   "bot": true,
+   "llm": false
+  },
+  "h10": {
+   "bot": true,
+   "llm": false
+  },
+  "h14": {
+   "bot": true,
+   "llm": false
+  },
+  "h17": {
+   "bot": true,
+   "llm": false
+  }
+ },
+ "rows": [
+  {
+   "id": "h01",
+   "type": "레거시 체인 패키지 이동",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.6744,
+    "context_precision": 1.0,
+    "context_recall": 1.0,
+    "factual_correctness": 0.8
+   },
+   "llm": {
+    "answer_relevancy": 0.6355,
+    "factual_correctness": 0.36
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-41c19d624a",
+    "doc-ba70f6867a74",
+    "doc-16492bcffe8d",
+    "doc-1f037eaf7dfb",
+    "doc-d4f52a72bd1d",
+    "doc-4621c50f2012",
+    "doc-a9f53ff5ca16"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h02",
+   "type": "동적 모델 선택 마이그레이션",
+   "difficulty": "어려움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.8571,
+    "answer_relevancy": 0.3647,
+    "context_precision": 0.2917,
+    "context_recall": 1.0,
+    "factual_correctness": 0.29
+   },
+   "llm": {
+    "answer_relevancy": 0.3562,
+    "factual_correctness": 0.27
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-8047894a632b",
+    "doc-e40dce52cb92",
+    "doc-ea7b7f937625",
+    "doc-250f1ceaa460",
+    "doc-299cf6f74fd4",
+    "doc-4c3ecae2a3b8"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h03",
+   "type": "상태 스키마 호환성",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.5639,
+    "context_precision": 0.325,
+    "context_recall": 0.0,
+    "factual_correctness": 0.0
+   },
+   "llm": {
+    "answer_relevancy": 0.5003,
+    "factual_correctness": 0.15
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-9990b08c1363",
+    "doc-9aa8cc90c8a2",
+    "doc-cf370aca5238",
+    "doc-c4e4578fa6e8",
+    "doc-0166f2f9e40c",
+    "doc-3f720cbf6bb4"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h04",
+   "type": "메시지 속성 변경",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.8889,
+    "answer_relevancy": 0.5455,
+    "context_precision": 0.5,
+    "context_recall": 1.0,
+    "factual_correctness": 0.93
+   },
+   "llm": {
+    "answer_relevancy": 0.5768,
+    "factual_correctness": 0.71
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-27e3f29b21f0",
+    "doc-111a80d8d4f1",
+    "doc-129018442b6d",
+    "doc-f55ae0cd1b8d",
+    "doc-24982e20049f",
+    "doc-c2fd8ffc5805"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h05",
+   "type": "문서에 없는 자동 마이그레이션 기능",
+   "difficulty": "어려움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.7823
+   },
+   "llm": {},
+   "bot_abstain": true,
+   "llm_abstain": false,
+   "retrieved": [
+    "doc-74ea4fe18ecc",
+    "doc-01dbffd57cb0",
+    "doc-67e2450ffccd",
+    "doc-97d8535a1cde",
+    "doc-ba70f6867a74",
+    "doc-8a30c7b18fd2"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h06",
+   "type": "에이전트 API 지원 종료 및 대체",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.9091,
+    "answer_relevancy": 0.5062,
+    "context_precision": 0.1667,
+    "context_recall": 0.0,
+    "factual_correctness": 0.33
+   },
+   "llm": {
+    "answer_relevancy": 0.6,
+    "factual_correctness": 0.46
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-b2cd51012ec8",
+    "doc-0166f2f9e40c",
+    "doc-ecf5a9e07f7f",
+    "doc-655ee1deb878",
+    "doc-0e83fa642464",
+    "doc-4621c50f2012"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h07",
+   "type": "Python 버전 호환성",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.8,
+    "answer_relevancy": 0.6807,
+    "context_precision": 0.2,
+    "context_recall": 1.0,
+    "factual_correctness": 0.89
+   },
+   "llm": {
+    "answer_relevancy": 0.6631,
+    "factual_correctness": 0.36
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-501c8b9a982b",
+    "doc-3f720cbf6bb4",
+    "doc-01dbffd57cb0",
+    "doc-ba70f6867a74",
+    "doc-74ea4fe18ecc",
+    "doc-16492bcffe8d"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h08",
+   "type": "상태 클래스 이름 변경",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.7262,
+    "context_precision": 1.0,
+    "context_recall": 1.0,
+    "factual_correctness": 0.67
+   },
+   "llm": {
+    "answer_relevancy": 0.7659,
+    "factual_correctness": 0.2
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-0422b4999f89",
+    "doc-76cd60955c57",
+    "doc-b2cd51012ec8",
+    "doc-fb90904dc480",
+    "doc-408b6faf41bf",
+    "doc-1f41fc3acb24"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h09",
+   "type": "입력 검증 API 변경",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.75,
+    "answer_relevancy": 0.0,
+    "context_precision": 0.25,
+    "context_recall": 0.0,
+    "factual_correctness": 0.36
+   },
+   "llm": {
+    "answer_relevancy": 0.3727,
+    "factual_correctness": 0.31
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-835109878e4e",
+    "doc-63184e552ae3",
+    "doc-ea7b7f937625",
+    "doc-db440deb0cdb",
+    "doc-71dd84fba34a",
+    "doc-299cf6f74fd4"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h10",
+   "type": "문서에 없는 자동 변환 명령",
+   "difficulty": "어려움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.0
+   },
+   "llm": {},
+   "bot_abstain": true,
+   "llm_abstain": false,
+   "retrieved": [
+    "doc-b2cd51012ec8",
+    "doc-b6fe15b266ad",
+    "doc-6fd9c07c98cc",
+    "doc-97d8535a1cde",
+    "doc-67e2450ffccd",
+    "doc-1f41fc3acb24"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h11",
+   "type": "에이전트 인터페이스 변경",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.4545,
+    "answer_relevancy": 0.3724,
+    "context_precision": 0.0,
+    "context_recall": 0.0,
+    "factual_correctness": 0.5
+   },
+   "llm": {
+    "answer_relevancy": 0.4281,
+    "factual_correctness": 0.4
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-f64669ae8d4f",
+    "doc-cb625afde98c",
+    "doc-ecf5a9e07f7f",
+    "doc-b2cd51012ec8",
+    "doc-0c9a37ebdb9a",
+    "doc-ea7b7f937625"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h12",
+   "type": "메시지 콘텐츠 구조 변경",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.5556,
+    "answer_relevancy": 0.4983,
+    "context_precision": 1.0,
+    "context_recall": 0.0,
+    "factual_correctness": 0.0
+   },
+   "llm": {
+    "answer_relevancy": 0.3071,
+    "factual_correctness": 0.22
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-83c8c1b50f5c",
+    "doc-930e7bfa1f8b",
+    "doc-f68550c45506",
+    "doc-f2780894319f",
+    "doc-2ca7f4c5cc1b",
+    "doc-37b2ab7b7fb4"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h13",
+   "type": "미들웨어 기반 구조 변경",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.3413,
+    "context_precision": 0.1667,
+    "context_recall": 0.5,
+    "factual_correctness": 0.44
+   },
+   "llm": {
+    "answer_relevancy": 0.4221,
+    "factual_correctness": 0.14
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-8a9467844792",
+    "doc-ea7b7f937625",
+    "doc-b78c4bebfb54",
+    "doc-f705440f2467",
+    "doc-299cf6f74fd4",
+    "doc-42357f78de62"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h14",
+   "type": "문서에 없는 하위 호환성 옵션",
+   "difficulty": "어려움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.8,
+    "answer_relevancy": 0.5865
+   },
+   "llm": {},
+   "bot_abstain": true,
+   "llm_abstain": false,
+   "retrieved": [
+    "doc-27000aa485c7",
+    "doc-d1a82dff36d5",
+    "doc-2149a78d4cd9",
+    "doc-ffcfa9ee5c6a",
+    "doc-e5cb518bc9b8",
+    "doc-8604669c75a0"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h15",
+   "type": "업그레이드 및 환경 설정",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.6667,
+    "answer_relevancy": 0.7557,
+    "context_precision": 0.8333,
+    "context_recall": 1.0,
+    "factual_correctness": 1.0
+   },
+   "llm": {
+    "answer_relevancy": 0.6443,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-2ce6a5a4f05a",
+    "doc-3f720cbf6bb4",
+    "doc-fb32e5af74af",
+    "doc-27d4f40de0dd",
+    "doc-f14afe80d845",
+    "doc-1b2950e16db1"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h16",
+   "type": "파트너 패키지 분리",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.8889,
+    "answer_relevancy": 0.6268,
+    "context_precision": 0.875,
+    "context_recall": 1.0,
+    "factual_correctness": 0.86
+   },
+   "llm": {
+    "answer_relevancy": 0.6066,
+    "factual_correctness": 0.75
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-95f5bf273a",
+    "imap-ce8895550a",
+    "doc-2ce6a5a4f05a",
+    "doc-726a82eaacc5",
+    "doc-0973aa4769b6",
+    "doc-9296b87f7cfc",
+    "doc-1c3e88eac1ba",
+    "doc-21697ebdd946"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h17",
+   "type": "문서에 없는 통합 패키지 설치 옵션",
+   "difficulty": "중간",
+   "route": "general",
+   "hit": null,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.5784
+   },
+   "llm": {},
+   "bot_abstain": true,
+   "llm_abstain": false,
+   "retrieved": [
+    "imap-95f5bf273a",
+    "imap-ce8895550a",
+    "doc-2ce6a5a4f05a",
+    "doc-976af3295bd8",
+    "doc-377b47b2608c",
+    "doc-de9fb099bc35",
+    "doc-0973aa4769b6",
+    "doc-30200a411835"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h18",
+   "type": "OpenAI 패키지 설치 오류",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.7577,
+    "context_precision": 0.7222,
+    "context_recall": 1.0,
+    "factual_correctness": 0.75
+   },
+   "llm": {
+    "answer_relevancy": 0.7577,
+    "factual_correctness": 0.4
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-2ce6a5a4f05a",
+    "doc-2176dac21345",
+    "doc-2ad980c2d360",
+    "doc-a6d5351116f1",
+    "doc-372501d3b5da",
+    "doc-4d2d5de3ffc7"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h19",
+   "type": "OpenAI import 경로 변경",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.75,
+    "answer_relevancy": 0.5748,
+    "context_precision": 1.0,
+    "context_recall": 1.0,
+    "factual_correctness": 0.4
+   },
+   "llm": {
+    "answer_relevancy": 0.5774,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-02229b7d73",
+    "doc-8555c8743011",
+    "doc-6a2fee79b2a5",
+    "doc-6c87a682fbb5",
+    "doc-68bcd31a2eae",
+    "doc-6fbaac3d25db",
+    "doc-b1e11a04d489"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h20",
+   "type": "파트너 API 호환성",
+   "difficulty": "어려움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.5577,
+    "context_precision": 0.71,
+    "context_recall": 1.0,
+    "factual_correctness": 0.75
+   },
+   "llm": {
+    "answer_relevancy": 0.7149,
+    "factual_correctness": 0.47
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-95f5bf273a",
+    "doc-83c8c1b50f5c",
+    "doc-6218171913dc",
+    "doc-d47e588767a3",
+    "doc-6fbaac3d25db",
+    "doc-c50d62f3f2e2",
+    "doc-69e0628d5851"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h21",
+   "type": "Chroma 패키지 분리",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.4185,
+    "context_precision": 0.8529,
+    "context_recall": 0.5,
+    "factual_correctness": 0.33
+   },
+   "llm": {
+    "answer_relevancy": 0.5276,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-f0323e963f",
+    "doc-a3e61bf87554",
+    "doc-e37ec2aca4df",
+    "doc-7106b8be7436",
+    "doc-e82372b6da8b",
+    "doc-d5747800dfde",
+    "doc-b7618e50fd6e"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h22",
+   "type": "Chroma import 경로 변경",
+   "difficulty": "쉬움",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.685,
+    "context_precision": 0.7679,
+    "context_recall": 1.0,
+    "factual_correctness": 0.5
+   },
+   "llm": {
+    "answer_relevancy": 0.6804,
+    "factual_correctness": 0.2
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "imap-f0323e963f",
+    "doc-a3e61bf87554",
+    "doc-e37ec2aca4df",
+    "doc-16492bcffe8d",
+    "doc-ba70f6867a74",
+    "doc-7106b8be7436",
+    "doc-e82372b6da8b"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h23",
+   "type": "대화 메모리 마이그레이션",
+   "difficulty": "중간",
+   "route": "general",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.8889,
+    "answer_relevancy": 0.4329,
+    "context_precision": 0.6667,
+    "context_recall": 0.5,
+    "factual_correctness": 0.36
+   },
+   "llm": {
+    "answer_relevancy": 0.4614,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-603ce0dabad4",
+    "doc-fe28c829d3f2",
+    "doc-83e117a7aa9d",
+    "doc-6b215f7be6ae",
+    "doc-344d2cd08e46",
+    "doc-594eeb7ca94a"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h24",
+   "type": "대화 스레드 유지",
+   "difficulty": "중간",
+   "route": "general",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.9286,
+    "answer_relevancy": 0.2954,
+    "context_precision": 0.6083,
+    "context_recall": 0.5,
+    "factual_correctness": 0.0
+   },
+   "llm": {
+    "answer_relevancy": 0.3751,
+    "factual_correctness": 0.29
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-5aa35c3a6a52",
+    "doc-603ce0dabad4",
+    "doc-9cf5a3c9739a",
+    "doc-c2fd8ffc5805",
+    "doc-d4f412d69b15",
+    "doc-666bb4f1fc60"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h25",
+   "type": "단기·장기 메모리 구분",
+   "difficulty": "중간",
+   "route": "general",
+   "hit": null,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.4664,
+    "context_precision": 0.95,
+    "context_recall": 1.0,
+    "factual_correctness": 0.89
+   },
+   "llm": {
+    "answer_relevancy": 0.5641,
+    "factual_correctness": 1.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-603ce0dabad4",
+    "doc-9cf5a3c9739a",
+    "doc-f545928ecc0c",
+    "doc-3237f70bd1f4",
+    "doc-fe28c829d3f2",
+    "doc-3c05251002c4"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h26",
+   "type": "대화 기록 관리 방식 변경",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.8182,
+    "answer_relevancy": 0.4627,
+    "context_precision": 0.8056,
+    "context_recall": 0.5,
+    "factual_correctness": 0.22
+   },
+   "llm": {
+    "answer_relevancy": 0.5186,
+    "factual_correctness": 0.4
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-ecf5a9e07f7f",
+    "doc-ea7b7f937625",
+    "doc-603ce0dabad4",
+    "doc-c2fd8ffc5805",
+    "doc-299cf6f74fd4",
+    "doc-f64669ae8d4f"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h27",
+   "type": "LangGraph 메모리 설정 변경",
+   "difficulty": "중간",
+   "route": "general",
+   "hit": null,
+   "bot": {
+    "faithfulness": null,
+    "answer_relevancy": 0.2583,
+    "context_precision": 1.0,
+    "context_recall": 0.5,
+    "factual_correctness": 0.0
+   },
+   "llm": {
+    "answer_relevancy": 0.2543,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-9990b08c1363",
+    "doc-f14afe80d845",
+    "doc-8d1fbb793573",
+    "doc-63d636700da1",
+    "doc-a12aeaeca0be",
+    "doc-759bc7510fc2"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h28",
+   "type": "운영 환경 메모리 저장소 변경",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 0.5714,
+    "answer_relevancy": 0.4558,
+    "context_precision": 0.9667,
+    "context_recall": 1.0,
+    "factual_correctness": 0.4
+   },
+   "llm": {
+    "answer_relevancy": 0.4955,
+    "factual_correctness": 0.0
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-9a3e19aa6655",
+    "doc-9696f8a3b842",
+    "doc-29be3d0887c3",
+    "doc-5a654a124819",
+    "doc-a538a1e37699",
+    "doc-f9b734ab5654"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h29",
+   "type": "PostgreSQL 마이그레이션 초기화",
+   "difficulty": "쉬움",
+   "route": "general",
+   "hit": null,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.5974,
+    "context_precision": 0.2,
+    "context_recall": 1.0,
+    "factual_correctness": 0.5
+   },
+   "llm": {
+    "answer_relevancy": 0.6683,
+    "factual_correctness": 0.35
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-f7ecdb5a4f73",
+    "doc-8ede90971cb7",
+    "doc-60d16b8c8ee2",
+    "doc-4d29a8ce2519",
+    "doc-9a3e19aa6655",
+    "doc-9c7c20315f55"
+   ],
+   "gold": []
+  },
+  {
+   "id": "h30",
+   "type": "메모리 구조 변경",
+   "difficulty": "중간",
+   "route": "search",
+   "hit": null,
+   "bot": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.4984,
+    "context_precision": 0.5333,
+    "context_recall": 1.0,
+    "factual_correctness": 0.76
+   },
+   "llm": {
+    "answer_relevancy": 0.4478,
+    "factual_correctness": 0.5
+   },
+   "bot_abstain": null,
+   "llm_abstain": null,
+   "retrieved": [
+    "doc-603ce0dabad4",
+    "doc-f545928ecc0c",
+    "doc-3237f70bd1f4",
+    "doc-3c05251002c4",
+    "doc-9cf5a3c9739a",
+    "doc-ff65910f2855"
+   ],
+   "gold": []
+  }
+ ]
+}
