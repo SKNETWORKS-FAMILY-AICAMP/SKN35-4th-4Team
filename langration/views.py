@@ -4,6 +4,7 @@
 API  : POST /api/langration/sessions/        → {ok, session_id}       새 대화 (첫 질문을 보낼 때 화면이 부름)
        GET  /api/langration/sessions/        → {ok, sessions: [...]}  내 대화 목록
        GET  /api/langration/sessions/<id>/   → {ok, messages: [...]}  대화 다시 열기 (질문 · 답만)
+       DELETE /api/langration/sessions/<id>/ → {ok, deleted}          대화 삭제
        POST /api/langration/chat/  {session_id, message}
             → 스트리밍 (JSON 한 줄씩): step … step → done (3차 client.ask() 결과) / error
 그래프 호출은 3차와 같이 langration/src/ui/client.py 한 곳 (그래프는 한 번만 만들고, 대화마다 thread_id 로 기억을 나눔).
@@ -21,7 +22,7 @@ from django.db import close_old_connections, connection
 from django.db.models import Count, Max, Min
 from django.http import JsonResponse, StreamingHttpResponse
 from django.shortcuts import redirect, render
-from django.views.decorators.http import require_GET, require_http_methods, require_POST
+from django.views.decorators.http import require_http_methods, require_POST
 
 from langration.src.ui import client
 from langration.src.ui.mock import import_paths
@@ -94,12 +95,15 @@ def api_sessions(request):
     return JsonResponse({"ok": True, "sessions": sessions})
 
 
-@require_GET
+@require_http_methods(["GET", "DELETE"])
 @api_login_required
 def api_session(request, session_id):
     rows = ChatHistory.objects.filter(user_id=_user_id(request), session_id=session_id).order_by("created_at")
-    if not rows.exists():
+    if not rows.exists():                                # 없는 대화 · 남의 대화
         return JsonResponse({"ok": False, "error": "대화를 찾지 못했어요."}, status=404)
+    if request.method == "DELETE":                       # 대화 삭제 (그 대화의 질문 · 답 전부, 되돌릴 수 없음)
+        deleted, _ = rows.delete()
+        return JsonResponse({"ok": True, "deleted": deleted})
     messages = [{"question": r.question, "answer": r.answer, "created_at": r.created_at.isoformat()} for r in rows]
     return JsonResponse({"ok": True, "messages": messages})
 
