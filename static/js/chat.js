@@ -443,11 +443,46 @@ function exampleText(q) { return q.code ? `${q.request}\n\n\`\`\`python\n${q.cod
 function exampleTag(q) { return q.source_version ? `${q.difficulty} · ${q.source_version} → 1.x` : `${q.difficulty} · 문서 질문`; }
 function sendExample(q) { closeModals(); sendQuestion(exampleText(q)); }
 
+// 예제 서랍 두 개: 먼저 서랍을 고르고, 들어가면 그 서랍의 30개만 보여 준다
+const EX_DRAWERS = [
+    { key: "code", title: "코드 변환 평가 문항", desc: "옛 코드를 1.x로 고치는 질문", icon: ["code", "v"] },
+    { key: "doc", title: "RAG 평가 문항", desc: "코드 없이 문서로 답하는 질문", icon: ["book", "g"] },
+];
+const drawerOf = (q) => (q.code ? "code" : "doc");
+
 function renderExampleList(word) {
     const box = $("example-list");
+    const search = $("example-search");
     box.replaceChildren();
+
+    // ① 서랍 고르기
+    if (!state.exDrawer) {
+        search.style.display = "none";
+        const grid = h("div", "ex-drawers");
+        EX_DRAWERS.forEach((d) => {
+            const n = state.examples.filter((q) => drawerOf(q) === d.key).length;
+            const b = h("button", "drawer");
+            b.type = "button";
+            const i = h("span", `ic ${d.icon[1]}`); i.append(icon(d.icon[0]));
+            b.append(i, h("span", "dt", d.title), h("span", "dd", d.desc), h("span", "tag", `${n}개`));
+            b.addEventListener("click", () => { state.exDrawer = d.key; search.value = ""; renderExampleList(""); });
+            grid.append(b);
+        });
+        box.append(grid);
+        return;
+    }
+
+    // ② 서랍 안: 뒤로 + 검색 + 그 서랍의 예제
+    search.style.display = "";
+    const d = EX_DRAWERS.find((x) => x.key === state.exDrawer);
+    const back = h("button", "ex-back", `← 묶음 선택 · ${d.title}`);
+    back.type = "button";
+    back.addEventListener("click", () => { state.exDrawer = null; renderExampleList(""); });
+    box.append(back);
+
     const w = word.trim().toLowerCase();
-    const hits = state.examples.filter((q) => !w || `${q.id} ${q.type} ${q.request} ${q.code}`.toLowerCase().includes(w));
+    const hits = state.examples.filter((q) => drawerOf(q) === state.exDrawer
+        && (!w || `${q.id} ${q.type} ${q.request} ${q.code}`.toLowerCase().includes(w)));
     if (!hits.length) { box.append(h("p", "empty", "맞는 예제가 없어요.")); return; }
     let last = null;
     hits.forEach((q) => {
@@ -458,7 +493,12 @@ function renderExampleList(word) {
 }
 
 $("example-search").addEventListener("input", (e) => renderExampleList(e.target.value));
-[$("open-examples"), $("rail-examples"), $("more-examples")].forEach((b) => b.addEventListener("click", () => openModal("examples")));
+[$("open-examples"), $("rail-examples"), $("more-examples")].forEach((b) => b.addEventListener("click", () => {
+    state.exDrawer = null;          // 열 때마다 서랍 고르기부터
+    $("example-search").value = "";
+    renderExampleList("");
+    openModal("examples");
+}));
 $("rail-help").addEventListener("click", () => openModal("help"));
 
 
