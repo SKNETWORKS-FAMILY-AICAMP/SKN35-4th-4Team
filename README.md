@@ -86,18 +86,18 @@ LangChain은 1.0에서 패키지가 나뉘고 옛 체인 · 에이전트(`LLMCha
 
 **바뀐 점 · 수정된 점 · 업그레이드된 점**
 
-| 항목 | 3차 | 4차 | 구분 |
-|---|---|---|---|
-| 화면 | Streamlit | Django 템플릿 + HTML · CSS · JS | 바뀐 점 |
-| 백엔드 | 화면에서 그래프 직접 호출 | Django API (`users` · `langration` 앱) | 바뀐 점 |
-| 배포 | Streamlit Cloud | Docker Compose (Django + Gunicorn · Nginx) → AWS EC2 | 바뀐 점 |
-| 진행 표시 | Streamlit이 화면을 다시 그림 | 서버가 단계마다 한 줄씩 전송 (NDJSON 스트리밍), Nginx 버퍼링 끔 | 바뀐 점 |
-| 로그인 | 아이디만 | 아이디 + 비밀번호 (PBKDF2 해시 저장) | 업그레이드 |
-| 대화 관리 | 목록 · 다시 열기 | 목록 · 다시 열기 · 삭제 | 업그레이드 |
-| 질문 분류 | LLM이 판단 | 코드 규칙(R1) 먼저 → LLM 판단 → 코드 없는 migration은 general로(R2), 코드 없으면 안내(`no_code`), 분류 실패 기록(`route_error`) | 수정된 점 |
-| 일반 답변 | temperature 0.7 | temperature 0.3 | 수정된 점 |
-| 평가 | 코드 변환 평가 | 코드 변환 평가 다시 측정 + 문서 질의응답 RAGAS 평가 | 업그레이드 |
-| 확인용 예제 | 코드 변환 30개 | 코드 변환 평가 문항 30개 + RAG 평가 문항 30개 (서랍 두 개) | 업그레이드 |
+| 항목 | 3차 | 4차 |
+|---|---|---|
+| 화면 | Streamlit | Django 템플릿 + HTML · CSS · JS |
+| 백엔드 | 화면에서 그래프 직접 호출 | Django API (`users` · `langration` 앱) |
+| 배포 | Streamlit Cloud | Docker Compose (Django + Gunicorn · Nginx) → AWS EC2 |
+| 진행 표시 | Streamlit이 화면을 다시 그림 | 서버가 단계마다 한 줄씩 전송 (NDJSON 스트리밍), Nginx 버퍼링 끔 |
+| 로그인 | 아이디만 | 아이디 + 비밀번호 (PBKDF2 해시 저장) |
+| 대화 관리 | 목록 · 다시 열기 | 목록 · 다시 열기 · 삭제 |
+| 질문 분류 | LLM이 판단 | 코드 규칙(R1) 먼저 → LLM 판단 → 코드 없는 migration은 general로(R2), 코드 없으면 안내(`no_code`), 분류 실패 기록(`route_error`) |
+| 일반 답변 | temperature 0.7 | temperature 0.3 |
+| 평가 | 코드 변환 평가 | 코드 변환 평가 다시 측정 + 문서 질의응답 RAGAS 평가 |
+| 확인용 예제 | 코드 변환 30개 | 코드 변환 평가 문항 30개 + RAG 평가 문항 30개 (서랍 두 개) |
 
 그대로인 것: gpt-4o-mini · LangGraph 변환 파이프라인(analyzer → retriever → rewriter → verifier) · RAG 데이터 · verifier 11가지 검사
 
@@ -145,17 +145,6 @@ flowchart LR
 3. Nginx는 버퍼링을 끈 채 그대로 전달하고, 화면은 도착한 줄을 진행 상자에 쌓습니다.
 4. 답이 완성되면 서버가 질문과 답을 TiDB `chat_history`에 저장한 뒤, 마지막 줄(`done`)로 답과 결과 패널 데이터를 보냅니다.
 
-**설정을 이렇게 한 이유**
-
-| 설정 | 이유 |
-|---|---|
-| Nginx까지 Docker Compose로 묶음 | 서버에서 `bash deploy/deploy.sh` 명령 하나로 받기 · 빌드 · 실행 |
-| 외부에는 80번만 열고 Django는 내부 8000번 | Gunicorn을 바로 노출하지 않고 Nginx 뒤에 둠 |
-| 정적 파일은 Nginx가 직접 전달 | Django가 CSS · JS까지 처리하지 않도록 공유 볼륨으로 넘김 |
-| 스트리밍 응답 버퍼링 끔 (`proxy_buffering off`, `X-Accel-Buffering: no`) | Nginx가 응답을 모았다가 한 번에 보내면 진행 단계가 실시간으로 안 보임 |
-| Gunicorn worker 1개 · thread 4개 · timeout 180초 | 그래프의 대화 기억이 서버 메모리에 있어 한 프로세스에 유지, 긴 답변도 끊기지 않게 |
-| 15초마다 빈 줄(keepalive) | 답이 오래 걸릴 때 연결이 끊기지 않게 |
-
 ### 3-1. API 명세
 
 | 앱 | 메서드 | 경로 | 하는 일 |
@@ -201,23 +190,23 @@ erDiagram
 
 ```mermaid
 flowchart TB
-    U["사용자 질문"] --> R{"R1 코드 규칙 먼저 (4차)<br/>코드 없음 + 옛 API 이름?"}
-    S["search<br/>문서 검색 → 근거 기반 답변"]
-    G["general<br/>일반 답변 (temp 0.3)"]
-    R -->|"예"| S
-    R -->|"아니오"| C{"classifier<br/>나머지만 LLM이 판단"}
+    U["User question"] --> R{"R1 rule check (4th)<br/>no code + legacy API name?"}
+    S["search<br/>doc retrieval → grounded answer"]
+    G["general<br/>general answer (temp 0.3)"]
+    R -->|"yes"| S
+    R -->|"no"| C{"classifier<br/>LLM decides the rest"}
     C -->|migration| M
     C -->|search| S
     C -->|general| G
-    C -.->|"R2 (4차)<br/>migration인데 코드 없음"| G
-    C -.->|"분류 실패 → route_error 기록 (4차)"| G
-    subgraph M["migration 서브그래프"]
-        A["① analyzer<br/>코드 · 목표 버전 읽기, 바꿀 부분 찾기"] -->|"코드 있음"| RT["② retriever<br/>대응표 정확 매칭 + 하이브리드 검색"]
-        A -->|"코드 없음 (4차)"| NC["no_code<br/>코드를 붙여 달라고 안내"]
-        RT --> W["③ rewriter<br/>근거 ID를 붙여 다시 쓰기"]
-        W --> V{"④ verifier<br/>LLM 없이 11가지 검사"}
-        V -->|"근거 문제 · 3번 미만"| RT
-        V -->|"그 밖의 오류 · 3번 미만"| W
+    C -.->|"R2 (4th)<br/>migration without code"| G
+    C -.->|"classification failed → log route_error (4th)"| G
+    subgraph M["migration subgraph"]
+        A["① analyzer<br/>read code · target version, find parts to change"] -->|"has code"| RT["② retriever<br/>exact map match + hybrid search"]
+        A -->|"no code (4th)"| NC["no_code<br/>ask user to paste code"]
+        RT --> W["③ rewriter<br/>rewrite with evidence IDs"]
+        W --> V{"④ verifier<br/>11 checks without LLM"}
+        V -->|"evidence error · attempt < 3"| RT
+        V -->|"other error · attempt < 3"| W
     end
 ```
 
@@ -231,7 +220,6 @@ flowchart TB
 | ③ | rewriter | gpt-4o-mini | 근거에 있는 것만 써서 다시 쓰기, 바뀐 줄마다 근거 ID | - |
 | ④ | verifier | 없음 | 11가지 검사, 실패하면 이유를 다음 시도에 넘김 (첫 시도 포함 최대 3번). 근거 문제면 retriever부터, 그 밖의 오류면 rewriter로 바로 | - |
 | - | no_code | 없음 | 고칠 코드가 없을 때 변환하지 않고 안내 | 4차 추가 |
-| - | search · general | gpt-4o-mini | 문서 근거로 답 + 출처 / 일반 답 | general temperature 0.7 → 0.3 |
 
 **verifier 11가지 검사**: ① 문법 ② 근거 ID ③ 변경 기록 ④ 남은 옛 import ⑤ import 존재 ⑥ 남은 옛 메서드(경고) ⑦ 안 쓰는 import ⑧ 반환값 보존 ⑨ 정의 안 된 이름 ⑩ 출력 꺼내기 ⑪ 체인 입출력 키
 
@@ -239,13 +227,13 @@ flowchart TB
 
 3차에서 구축한 데이터를 그대로 사용합니다.
 
-| 데이터 | 규모 | 내용 |
-|---|---|---|
-| import 대응표 | 9,155건 | 옛 import 경로 → 1.x 경로 (PyPI 패키지 코드 분석 + langchain-cli 규칙 병합) |
-| 메서드 대응표 | 42건 | `.run` → `.invoke` 등 |
-| 최신 공식 문서 | 271페이지 | docs.langchain.com |
-| 마이그레이션 가이드 | 24페이지 | 0.3.30 공식 가이드 |
-| 청크 | 11,945개 | Chroma Cloud · text-embedding-3-small (1536차원) |
+| 데이터 | 규모 | 내용 | 출처 |
+|---|---|---|---|
+| import 대응표 | 9,155건 | 옛 import 경로 → 1.x 경로 (PyPI 패키지 코드 분석 + langchain-cli 규칙 병합) | [PyPI langchain](https://pypi.org/project/langchain/) · [langchain-cli 0.0.37](https://pypi.org/project/langchain-cli/0.0.37/) |
+| 메서드 대응표 | 42건 | `.run` → `.invoke` 등 | [PyPI 패키지 코드](https://pypi.org/project/langchain/) + [수동 보강](langration/src/rag/import_map/manual_method_map.py) |
+| 최신 공식 문서 | 271페이지 | docs.langchain.com | [LangChain 공식 문서 (Python)](https://docs.langchain.com/oss/python) |
+| 마이그레이션 가이드 | 24페이지 | 0.3.30 공식 가이드 | [langchain-ai/langchain `langchain==0.3.30` 태그](https://github.com/langchain-ai/langchain/tree/langchain%3D%3D0.3.30/docs/docs/versions) |
+| 청크 | 11,945개 | Chroma Cloud · text-embedding-3-small (1536차원) | 위 데이터를 가공 ([`data/processed/chunks.jsonl`](data/processed/chunks.jsonl)) |
 
 **검색 흐름**
 
