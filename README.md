@@ -193,7 +193,7 @@ erDiagram
 flowchart TB
     U["사용자 질문"] --> R{"R1 코드 규칙<br/>코드 없음 + 옛 API 이름?"}
     S["search<br/>문서 검색 → 근거 기반 답변"]
-    G["general<br/>일반 답변 (temp 0.3)"]
+    G["general<br/>일반 답변"]
     R -->|"예"| S
     R -->|"아니오"| C{"classifier<br/>나머지만 LLM이 판단"}
     C -->|migration| M
