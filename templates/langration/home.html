@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Langration · LangChain 마이그레이션 어시스턴트</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body data-user="{{ user_id|default:'' }}" data-examples="{% static 'data/examples.json' %}">
+    {% csrf_token %}
+
+    <div class="shell">
+        <!-- 맨 위 -->
+        <header class="topbar">
+            <span class="brand"><span class="logo"><svg class="i" data-i="logo"></svg></span>Langration</span>
+            <div class="right">
+                <span class="status" id="status" hidden></span>
+            </div>
+        </header>
+
+        <div class="frame welcome" id="frame">
+            <!-- ① 아이콘 줄 -->
+            <nav class="rail">
+                <button class="on" title="대화"><svg class="i" data-i="chat"></svg></button>
+                <button id="rail-examples" title="확인용 예제"><svg class="i" data-i="flask"></svg></button>
+                <span class="sep"></span>
+                <button id="rail-help" title="쓰는 방법"><svg class="i" data-i="help"></svg></button>
+            </nav>
+
+            <!-- ② 목록: 새 대화 · 확인용 예제 · 내 대화 · 로그아웃 -->
+            <aside class="side">
+                <h2>대화</h2>
+                <button class="btn line" id="new-chat"><svg class="i" data-i="plus"></svg>새 대화</button>
+                <button class="btn ghost" id="open-examples" style="justify-content:flex-start"><svg class="i" data-i="flask"></svg>확인용 예제 <span class="tag" id="example-count" style="margin-left:auto">0</span></button>
+                <div class="list" id="session-list"><p class="empty">불러오는 중...</p></div>
+                <div class="me">
+                    <span class="avatar" id="avatar-side"></span>
+                    <span class="name">{{ user_id|default:"로그인 사용자" }}</span>
+                    <button class="btn ghost sm" id="logout" title="로그아웃"><svg class="i" data-i="logout"></svg></button>
+                </div>
+            </aside>
+
+            <!-- ③ 가운데 대화 -->
+            <main class="chat">
+                <div class="chat-head">
+                    <span class="title" id="chat-title">새 대화</span>
+                    <span class="meta" id="chat-meta"></span>
+                    <button class="btn ghost sm" id="toggle-result" title="결과 패널 열기 · 닫기"><svg class="i" data-i="panel"></svg>결과</button>
+                </div>
+
+                <!-- 첫 화면: 인사 + 추천 질문 (3차 첫 인사 문구) -->
+                <section class="hello" id="hello">
+                    <div class="in">
+                        <h1>안녕하세요, Langration입니다! 👋</h1>
+                        <p class="lead">옛 LangChain 코드를 붙여 넣으면 원하는 버전에 맞게 고쳐 드리고, 바꾼 이유와 근거, 검사 결과까지 함께 보여 드려요.</p>
+                        <ul>
+                            <li>바꿀 버전은 글로 적어 주세요 (예: "1.x로 바꿔 줘", "0.2로 되돌려 줘"). 적지 않으면 최신 버전으로 바꿔요.</li>
+                            <li>LangChain 버전 변화가 궁금하면 그냥 물어보셔도 돼요.</li>
+                        </ul>
+
+                        <form class="composer" data-composer>
+                            <textarea placeholder="옛 코드나 질문을 입력하세요 (여러 줄은 Shift+Enter)" aria-label="질문"></textarea>
+                            <div class="bar">
+                                <span class="hint">Enter 보내기 · Shift+Enter 줄 바꿈</span>
+                                <button class="send" type="submit" title="보내기"><svg class="i" data-i="up"></svg></button>
+                            </div>
+                        </form>
+
+                        <div class="suggest">
+                            <p class="cap"><span>이렇게 물어보세요</span><button type="button" id="more-examples">확인용 예제 전체 보기</button></p>
+                            <div id="suggest-list"></div>
+                        </div>
+
+                        <p class="foot">근거: <b>LangChain 공식 문서</b> · <b>마이그레이션 가이드</b> · <b>import 대응표</b></p>
+                    </div>
+                </section>
+
+                <div class="messages" id="messages"></div>
+
+                <div class="composer-wrap">
+                    <form class="composer" data-composer>
+                        <textarea placeholder="옛 코드나 질문을 입력하세요 (여러 줄은 Shift+Enter)" aria-label="질문"></textarea>
+                        <div class="bar">
+                            <button class="send" type="submit" title="보내기"><svg class="i" data-i="up"></svg></button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+
+            <!-- ④ 오른쪽 결과 패널 -->
+            <section class="result" id="result">
+                <div class="rhead">
+                    <h2>결과</h2>
+                    <button class="btn ghost sm" id="close-result" title="결과 패널 닫기"><svg class="i" data-i="x"></svg></button>
+                </div>
+                <div class="rbody" id="result-body"></div>
+            </section>
+        </div>
+    </div>
+
+    <!-- 확인창: 로그아웃 -->
+    <div class="modal" id="confirm">
+        <div class="box">
+            <h3>로그아웃할까요?</h3>
+            <p>대화 기록은 저장돼 있어요. 같은 아이디로 다시 들어오면 이어서 볼 수 있어요.</p>
+            <div class="acts">
+                <button class="btn line" data-close>취소</button>
+                <button class="btn primary" id="confirm-ok">로그아웃</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 확인창: 대화 삭제 -->
+    <div class="modal" id="delete-confirm">
+        <div class="box">
+            <h3>이 대화를 지울까요?</h3>
+            <p><b id="delete-title"></b><br>이 대화의 질문과 답이 모두 지워지고, 되돌릴 수 없어요.</p>
+            <div class="acts">
+                <button class="btn line" data-close>취소</button>
+                <button class="btn primary danger" id="delete-ok">지우기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 확인용 예제 60개 (코드 변환 평가 30 + RAG 평가 30) -->
+    <div class="modal" id="examples">
+        <div class="box wide">
+            <h3>확인용 예제</h3>
+            <p>4차 평가에 쓴 질문이에요. 코드 변환 평가 30개 · RAG 평가 30개. 누르면 바로 보내요.</p>
+            <input class="field" type="search" id="example-search" placeholder="예제 검색 (예: LLMChain, 메모리, RAG)">
+            <div class="ex-list" id="example-list"></div>
+            <div class="acts" style="margin-top:12px"><button class="btn line" data-close>닫기</button></div>
+        </div>
+    </div>
+
+    <!-- 쓰는 방법 -->
+    <div class="modal" id="help">
+        <div class="box">
+            <h3>쓰는 방법</h3>
+            <div class="md">
+                <ul>
+                    <li><b>코드 변환</b>: 옛 LangChain 코드를 붙여 넣고 바꿔 달라고 하면, 오른쪽에 전후 비교 · 바뀐 줄 · 근거 · 11가지 검사 결과가 나와요.</li>
+                    <li><b>버전</b>: "0.2로 되돌려 줘"처럼 글로 적어 주세요. 적지 않으면 최신 1.x로 바꿔요.</li>
+                    <li><b>질문</b>: 코드 없이 물어보면 공식 문서를 찾아 출처와 함께 답해요.</li>
+                    <li><b>대화</b>: 같은 대화 안에서는 앞 내용을 기억해요. 새 주제는 <b>새 대화</b>로 시작하세요.</li>
+                </ul>
+            </div>
+            <div class="acts"><button class="btn primary" data-close>알겠어요</button></div>
+        </div>
+    </div>
+
+    <!-- 답변 마크다운 표시 (marked) + 위험한 HTML 걸러내기 (DOMPurify) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+    <script src="{% static 'js/icons.js' %}"></script>
+    <script src="{% static 'js/api.js' %}"></script>
+    <script src="{% static 'js/result.js' %}"></script>
+    <script src="{% static 'js/chat.js' %}"></script>
+</body>
+</html>

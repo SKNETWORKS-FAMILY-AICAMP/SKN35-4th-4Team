@@ -1,0 +1,306 @@
+[
+  {
+    "id": "h01",
+    "type": "레거시 체인 패키지 이동",
+    "difficulty": "쉬움",
+    "question": "1.x로 올리니까 `from langchain.chains import LLMChain` import가 깨졌어. 기존 체인을 당장 유지하려면 어디서 가져오고 뭘 설치해야 해?",
+    "reference": "레거시 체인은 `langchain-classic` 패키지로 이동했다. `pip install langchain-classic`으로 설치한 후 `from langchain_classic.chains import LLMChain`으로 import하면 된다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "evidence_quote": "If you were using any of the following from the `langchain` package, you’ll need to install `langchain-classic` and update your imports: Legacy chains (`LLMChain`, `ConversationChain`, etc.).",
+    "gold_ids": []
+  },
+  {
+    "id": "h02",
+    "type": "동적 모델 선택 마이그레이션",
+    "difficulty": "어려움",
+    "question": "예전에는 model 자리에 함수를 넘겨서 메시지 길이에 따라 저렴한 모델이랑 비싼 모델을 골랐는데, 1.x에서 똑같이 하려면 어디로 옮겨야 해?",
+    "reference": "v0의 callable 기반 동적 모델 선택 기능은 v1에서 middleware 인터페이스로 이동했다. 모델 선택 로직은 middleware를 통해 구현해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "evidence_quote": "This functionality has been ported to the middleware interface in v1.",
+    "gold_ids": []
+  },
+  {
+    "id": "h03",
+    "type": "상태 스키마 호환성",
+    "difficulty": "중간",
+    "question": "기존 상태 클래스를 Pydantic으로 정의해 뒀는데 1.x에서 state_schema에 넣으니까 지원하지 않는다는 에러가 나. 뭘로 바꿔야 해?",
+    "reference": "`create_agent`의 상태 스키마는 `TypedDict`만 지원한다. Pydantic 모델과 dataclass는 더 이상 지원하지 않으므로 `TypedDict` 기반으로 변경해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "evidence_quote": "`create_agent` only supports `TypedDict` for state schemas. Pydantic models and dataclasses are no longer supported.",
+    "gold_ids": []
+  },
+  {
+    "id": "h04",
+    "type": "메시지 속성 변경",
+    "difficulty": "쉬움",
+    "question": "업그레이드하고 나서 `response.text()`를 호출하면 경고가 뜨는데, 이거 당장 수정해야 해? 괄호만 빼면 되는 건가?",
+    "reference": "메시지 객체의 `.text()`는 메서드에서 속성으로 변경되었으므로 `response.text`로 접근해야 한다. 기존 `.text()` 호출도 동작하지만 경고가 발생하며 v2에서 제거될 예정이다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "evidence_quote": "Use of the `.text()` method on message objects should drop the parentheses, as it is now a property. Existing usage patterns (i.e., `.text()`) will continue to function but now emit a warning.",
+    "gold_ids": []
+  },
+  {
+    "id": "h05",
+    "type": "문서에 없는 자동 마이그레이션 기능",
+    "difficulty": "어려움",
+    "question": "LangChain 1.x로 올리면서 기존 프로젝트의 import 경로를 자동으로 찾아 바꿔주는 `langchain migrate --rewrite-imports` 명령이 공식적으로 제공돼?",
+    "reference": "공식 LangChain v1 마이그레이션 가이드에는 `langchain migrate --rewrite-imports` 명령이나 해당 자동 변환 CLI의 사용법이 없다. 공식 가이드는 변경된 API와 import 경로를 항목별로 안내한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langchain-v1",
+    "evidence_quote": "This guide outlines the major changes between LangChain v1 and previous versions.",
+    "gold_ids": [],
+    "unanswerable": true
+  },
+  {
+    "id": "h06",
+    "type": "에이전트 API 지원 종료 및 대체",
+    "difficulty": "쉬움",
+    "question": "LangGraph 1.x로 올렸더니 기존 에이전트 생성 코드에서 deprecated 경고가 떠. 공식적으로 권장하는 새 방식이 뭐야?",
+    "reference": "LangGraph v1에서는 `create_react_agent`가 deprecated되었다. 대체 API로 `langchain.agents.create_agent`를 사용한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langgraph-v1",
+    "evidence_quote": "LangGraph v1 deprecates the `create_react_agent` prebuilt. Use LangChain’s `create_agent`, which runs on LangGraph and adds a flexible middleware system.",
+    "gold_ids": []
+  },
+  {
+    "id": "h07",
+    "type": "Python 버전 호환성",
+    "difficulty": "쉬움",
+    "question": "기존 서버가 Python 3.9인데 LangChain 1.x 설치가 안 돼. 기존 코드 문제야, 아니면 파이썬 버전부터 올려야 하는 거야?",
+    "reference": "LangChain v1의 모든 패키지는 Python 3.10 이상을 요구한다. Python 3.9 환경에서는 Python 버전을 먼저 업그레이드해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langgraph-v1",
+    "evidence_quote": "All LangChain packages now require Python 3.10 or higher. Python 3.9 reached end of life in October 2025.",
+    "gold_ids": []
+  },
+  {
+    "id": "h08",
+    "type": "상태 클래스 이름 변경",
+    "difficulty": "중간",
+    "question": "LangGraph 1.x 업그레이드 후 `AgentStatePydantic`이 deprecated됐다는 메시지가 나와. 공식적으로 어떤 클래스로 변경해야 해?",
+    "reference": "`AgentStatePydantic`의 대체 항목은 `langchain.agents.AgentState`이다. LangGraph v1에서는 Pydantic 기반 AgentState를 사용하지 않는다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langgraph-v1",
+    "evidence_quote": "`AgentStatePydantic` | `langchain.agents.AgentState` (no more pydantic state)",
+    "gold_ids": []
+  },
+  {
+    "id": "h09",
+    "type": "입력 검증 API 변경",
+    "difficulty": "중간",
+    "question": "예전에는 도구 입력값 검증을 별도 노드로 처리했는데 1.x 업그레이드 이후 그 노드를 찾을 수 없다는 오류가 나. 검증은 어떻게 처리해야 해?",
+    "reference": "LangGraph v1에서는 `ValidationNode`의 대체 방법으로 `create_agent`의 도구 자동 입력 검증을 안내한다. 별도의 `ValidationNode`를 사용하는 기존 구조를 새 도구 검증 방식으로 변경할 수 있다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langgraph-v1",
+    "evidence_quote": "`ValidationNode` | Tools automatically validate input with `create_agent`",
+    "gold_ids": []
+  },
+  {
+    "id": "h10",
+    "type": "문서에 없는 자동 변환 명령",
+    "difficulty": "어려움",
+    "question": "기존 LangGraph 프로젝트를 올릴 때 `langgraph migrate --auto-fix`를 실행하면 deprecated API를 전부 자동으로 새 API로 바꿔준다는 게 맞아?",
+    "reference": "공식 LangGraph v1 마이그레이션 가이드에는 `langgraph migrate --auto-fix` 명령이 설명되어 있지 않다. 문서에서 안내하는 업그레이드 명령은 `pip install -U langgraph langchain-core`이다.",
+    "source_url": "https://docs.langchain.com/oss/python/migrate/langgraph-v1",
+    "evidence_quote": "For a high-level overview of changes, see the what’s new page. To upgrade:",
+    "gold_ids": [],
+    "unanswerable": true
+  },
+  {
+    "id": "h11",
+    "type": "에이전트 인터페이스 변경",
+    "difficulty": "중간",
+    "question": "기존 에이전트 생성 코드를 1.x로 옮기는데 새 API는 단순히 함수 이름만 바뀐 거야? 기존보다 커스터마이징하는 방법도 달라졌어?",
+    "reference": "`create_agent`는 LangChain 1.0의 표준 에이전트 생성 방식으로 기존 `langgraph.prebuilt.create_react_agent`를 대체한다. middleware를 통해 에이전트의 동작을 더 유연하게 커스터마이징할 수 있다.",
+    "source_url": "https://docs.langchain.com/oss/python/releases/langchain-v1",
+    "evidence_quote": "`create_agent` is the standard way to build agents in LangChain 1.0. It provides a simpler interface than `langgraph.prebuilt.create_react_agent` while offering greater customization potential by using middleware.",
+    "gold_ids": []
+  },
+  {
+    "id": "h12",
+    "type": "메시지 콘텐츠 구조 변경",
+    "difficulty": "쉬움",
+    "question": "모델마다 reasoning이나 text 응답을 꺼내는 방법이 달라서 파싱 코드가 복잡했는데 1.x부터 공통으로 접근할 수 있는 속성이 생긴 거야?",
+    "reference": "LangChain v1에서는 메시지에 `content_blocks` 속성이 추가되었다. 이 속성은 여러 모델 제공자의 콘텐츠에 일관된 방식으로 접근할 수 있도록 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/releases/langchain-v1",
+    "evidence_quote": "A new `content_blocks` property that provides unified access to modern LLM features across providers.",
+    "gold_ids": []
+  },
+  {
+    "id": "h13",
+    "type": "미들웨어 기반 구조 변경",
+    "difficulty": "중간",
+    "question": "1.x로 바꾸고 보니까 예전처럼 에이전트 실행 단계마다 프롬프트를 수정하거나 대화 기록을 정리하는 구조가 달라졌어. 새 구조에서는 이런 작업을 어디서 처리해?",
+    "reference": "LangChain v1에서는 middleware를 통해 동적 프롬프트, 대화 요약, 도구 접근 제어, 상태 관리 및 가드레일을 제어한다. middleware는 `create_agent`의 주요 확장 인터페이스다.",
+    "source_url": "https://docs.langchain.com/oss/python/releases/langchain-v1",
+    "evidence_quote": "Middleware is the defining feature of `create_agent`. Middleware helps you control dynamic prompts, conversation summarization, selective tool access, state management, and guardrails through a composable abstraction.",
+    "gold_ids": []
+  },
+  {
+    "id": "h14",
+    "type": "문서에 없는 하위 호환성 옵션",
+    "difficulty": "어려움",
+    "question": "기존 에이전트 코드를 최대한 수정하지 않으려고 하는데 `create_agent(..., legacy_prompt=True)` 같은 옵션으로 0.x의 프롬프트 동작을 유지할 수 있어?",
+    "reference": "공식 What's new in LangChain v1 문서에는 `legacy_prompt=True` 옵션이 설명되어 있지 않다. v1에서는 `create_agent`와 middleware를 중심으로 새로운 에이전트 구조를 제공한다.",
+    "source_url": "https://docs.langchain.com/oss/python/releases/langchain-v1",
+    "evidence_quote": "The new standard for building agents in LangChain, replacing `langgraph.prebuilt.create_react_agent`.",
+    "gold_ids": [],
+    "unanswerable": true
+  },
+  {
+    "id": "h15",
+    "type": "업그레이드 및 환경 설정",
+    "difficulty": "쉬움",
+    "question": "Python 3.9 환경에서 LangChain을 최신 버전으로 설치하려고 하는데 버전 호환 문제가 발생해. 설치하려면 최소 Python 버전이 얼마야?",
+    "reference": "LangChain 설치 가이드에서 요구하는 Python 버전은 3.10 이상이다. Python 3.9 환경은 지원 요구사항을 충족하지 않는다.",
+    "source_url": "https://docs.langchain.com/oss/python/langchain/install",
+    "evidence_quote": "Requires Python 3.10+",
+    "gold_ids": []
+  },
+  {
+    "id": "h16",
+    "type": "파트너 패키지 분리",
+    "difficulty": "중간",
+    "question": "1.x로 올린 뒤 langchain만 설치했는데 OpenAI나 Anthropic 연결 라이브러리가 따로 설치되지 않은 것 같아. 예전처럼 한 패키지만 설치하면 되는 게 아니야?",
+    "reference": "LangChain의 모델 및 통합 기능은 독립적인 provider 패키지로 제공된다. OpenAI는 `langchain-openai`, Anthropic은 `langchain-anthropic`을 별도로 설치해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/langchain/install",
+    "evidence_quote": "LangChain provides integrations to hundreds of LLMs and thousands of other integrations. These live in independent provider packages.",
+    "gold_ids": []
+  },
+  {
+    "id": "h17",
+    "type": "문서에 없는 통합 패키지 설치 옵션",
+    "difficulty": "중간",
+    "question": "LangChain 1.x에서 `pip install \"langchain[all-providers]\"`를 사용하면 OpenAI, Anthropic 등 모든 모델 연동 패키지를 한 번에 설치할 수 있는 공식 extra가 있어?",
+    "reference": "공식 설치 문서에는 `langchain[all-providers]` extra가 설명되어 있지 않다. 문서에서 안내하는 방식은 `langchain-openai`, `langchain-anthropic` 등 필요한 provider 패키지를 개별 설치하는 것이다.",
+    "source_url": "https://docs.langchain.com/oss/python/langchain/install",
+    "evidence_quote": "LangChain provides integrations to hundreds of LLMs and thousands of other integrations. These live in independent provider packages.",
+    "gold_ids": [],
+    "unanswerable": true
+  },
+  {
+    "id": "h18",
+    "type": "OpenAI 패키지 설치 오류",
+    "difficulty": "쉬움",
+    "question": "업그레이드하고 `ModuleNotFoundError: No module named 'langchain_openai'` 오류가 나는데 langchain은 이미 설치했어. 추가로 뭘 설치해야 해?",
+    "reference": "OpenAI 연동에는 별도의 `langchain-openai` 패키지가 필요하다. `pip install -U langchain-openai` 명령으로 설치하면 된다.",
+    "source_url": "https://docs.langchain.com/oss/python/integrations/chat/openai",
+    "evidence_quote": "To access OpenAI models you’ll need to install the `langchain-openai` integration package and acquire an OpenAI Platform API key.",
+    "gold_ids": []
+  },
+  {
+    "id": "h19",
+    "type": "OpenAI import 경로 변경",
+    "difficulty": "쉬움",
+    "question": "ChatOpenAI를 쓰던 코드를 정리 중인데 새 패키지 기준으로 import 경로가 어디야?",
+    "reference": "`ChatOpenAI` 클래스는 `langchain-openai` 패키지에 속한다. `from langchain_openai import ChatOpenAI`로 가져온다.",
+    "source_url": "https://docs.langchain.com/oss/python/integrations/chat/openai",
+    "evidence_quote": "from langchain_openai import ChatOpenAI",
+    "gold_ids": []
+  },
+  {
+    "id": "h20",
+    "type": "파트너 API 호환성",
+    "difficulty": "어려움",
+    "question": "OpenAI 호환 API를 제공하는 다른 서비스로 바꿨는데 예전에는 나오던 `reasoning_content`나 `reasoning_details`가 응답에서 사라졌어. 1.x에서 왜 이런 현상이 생겨?",
+    "reference": "`ChatOpenAI`는 공식 OpenAI API 명세를 대상으로 한다. 타사 제공자의 비표준 응답 필드인 `reasoning_content`, `reasoning`, `reasoning_details`는 추출하거나 보존하지 않으므로 provider별 패키지를 사용해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/integrations/chat/openai",
+    "evidence_quote": "`ChatOpenAI` targets official OpenAI API specifications only. Non-standard response fields from third-party providers (e.g., `reasoning_content`, `reasoning`, `reasoning_details`) are not extracted or preserved.",
+    "gold_ids": []
+  },
+  {
+    "id": "h21",
+    "type": "Chroma 패키지 분리",
+    "difficulty": "쉬움",
+    "question": "업그레이드하고 Chroma 벡터 저장소를 불러오려는데 예전과 다르게 모듈을 찾지 못해. 어떤 패키지를 설치해야 해?",
+    "reference": "LangChain에서 Chroma 벡터 저장소를 사용하려면 독립 통합 패키지인 `langchain-chroma`를 설치해야 한다. 공식 설치 예시는 `pip install -qU \"langchain-chroma>=0.1.2\"`이다.",
+    "source_url": "https://docs.langchain.com/oss/python/integrations/vectorstores/chroma",
+    "evidence_quote": "To access `Chroma` vector stores you’ll need to install the `langchain-chroma` integration package.",
+    "gold_ids": []
+  },
+  {
+    "id": "h22",
+    "type": "Chroma import 경로 변경",
+    "difficulty": "쉬움",
+    "question": "기존 Chroma 코드를 유지하려는데 이제 `Chroma` 클래스를 어디서 import해야 해?",
+    "reference": "Chroma 통합 클래스는 `langchain_chroma` 모듈에서 가져온다. `from langchain_chroma import Chroma`를 사용하면 된다.",
+    "source_url": "https://docs.langchain.com/oss/python/integrations/vectorstores/chroma",
+    "evidence_quote": "from langchain_chroma import Chroma",
+    "gold_ids": []
+  },
+  {
+    "id": "h23",
+    "type": "대화 메모리 마이그레이션",
+    "difficulty": "중간",
+    "question": "예전에는 체인에 메모리를 붙여서 대화를 기억하게 했는데 새 에이전트로 바꾸고 나니까 질문할 때마다 처음부터 시작해. 대화 기록을 유지하려면 뭘 설정해야 해?",
+    "reference": "LangChain 에이전트에서 단기 대화 메모리를 사용하려면 에이전트를 생성할 때 `checkpointer`를 지정해야 한다. 공식 예시에서는 `InMemorySaver`를 사용한다.",
+    "source_url": "https://docs.langchain.com/oss/python/langchain/short-term-memory",
+    "evidence_quote": "To add short-term memory (thread-level persistence) to an agent, you need to specify a `checkpointer` when creating an agent.",
+    "gold_ids": []
+  },
+  {
+    "id": "h24",
+    "type": "대화 스레드 유지",
+    "difficulty": "중간",
+    "question": "같은 사용자가 연속해서 질문하는데 이전 대화 내용을 기억하지 못해. 매번 호출할 때 어떤 설정을 동일하게 전달해야 해?",
+    "reference": "대화 연속성을 유지하려면 같은 `thread_id`를 가진 설정을 각 `invoke` 호출에 전달해야 한다. 공식 예시에서는 `configurable` 내부에 `thread_id`를 지정해 사용한다.",
+    "source_url": "https://docs.langchain.com/oss/python/langchain/short-term-memory",
+    "evidence_quote": "thread_config = {\"configurable\": {\"thread_id\": \"1\"}}",
+    "gold_ids": []
+  },
+  {
+    "id": "h25",
+    "type": "단기·장기 메모리 구분",
+    "difficulty": "중간",
+    "question": "대화방이 달라져도 사용자의 선호 정보나 이전에 저장한 데이터를 계속 기억해야 하는데, 지금 사용하는 대화 메모리 설정만으로 가능한 거야?",
+    "reference": "단기 메모리는 하나의 thread 또는 대화 내에서 이전 상호작용을 기억한다. 서로 다른 대화나 세션에서도 사용자별 정보를 유지하려면 장기 메모리를 사용해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/langchain/short-term-memory",
+    "evidence_quote": "Need to remember information across conversations? Use long-term memory to store and recall user-specific or application-level data across different threads and sessions.",
+    "gold_ids": []
+  },
+  {
+    "id": "h26",
+    "type": "대화 기록 관리 방식 변경",
+    "difficulty": "중간",
+    "question": "예전처럼 대화 기록을 계속 쌓다 보니까 입력 토큰이 너무 커지고 응답도 느려져. 1.x에서 이전 대화를 줄이거나 정리하는 방법은 뭐가 있어?",
+    "reference": "LangChain의 단기 메모리 관리에는 메시지 자르기, 삭제하기, 요약하기 등의 방법이 있다. 요약 방식은 이전 메시지를 요약하고 원래 메시지 대신 요약 내용을 남기는 방식이다.",
+    "source_url": "https://docs.langchain.com/oss/python/langchain/short-term-memory",
+    "evidence_quote": "Summarize earlier messages in the history and replace them with a summary.",
+    "gold_ids": []
+  },
+  {
+    "id": "h27",
+    "type": "LangGraph 메모리 설정 변경",
+    "difficulty": "중간",
+    "question": "기존 그래프 기반 챗봇 코드를 업그레이드하면서 여러 차례 실행해도 대화 상태가 유지되게 만들고 싶어. 그래프를 만들 때 어떤 설정을 추가해야 해?",
+    "reference": "LangGraph의 단기 메모리는 `InMemorySaver`를 checkpointer로 사용해 구현할 수 있다. 그래프를 컴파일할 때 `compile(checkpointer=checkpointer)`로 전달하면 된다.",
+    "source_url": "https://docs.langchain.com/oss/python/langgraph/add-memory",
+    "evidence_quote": "Short-term memory (thread-level persistence) enables agents to track multi-turn conversations. To add short-term memory:",
+    "gold_ids": []
+  },
+  {
+    "id": "h28",
+    "type": "운영 환경 메모리 저장소 변경",
+    "difficulty": "중간",
+    "question": "기존에는 메모리를 프로세스 안에만 저장했는데 운영 환경에서는 서버가 재시작돼도 대화 기록이 남아야 해. 공식 문서에서 안내하는 PostgreSQL 기반 저장 방식이 있어?",
+    "reference": "운영 환경에서 데이터베이스 기반 checkpointer가 필요하다면 `PostgresSaver`를 사용할 수 있다. 관련 패키지는 `langgraph-checkpoint-postgres`이며 PostgreSQL 연결 문자열을 통해 설정한다.",
+    "source_url": "https://docs.langchain.com/oss/python/langgraph/add-memory",
+    "evidence_quote": "In production, use a checkpointer backed by a database:",
+    "gold_ids": []
+  },
+  {
+    "id": "h29",
+    "type": "PostgreSQL 마이그레이션 초기화",
+    "difficulty": "쉬움",
+    "question": "PostgreSQL 기반으로 메모리 저장소를 변경했는데 처음 실행할 때 초기화 작업도 필요해? 연결만 하면 바로 쓸 수 있는 거야?",
+    "reference": "Postgres checkpointer를 처음 사용하는 경우 `checkpointer.setup()`을 호출해야 한다.",
+    "source_url": "https://docs.langchain.com/oss/python/langgraph/add-memory",
+    "evidence_quote": "You need to call `checkpointer.setup()` the first time you’re using Postgres checkpointer.",
+    "gold_ids": []
+  },
+  {
+    "id": "h30",
+    "type": "메모리 구조 변경",
+    "difficulty": "중간",
+    "question": "기존에는 대화 기록이랑 사용자별로 저장하는 정보를 메모리 하나로 관리했는데, 새 구조에서는 두 가지를 구분해서 관리해야 한다고 하더라. 어떤 기준으로 나뉘는 거야?",
+    "reference": "LangGraph는 단기 메모리와 장기 메모리 두 종류를 제공한다. 단기 메모리는 에이전트 상태에 포함되어 다중 대화를 지원하고, 장기 메모리는 세션을 넘어 사용자별 또는 애플리케이션 수준의 데이터를 저장한다.",
+    "source_url": "https://docs.langchain.com/oss/python/langgraph/add-memory",
+    "evidence_quote": "In LangGraph, you can add two types of memory: Add short-term memory as a part of your agent’s state to enable multi-turn conversations. Add long-term memory to store user-specific or application-level data across sessions.",
+    "gold_ids": []
+  }
+]
