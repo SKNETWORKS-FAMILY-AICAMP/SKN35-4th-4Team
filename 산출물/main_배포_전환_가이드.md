@@ -31,7 +31,7 @@ git pull origin main
 | 파일 | 바꿀 곳 |
 |---|---|
 | `README.md` 10장 실행 방법 | "dev 최신 코드 받기" → "main 최신 코드 받기" |
-| `docs/배포_가이드.md` | `git pull origin dev` 두 곳 → `main` |
+| `산출물/배포_가이드.md` | `git pull origin dev` 두 곳 → `main` |
 
 ## 3. 순서
 
