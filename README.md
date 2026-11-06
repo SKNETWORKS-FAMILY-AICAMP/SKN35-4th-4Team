@@ -35,7 +35,7 @@
 
 [**배포 화면**](http://16.176.158.134/) 
 
-[3차 → 4차](#2-문제와-3차--4차-변경-사항) · [구성도](#4-시스템-구성도) · [LLM](#5-llm-아키텍처) · [실행](#9-실행-방법) · [평가](#10-평가) · [화면](#13-실제-화면) · [문서](#14-문서) · [회고](#15-한-줄-회고) · [3차 저장소](https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN35-3rd-4Team)
+[3차 → 4차](#1-문제와-3차--4차-변경-사항) · [구성도](#3-시스템-구성도) · [LLM](#4-llm-아키텍처) · [실행](#8-실행-방법) · [평가](#9-평가) · [화면](#10-실제-화면) · [문서](#11-문서) · [회고](#12-한-줄-회고) · [3차 저장소](https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN35-3rd-4Team)
 
 </div>
 
@@ -51,22 +51,18 @@
 
 **목차**
 
-1. [진행 상황](#1-진행-상황)
-2. [문제와 3차 → 4차 변경 사항](#2-문제와-3차--4차-변경-사항)
-3. [주요 기능](#3-주요-기능)
-4. [시스템 구성도](#4-시스템-구성도)
-5. [LLM 아키텍처](#5-llm-아키텍처)
-6. [RAG 데이터](#6-rag-데이터)
-7. [기술 스택](#7-기술-스택)
-8. [폴더 구조](#8-폴더-구조)
-9. [실행 방법](#9-실행-방법)
-10. [평가](#10-평가)
-11. [만들면서 발견한 것](#11-만들면서-발견한-것)
-12. [한계와 다음 단계](#12-한계와-다음-단계)
-13. [실제 화면](#13-실제-화면)
-14. [문서](#14-문서)
-15. [한 줄 회고](#15-한-줄-회고)
-16. [참고 자료](#16-참고-자료)
+1. [문제와 3차 → 4차 변경 사항](#1-문제와-3차--4차-변경-사항)
+2. [주요 기능](#2-주요-기능)
+3. [시스템 구성도](#3-시스템-구성도)
+4. [LLM 아키텍처](#4-llm-아키텍처)
+5. [RAG 데이터](#5-rag-데이터)
+6. [기술 스택](#6-기술-스택)
+7. [폴더 구조](#7-폴더-구조)
+8. [실행 방법](#8-실행-방법)
+9. [평가](#9-평가)
+10. [실제 화면](#10-실제-화면)
+11. [문서](#11-문서)
+12. [한 줄 회고](#12-한-줄-회고)
 
 ---
 
@@ -98,7 +94,7 @@ LangChain은 1.0에서 패키지가 나뉘고 옛 체인 · 에이전트(`LLMCha
 | 진행 표시 | Streamlit이 화면을 다시 그림 | 서버가 단계마다 한 줄씩 전송 (NDJSON 스트리밍), Nginx 버퍼링 끔 | 바뀐 점 |
 | 로그인 | 아이디만 | 아이디 + 비밀번호 (PBKDF2 해시 저장) | 업그레이드 |
 | 대화 관리 | 목록 · 다시 열기 | 목록 · 다시 열기 · 삭제 | 업그레이드 |
-| 질문 분류 | LLM이 판단 | 코드 규칙 먼저(R1 · R2) + LLM, 코드 없으면 안내(`no_code`), 분류 실패 기록(`route_error`) | 수정된 점 |
+| 질문 분류 | LLM이 판단 | 코드 규칙(R1) 먼저 → LLM 판단 → 코드 없는 migration은 general로(R2), 코드 없으면 안내(`no_code`), 분류 실패 기록(`route_error`) | 수정된 점 |
 | 일반 답변 | temperature 0.7 | temperature 0.3 | 수정된 점 |
 | 평가 | 코드 변환 평가 | 코드 변환 평가 다시 측정 + 문서 질의응답 RAGAS 평가 | 업그레이드 |
 | 확인용 예제 | 코드 변환 30개 | 코드 변환 평가 문항 30개 + RAG 평가 문항 30개 (서랍 두 개) | 업그레이드 |
@@ -113,7 +109,7 @@ LangChain은 1.0에서 패키지가 나뉘고 옛 체인 · 에이전트(`LLMCha
 |---|---|
 | 코드 마이그레이션 | 0.x 코드를 1.x로, 버전을 적으면 옛 버전으로 되돌리기도 |
 | 근거 기반 변경 | 바뀐 줄마다 근거 ID와 이유 |
-| 자동 검사 + 재시도 | verifier 11가지 검사, 실패하면 이유를 들고 최대 3회 다시 |
+| 자동 검사 + 재시도 | verifier 11가지 검사, 실패하면 이유를 들고 다시 고침 (첫 시도 포함 최대 3번) |
 | 설치 패키지 안내 | 새 코드가 쓰는 패키지 목록 |
 | 문서 검색 Q&A | 버전 변화 질문은 공식 문서에서 찾아 답변 |
 
@@ -147,7 +143,7 @@ flowchart LR
 1. 화면이 `POST /api/langration/chat/`로 질문을 보냅니다.
 2. Django가 별도 스레드에서 LangGraph를 돌리고, 단계가 끝날 때마다 큐에 넣은 진행 상황을 NDJSON 한 줄(`step`)로 바로 보냅니다.
 3. Nginx는 버퍼링을 끈 채 그대로 전달하고, 화면은 도착한 줄을 진행 상자에 쌓습니다.
-4. 마지막 줄(`done`)에 답과 결과 패널 데이터가 오면, 질문과 답을 TiDB `chat_history`에 저장합니다.
+4. 답이 완성되면 서버가 질문과 답을 TiDB `chat_history`에 저장한 뒤, 마지막 줄(`done`)로 답과 결과 패널 데이터를 보냅니다.
 
 **설정을 이렇게 한 이유**
 
@@ -205,18 +201,23 @@ erDiagram
 
 ```mermaid
 flowchart TB
-    U["사용자 질문"] --> R{"코드 규칙 먼저 (4차)<br/>R1 코드 없음 + 옛 API 이름 → search<br/>R2 코드 없음 → migration 금지"}
-    R --> C{"classifier<br/>나머지만 LLM이 판단"}
+    U["사용자 질문"] --> R{"R1 코드 규칙 먼저 (4차)<br/>코드 없음 + 옛 API 이름?"}
+    S["search<br/>문서 검색 → 근거 기반 답변"]
+    G["general<br/>일반 답변 (temp 0.3)"]
+    R -->|"예"| S
+    R -->|"아니오"| C{"classifier<br/>나머지만 LLM이 판단"}
     C -->|migration| M
-    C -->|search| S["search<br/>문서 검색 → 근거 기반 답변"]
-    C -->|general| G["general<br/>일반 답변 (temp 0.3)"]
-    C -.->|"분류 실패"| E["route_error 기록 (4차)"]
+    C -->|search| S
+    C -->|general| G
+    C -.->|"R2 (4차)<br/>migration인데 코드 없음"| G
+    C -.->|"분류 실패 → route_error 기록 (4차)"| G
     subgraph M["migration 서브그래프"]
         A["① analyzer<br/>코드 · 목표 버전 읽기, 바꿀 부분 찾기"] -->|"코드 있음"| RT["② retriever<br/>대응표 정확 매칭 + 하이브리드 검색"]
         A -->|"코드 없음 (4차)"| NC["no_code<br/>코드를 붙여 달라고 안내"]
         RT --> W["③ rewriter<br/>근거 ID를 붙여 다시 쓰기"]
         W --> V{"④ verifier<br/>LLM 없이 11가지 검사"}
-        V -->|"실패 · 3회 미만"| RT
+        V -->|"근거 문제 · 3번 미만"| RT
+        V -->|"그 밖의 오류 · 3번 미만"| W
     end
 ```
 
@@ -224,11 +225,11 @@ flowchart TB
 
 | 순서 | 노드 | LLM | 하는 일 | 4차 변경 |
 |---|---|---|---|---|
-| 0 | classifier | gpt-4o-mini | migration · search · general 중 하나로 분류 | 코드 규칙(R1 · R2)을 먼저 적용, 분류 실패를 `route_error`로 기록 |
+| 0 | classifier | gpt-4o-mini | migration · search · general 중 하나로 분류 | R1 코드 규칙을 먼저 적용, LLM이 migration이라 해도 코드가 없으면 general로(R2), 분류 실패는 general로 보내고 `route_error`에 기록 |
 | ① | analyzer | gpt-4o-mini | 코드 원문 · 목표 버전(없으면 최신) · 바꿀 부분을 JSON으로 | 코드가 없으면 `no_code`로 보냄 |
 | ② | retriever | 없음 | 대응표 정확 매칭 → 메서드 매칭 → 문서 하이브리드 검색(BM25 + 벡터, RRF), 재시도 때 틀린 근거 제외 | 대화 사이 제외 목록 초기화 |
 | ③ | rewriter | gpt-4o-mini | 근거에 있는 것만 써서 다시 쓰기, 바뀐 줄마다 근거 ID | - |
-| ④ | verifier | 없음 | 11가지 검사, 실패하면 이유를 다음 시도에 넘김 (최대 3회) | - |
+| ④ | verifier | 없음 | 11가지 검사, 실패하면 이유를 다음 시도에 넘김 (첫 시도 포함 최대 3번). 근거 문제면 retriever부터, 그 밖의 오류면 rewriter로 바로 | - |
 | - | no_code | 없음 | 고칠 코드가 없을 때 변환하지 않고 안내 | 4차 추가 |
 | - | search · general | gpt-4o-mini | 문서 근거로 답 + 출처 / 일반 답 | general temperature 0.7 → 0.3 |
 
@@ -244,7 +245,7 @@ flowchart TB
 | 메서드 대응표 | 42건 | `.run` → `.invoke` 등 |
 | 최신 공식 문서 | 271페이지 | docs.langchain.com |
 | 마이그레이션 가이드 | 24페이지 | 0.3.30 공식 가이드 |
-| 청크 | 11,903개 | Chroma Cloud · text-embedding-3-small (1536차원) |
+| 청크 | 11,945개 | Chroma Cloud · text-embedding-3-small (1536차원) |
 
 **검색 흐름**
 
@@ -297,12 +298,14 @@ flowchart LR
 |---|---|
 | `OPENAI_API_KEY` | gpt-4o-mini · 임베딩 |
 | `CHROMA_API_KEY` · `CHROMA_TENANT` · `CHROMA_DATABASE` | Chroma Cloud 문서 검색 |
-| `TIDB_HOST` · `TIDB_PORT` · `TIDB_USER` · `TIDB_PASSWORD` · `TIDB_DATABASE` | TiDB Cloud 연결 |
-| `TIDB_CA_PATH` | TiDB 인증서 경로 (없으면 기본 인증서 사용) |
+| `TIDB_HOST` · `TIDB_PORT` · `TIDB_USERNAME` · `TIDB_PASSWORD` · `TIDB_DATABASE` | TiDB Cloud 연결 (`TIDB_PORT`만 생략 가능, 기본 4000) |
+| `TIDB_CA_PATH` | TiDB 인증서 경로 (없으면 프로젝트 루트의 `isrgrootx1.pem`, 그것도 없으면 certifi 기본 인증서) |
 | `DJANGO_SECRET_KEY` · `DJANGO_DEBUG` | Django 비밀 키 · 디버그 모드 (배포는 False) |
 | `DJANGO_ALLOWED_HOSTS` · `DJANGO_CSRF_TRUSTED_ORIGINS` | 접속 허용 주소 |
 
 **로컬 실행**
+
+로컬에서도 DB는 TiDB Cloud를 씁니다. `.env`에 TiDB 값이 없으면 `manage.py`가 바로 멈추므로 먼저 `.env`를 만듭니다.
 
 ```bash
 uv sync
@@ -357,7 +360,7 @@ bash deploy/deploy.sh
 |---|---|---:|---:|
 | 공통 기준 통과 | 실행 기준 + 정답 import까지 모두 맞음 | 57% | **63%** |
 | 실행 기준 통과 | 문법 · 옛 import 없음 · import 존재 · 결과값 보존 | 87% | **93%** |
-| 최종 검증 통과 | 최대 3회 재시도 안에 검사 통과 | 53% | **93%** |
+| 최종 검증 통과 | 첫 시도 포함 최대 3번 안에 검사 통과 | 53% | **93%** |
 | 1회차 검증 통과 | 재시도 없이 첫 시도에 통과 | 43% | **60%** |
 | 자체 평가 | 팀 규칙 21항목 | 83.3점 (B) | **91.8점 (A)** |
 
@@ -405,17 +408,17 @@ http://16.176.158.134/
 ## 11. 문서
 
 | 문서 | 내용 |
-|---|---|---|
-| [eval/README.md](eval/README.md) | 코드 변환 평가 · RAGAS 평가 방법, 문항, 결과 | 손채영 |
-| [산출물/검증_결과_정리.pdf](산출물/검증_결과_정리.pdf) · [HTML](산출물/검증_결과_정리.html) | 4차 검증 결과 보고서 | 손채영 |
-| [산출물/분류기_개선안.md](산출물/분류기_개선안.md) | search → general 오분류 발견과 분류기 보완안 | 손채영 |
-| [산출물/API_명세.md](산출물/API_명세.md) | API 엔드포인트별 요청 · 응답 · 오류, 채팅 스트리밍 이벤트 형식 | 심성욱 |
-| [산출물/배포_가이드.md](산출물/배포_가이드.md) | EC2 준비 · 환경 변수 · `deploy.sh` · Nginx 설정 · 재배포 · 자주 나는 문제 | 심성욱 |
-| [산출물/DB_설계.md](산출물/DB_설계.md) | ERD, 비밀번호 칸 추가, 대화 세션 저장 방식 | 심성욱 |
-| [산출물/main_배포_전환_가이드.md](산출물/main_배포_전환_가이드.md) | `dev` 기준 배포를 `main` 기준으로 바꾸는 순서 · 확인 · 되돌리기 | 심성욱 |
-| [발표자료 PDF](산출물/발표자료/Langration_4차_발표.pdf) · [HTML (모션 포함)](산출물/발표자료/Langration_4차_발표.html) · [발표 대본](산출물/발표자료/4차_발표_대본.pdf) · [예상 질문](산출물/발표자료/4차_예상질문.pdf) | 발표 15장 (HTML은 브라우저에서 모션 재생) · 15분 대본 · 예상 질문 21개와 답변 | 심성욱 |
+|---|---|
+| [eval/README.md](eval/README.md) | 코드 변환 평가 · RAGAS 평가 방법, 문항, 결과 |
+| [산출물/검증_결과_정리.pdf](산출물/검증_결과_정리.pdf) · [HTML](산출물/검증_결과_정리.html) | 4차 검증 결과 보고서 |
+| [산출물/분류기_개선안.md](산출물/분류기_개선안.md) | search → general 오분류 발견과 분류기 보완안 |
+| [산출물/API_명세.md](산출물/API_명세.md) | API 엔드포인트별 요청 · 응답 · 오류, 채팅 스트리밍 이벤트 형식 |
+| [산출물/배포_가이드.md](산출물/배포_가이드.md) | EC2 준비 · 환경 변수 · `deploy.sh` · Nginx 설정 · 재배포 · 자주 나는 문제 |
+| [산출물/DB_설계.md](산출물/DB_설계.md) | ERD, 비밀번호 칸 추가, 대화 세션 저장 방식 |
+| [산출물/main_배포_전환_가이드.md](산출물/main_배포_전환_가이드.md) | `dev` 기준 배포를 `main` 기준으로 바꾸는 순서 · 확인 · 되돌리기 |
+| [발표자료 PDF](산출물/발표자료/Langration_4차_발표.pdf) · [HTML (모션 포함)](산출물/발표자료/Langration_4차_발표.html) | 4차 발표자료 (HTML은 브라우저에서 모션 재생) |
 
-## 15. 한 줄 회고
+## 12. 한 줄 회고
 
 | 이름 | 회고 |
 |---|---|
@@ -423,12 +426,3 @@ http://16.176.158.134/
 | 조현주 | EC2 서버 구축부터 Docker Compose 배포까지 직접 해본 프로젝트였습니다. 평가 결과에서 챗봇의 품질을 깎았던 부분들을 다시 redefine하여 3차의 약점을 보완했습니다. 3차에 이어 4차까지 좋은 팀원분들과 함께할 수 있어서 감사했습니다. |
 | 손채영 | 이번 프로젝트에 RAGAS를 사용해서 검증, 평가를 해보았습니다. search 경로로 가야 할 질문 상당수가 classifier에서 general로 빠지고 있었다는 걸 알게 되었고, 답을 잘 만드는 것만큼 적절한 라우팅이 중요하다는 걸 배웠습니다. |
 | 심성욱 | 화면을 맡아 팀 채팅으로 들어온 수정 요청을 직접 고치고, 배포 화면에서 오류를 다시 확인하는 일을 반복했습니다. 진행 단계가 몰려서 나오거나 지운 대화가 목록에 남는 것처럼 겉으로는 화면 문제였지만 원인은 서버 설정이나 브라우저 캐시에 있는 경우가 많아, 증상에서 끝내지 않고 원인까지 따라가 확인하는 습관이 생겼습니다. 3차에 이어 4차까지 함께한 팀원분들께 감사합니다. |
-
-## 16. 참고 자료
-
-- [LangChain v1 마이그레이션 가이드](https://docs.langchain.com/oss/python/migrate/langchain-v1)
-- [LangGraph 문서](https://docs.langchain.com/oss/python/langgraph/overview)
-- [RAGAS 문서](https://docs.ragas.io/)
-- [Django 문서](https://docs.djangoproject.com/)
-- [Docker Compose 문서](https://docs.docker.com/compose/)
-- 3차 프로젝트: [SKNETWORKS-FAMILY-AICAMP/SKN35-3rd-4Team](https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN35-3rd-4Team)
