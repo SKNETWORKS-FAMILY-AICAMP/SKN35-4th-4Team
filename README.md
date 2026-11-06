@@ -8,10 +8,10 @@
 
 | | 이름 | 역할 |
 | --- | --- | --- |
-| <img src="./docs/profile/나무늘보.png" width="100"> | [최우석](https://github.com/wsc9150) | Django 프로젝트 구조 설계 / API 엔드포인트 정의 · 백엔드 구현 / TiDB 모델 · 비밀번호 로그인 / 발표 |
-| <img src="./docs/profile/가젤.png" width="100"> | [조현주](https://github.com/zozuzu) | AWS EC2 · Docker Compose 배포 환경 구축 / 분류기 보완(no_code · route_error) / LLM 파이프라인 검증 |
-| <img src="./docs/profile/햄스터.png" width="100"> | [손채영](https://github.com/cchhaaee1023) | RAGAS 평가 도입 · 코드 변환 평가 재실행 / 분류기 개선안 도출 / 파이프라인 QA |
-| <img src="./docs/profile/쿼카.png" width="100"> | [심성욱](https://github.com/SKN35shimsungwook) | 화면 UI 구현 · 진행 단계 스트리밍 표시 / 백엔드 API 연결 보조 / 발표자료 · README · 산출물 제작 |
+| <img src="./산출물/profile/나무늘보.png" width="100"> | [최우석](https://github.com/wsc9150) | Django 프로젝트 구조 설계 / API 엔드포인트 정의 · 백엔드 구현 / TiDB 모델 · 비밀번호 로그인 / 발표 |
+| <img src="./산출물/profile/가젤.png" width="100"> | [조현주](https://github.com/zozuzu) | AWS EC2 · Docker Compose 배포 환경 구축 / 분류기 보완(no_code · route_error) / LLM 파이프라인 검증 |
+| <img src="./산출물/profile/햄스터.png" width="100"> | [손채영](https://github.com/cchhaaee1023) | RAGAS 평가 도입 · 코드 변환 평가 재실행 / 분류기 개선안 도출 / 파이프라인 QA |
+| <img src="./산출물/profile/쿼카.png" width="100"> | [심성욱](https://github.com/SKN35shimsungwook) | 화면 UI 구현 · 진행 단계 스트리밍 표시 / 백엔드 API 연결 보조 / 발표자료 · README · 산출물 제작 |
 
 **기술 스택**
 
@@ -32,8 +32,8 @@
 
 </div>
 
-<p align="center"><img src="docs/images/demo.gif" width="860" alt="코드 변환 예제를 보내면 진행 단계가 한 줄씩 쌓이고 결과 패널에 전후 비교가 나오는 화면"></p>
-<p align="center"><sub>실제 배포 화면 (2026-11-05, 2배속) · 로그인 → 코드 변환 예제 → 진행 단계 실시간 표시 → 결과 패널 탭 → 문서 질문 · <a href="docs/images/demo.mp4">원본 동영상</a></sub></p>
+<p align="center"><img src="산출물/images/demo.gif" width="860" alt="코드 변환 예제를 보내면 진행 단계가 한 줄씩 쌓이고 결과 패널에 전후 비교가 나오는 화면"></p>
+<p align="center"><sub>실제 배포 화면 (2026-11-05, 2배속) · 로그인 → 코드 변환 예제 → 진행 단계 실시간 표시 → 결과 패널 탭 → 문서 질문 · <a href="산출물/images/demo.mp4">원본 동영상</a></sub></p>
 
 > 3차에서 만든 **근거 기반 LangChain 마이그레이션 챗봇**을, 4차에서 **Django 웹 서비스**로 다시 지어 **AWS EC2에 Docker로 배포**했습니다.
 > 평가는 코드 변환에 더해 **문서 질의응답(RAG)까지 RAGAS로** 넓혔습니다.
@@ -274,7 +274,7 @@ flowchart LR
 
 ## 8. 폴더 구조
 
-> [정리 예정] `작업기록/` 폴더는 삭제하고 `docs/` 폴더로 통일한 뒤, 폴더 이름을 `산출물/`로 바꿀 예정입니다.
+> 문서 · 사진 · 발표자료 · 작업기록은 모두 `산출물/` 한 곳에 모았습니다.
 
 | 영역 | 경로 | 내용 |
 |---|---|---|
@@ -289,7 +289,7 @@ flowchart LR
 | 데이터 | `data/` | RAG 원본 · 가공 데이터 |
 | 평가 | `eval/` | 코드 변환 평가 · RAGAS 평가 스크립트, 문항, 결과 |
 | 배포 | `Dockerfile` · `docker-compose.yml` · `deploy/` | 컨테이너 설정 · Nginx 설정 · 배포 스크립트 |
-| 문서 | `docs/` | 검증 결과 정리 · 분류기 개선안 등 산출물 |
+| 산출물 | `산출물/` | 보고서 · 가이드 · 화면 사진(`images/`) · 프로필(`profile/`) · 발표자료(`발표자료/`) · 작업기록(`작업기록/`) |
 
 ## 9. 실행 방법
 
@@ -346,7 +346,7 @@ bash deploy/deploy.sh
 
 결과: [`eval/results/RAGAS_gpt2-questions/`](eval/results/RAGAS_gpt2-questions/)
 
-평가 과정에서 search로 가야 할 질문 상당수가 classifier에서 general로 빠지는 것을 발견했고, 이를 바탕으로 분류기를 보완했습니다 (코드 규칙 · `no_code` · `route_error`, [docs/분류기_개선안.md](docs/분류기_개선안.md)).
+평가 과정에서 search로 가야 할 질문 상당수가 classifier에서 general로 빠지는 것을 발견했고, 이를 바탕으로 분류기를 보완했습니다 (코드 규칙 · `no_code` · `route_error`, [산출물/분류기_개선안.md](산출물/분류기_개선안.md)).
 
 ### 10-2. 코드 변환 평가 (3차 대비)
 
@@ -389,46 +389,46 @@ bash deploy/deploy.sh
 
 | 로그인 | 아이디 만들기 |
 |:---:|:---:|
-| <img src="docs/images/01_login.png" width="420" alt="로그인 화면"> | <img src="docs/images/02_signup.png" width="420" alt="아이디 만들기 화면"> |
+| <img src="산출물/images/01_login.png" width="420" alt="로그인 화면"> | <img src="산출물/images/02_signup.png" width="420" alt="아이디 만들기 화면"> |
 
 **첫 화면 · 사용법 · 확인용 예제**
 
 | 첫 화면 (추천 질문) | 쓰는 방법 |
 |:---:|:---:|
-| <img src="docs/images/03_home.png" width="420" alt="첫 화면과 추천 질문"> | <img src="docs/images/04_help.png" width="420" alt="쓰는 방법 안내창"> |
+| <img src="산출물/images/03_home.png" width="420" alt="첫 화면과 추천 질문"> | <img src="산출물/images/04_help.png" width="420" alt="쓰는 방법 안내창"> |
 | **확인용 예제 (서랍 두 개)** | **RAG 평가 문항 서랍** |
-| <img src="docs/images/05_examples.png" width="420" alt="확인용 예제 서랍 두 개"> | <img src="docs/images/06_examples_rag.png" width="420" alt="RAG 평가 문항 서랍"> |
+| <img src="산출물/images/05_examples.png" width="420" alt="확인용 예제 서랍 두 개"> | <img src="산출물/images/06_examples_rag.png" width="420" alt="RAG 평가 문항 서랍"> |
 
 **코드 변환: 진행 단계 → 결과 패널**
 
 | 진행 단계 실시간 표시 | 전후 비교 |
 |:---:|:---:|
-| <img src="docs/images/07_streaming.png" width="420" alt="진행 단계가 한 줄씩 쌓이는 화면"> | <img src="docs/images/08_result_diff.png" width="420" alt="전후 비교 탭"> |
+| <img src="산출물/images/07_streaming.png" width="420" alt="진행 단계가 한 줄씩 쌓이는 화면"> | <img src="산출물/images/08_result_diff.png" width="420" alt="전후 비교 탭"> |
 | **변경 사항** | **근거** |
-| <img src="docs/images/09_result_changes.png" width="420" alt="변경 사항 탭"> | <img src="docs/images/10_result_evidence.png" width="420" alt="근거 탭"> |
+| <img src="산출물/images/09_result_changes.png" width="420" alt="변경 사항 탭"> | <img src="산출물/images/10_result_evidence.png" width="420" alt="근거 탭"> |
 | **검사 결과 (11가지)** | **안내 (설치할 패키지)** |
-| <img src="docs/images/11_result_checks.png" width="420" alt="검사 결과 탭"> | <img src="docs/images/12_result_guide.png" width="420" alt="안내 탭"> |
+| <img src="산출물/images/11_result_checks.png" width="420" alt="검사 결과 탭"> | <img src="산출물/images/12_result_guide.png" width="420" alt="안내 탭"> |
 | **처리 과정 (1회차 실패 → 2회차 통과)** | **결과 패널 닫기** |
-| <img src="docs/images/13_result_process.png" width="420" alt="처리 과정 탭"> | <img src="docs/images/14_result_closed.png" width="420" alt="결과 패널을 닫은 대화 화면"> |
+| <img src="산출물/images/13_result_process.png" width="420" alt="처리 과정 탭"> | <img src="산출물/images/14_result_closed.png" width="420" alt="결과 패널을 닫은 대화 화면"> |
 
 **문서 질문 · 대화 관리**
 
 | 문서 질문 답변 (출처 표시) | 로그아웃 확인 |
 |:---:|:---:|
-| <img src="docs/images/15_doc_answer.png" width="420" alt="문서 질문 답변"> | <img src="docs/images/16_logout.png" width="420" alt="로그아웃 확인창"> |
+| <img src="산출물/images/15_doc_answer.png" width="420" alt="문서 질문 답변"> | <img src="산출물/images/16_logout.png" width="420" alt="로그아웃 확인창"> |
 
 ## 14. 문서
 
 | 문서 | 내용 | 작성자 |
 |---|---|---|
 | [eval/README.md](eval/README.md) | 코드 변환 평가 · RAGAS 평가 방법, 문항, 결과 | 손채영 |
-| [docs/검증_결과_정리.pdf](docs/검증_결과_정리.pdf) · [HTML](docs/검증_결과_정리.html) | 4차 검증 결과 보고서 | 손채영 |
-| [docs/분류기_개선안.md](docs/분류기_개선안.md) | search → general 오분류 발견과 분류기 보완안 | 손채영 |
-| [docs/API_명세.md](docs/API_명세.md) | API 엔드포인트별 요청 · 응답 · 오류, 채팅 스트리밍 이벤트 형식 | 심성욱 |
-| [docs/배포_가이드.md](docs/배포_가이드.md) | EC2 준비 · 환경 변수 · `deploy.sh` · Nginx 설정 · 재배포 · 자주 나는 문제 | 심성욱 |
-| [docs/DB_설계.md](docs/DB_설계.md) | ERD, 비밀번호 칸 추가, 대화 세션 저장 방식 | 심성욱 |
-| [docs/main_배포_전환_가이드.md](docs/main_배포_전환_가이드.md) | `dev` 기준 배포를 `main` 기준으로 바꾸는 순서 · 확인 · 되돌리기 | 심성욱 |
-| [발표자료 PDF](docs/발표자료/Langration_4차_발표.pdf) · [발표 대본](docs/발표자료/4차_발표_대본.pdf) · [예상 질문](docs/발표자료/4차_예상질문.pdf) | 발표 15장 · 15분 대본 · 예상 질문 21개와 답변 | 심성욱 |
+| [산출물/검증_결과_정리.pdf](산출물/검증_결과_정리.pdf) · [HTML](산출물/검증_결과_정리.html) | 4차 검증 결과 보고서 | 손채영 |
+| [산출물/분류기_개선안.md](산출물/분류기_개선안.md) | search → general 오분류 발견과 분류기 보완안 | 손채영 |
+| [산출물/API_명세.md](산출물/API_명세.md) | API 엔드포인트별 요청 · 응답 · 오류, 채팅 스트리밍 이벤트 형식 | 심성욱 |
+| [산출물/배포_가이드.md](산출물/배포_가이드.md) | EC2 준비 · 환경 변수 · `deploy.sh` · Nginx 설정 · 재배포 · 자주 나는 문제 | 심성욱 |
+| [산출물/DB_설계.md](산출물/DB_설계.md) | ERD, 비밀번호 칸 추가, 대화 세션 저장 방식 | 심성욱 |
+| [산출물/main_배포_전환_가이드.md](산출물/main_배포_전환_가이드.md) | `dev` 기준 배포를 `main` 기준으로 바꾸는 순서 · 확인 · 되돌리기 | 심성욱 |
+| [발표자료 PDF](산출물/발표자료/Langration_4차_발표.pdf) · [HTML (모션 포함)](산출물/발표자료/Langration_4차_발표.html) · [발표 대본](산출물/발표자료/4차_발표_대본.pdf) · [예상 질문](산출물/발표자료/4차_예상질문.pdf) | 발표 15장 (HTML은 브라우저에서 모션 재생) · 15분 대본 · 예상 질문 21개와 답변 | 심성욱 |
 
 ## 15. 한 줄 회고
 
