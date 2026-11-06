@@ -188,25 +188,26 @@ erDiagram
 
 **최상위 그래프와 마이그레이션 서브그래프**
 
+
 ```mermaid
 flowchart TB
-    U["User question"] --> R{"R1 rule check (4th)<br/>no code + legacy API name?"}
-    S["search<br/>doc retrieval → grounded answer"]
-    G["general<br/>general answer (temp 0.3)"]
-    R -->|"yes"| S
-    R -->|"no"| C{"classifier<br/>LLM decides the rest"}
+    U["사용자 질문"] --> R{"R1 코드 규칙<br/>코드 없음 + 옛 API 이름?"}
+    S["search<br/>문서 검색 → 근거 기반 답변"]
+    G["general<br/>일반 답변 (temp 0.3)"]
+    R -->|"예"| S
+    R -->|"아니오"| C{"classifier<br/>나머지만 LLM이 판단"}
     C -->|migration| M
     C -->|search| S
     C -->|general| G
-    C -.->|"R2 (4th)<br/>migration without code"| G
-    C -.->|"classification failed → log route_error (4th)"| G
-    subgraph M["migration subgraph"]
-        A["① analyzer<br/>read code · target version, find parts to change"] -->|"has code"| RT["② retriever<br/>exact map match + hybrid search"]
-        A -->|"no code (4th)"| NC["no_code<br/>ask user to paste code"]
-        RT --> W["③ rewriter<br/>rewrite with evidence IDs"]
-        W --> V{"④ verifier<br/>11 checks without LLM"}
-        V -->|"evidence error · attempt < 3"| RT
-        V -->|"other error · attempt < 3"| W
+    C -.->|"R2<br/>migration인데 코드 없음"| G
+    C -.->|"분류 실패 → route_error 기록"| G
+    subgraph M["migration 서브그래프"]
+        A["① analyzer<br/>코드 · 목표 버전 읽기, 바꿀 부분 찾기"] -->|"코드 있음"| RT["② retriever<br/>대응표 정확 매칭 + 하이브리드 검색"]
+        A -->|"코드 없음"| NC["no_code<br/>코드를 붙여 달라고 안내"]
+        RT --> W["③ rewriter<br/>근거 ID를 붙여 다시 쓰기"]
+        W --> V{"④ verifier<br/>LLM 없이 11가지 검사"}
+        V -->|"근거 문제 · 3번 미만"| RT
+        V -->|"그 밖의 오류 · 3번 미만"| W
     end
 ```
 
@@ -414,3 +415,4 @@ http://16.176.158.134/
 | 조현주 | EC2 서버 구축부터 Docker Compose 배포까지 직접 해본 프로젝트였습니다. 평가 결과에서 챗봇의 품질을 깎았던 부분들을 다시 redefine하여 3차의 약점을 보완했습니다. 3차에 이어 4차까지 좋은 팀원분들과 함께할 수 있어서 감사했습니다. |
 | 손채영 | 이번 프로젝트에 RAGAS를 사용해서 검증, 평가를 해보았습니다. search 경로로 가야 할 질문 상당수가 classifier에서 general로 빠지고 있었다는 걸 알게 되었고, 답을 잘 만드는 것만큼 적절한 라우팅이 중요하다는 걸 배웠습니다. |
 | 심성욱 | 화면을 맡아 팀 채팅으로 들어온 수정 요청을 직접 고치고, 배포 화면에서 오류를 다시 확인하는 일을 반복했습니다. 진행 단계가 몰려서 나오거나 지운 대화가 목록에 남는 것처럼 겉으로는 화면 문제였지만 원인은 서버 설정이나 브라우저 캐시에 있는 경우가 많아, 증상에서 끝내지 않고 원인까지 따라가 확인하는 습관이 생겼습니다. 3차에 이어 4차까지 함께한 팀원분들께 감사합니다. |
+
