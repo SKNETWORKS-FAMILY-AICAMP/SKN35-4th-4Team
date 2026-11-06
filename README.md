@@ -427,6 +427,7 @@ bash deploy/deploy.sh
 | [docs/API_명세.md](docs/API_명세.md) | API 엔드포인트별 요청 · 응답 · 오류, 채팅 스트리밍 이벤트 형식 | 심성욱 |
 | [docs/배포_가이드.md](docs/배포_가이드.md) | EC2 준비 · 환경 변수 · `deploy.sh` · Nginx 설정 · 재배포 · 자주 나는 문제 | 심성욱 |
 | [docs/DB_설계.md](docs/DB_설계.md) | ERD, 비밀번호 칸 추가, 대화 세션 저장 방식 | 심성욱 |
+| [docs/main_배포_전환_가이드.md](docs/main_배포_전환_가이드.md) | `dev` 기준 배포를 `main` 기준으로 바꾸는 순서 · 확인 · 되돌리기 | 심성욱 |
 | 발표자료 (추가 예정) | 발표 PDF 15장 · 발표 대본 · 예상 질문 | 심성욱 |
 
 ## 15. 한 줄 회고
